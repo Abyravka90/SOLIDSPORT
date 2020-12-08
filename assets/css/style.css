@@ -1,0 +1,156 @@
+body {
+  /*background: url('banner/banner2.jpg');*/
+  background-color: rgb(39, 38, 38);
+  width: 100%;
+  height: auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow-x: hidden;
+}
+img {
+  border-radius: 15%;
+}
+.logo {
+  padding-left: 2.5%;
+  padding-top: 2%;
+}
+.content {
+  width: 100%;
+}
+
+.header {
+  margin-top: 0%;
+  width: 100%;
+  display: flex;
+  justify-content: justify;
+}
+
+.header h3 {
+  margin-top: 5%;
+  padding-left: 30%;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.table {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+table {
+  width: 92%;
+  border-collapse: collapse;
+  margin: 50px auto;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+th {
+  background: #f5355c;
+  color: white;
+  font-weight: bold;
+}
+
+td,
+th {
+  padding: 20px;
+
+  text-align: left;
+  font-size: 18px;
+}
+
+td {
+  background: transparent;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+@media only screen and (max-width: 760px),
+  (min-device-width: 768px) and (max-device-width: 1024px) {
+  table {
+    width: 100%;
+  }
+
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
+
+  thead tr {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+  }
+
+  tr {
+    border: 1px solid #ccc;
+  }
+
+  td {
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+    padding-left: 50%;
+  }
+
+  td:before {
+    position: absolute;
+
+    top: 6px;
+    left: 6px;
+    width: 45%;
+    padding-right: 10px;
+    white-space: nowrap;
+
+    content: attr(data-column);
+
+    color: #000;
+    font-weight: bold;
+  }
+}
+
+.dot {
+  height: 18px;
+  width: 18px;
+  background-color: green;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.score {
+  margin-top: 2%;
+  width: 100%;
+  justify-content: center;
+}
+
+.left {
+  background-color: #f5355c;
+  margin-left: 2%;
+  display: flex;
+  justify-content: center;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 50px;
+  width: 30%;
+  height: 40%;
+  float: left !important;
+}
+
+.right {
+  background-color: white;
+  text-transform: uppercase;
+  color: black;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding-bottom: 15px !important;
+  padding-left: 15px;
+  margin-left: 2%;
+  width: 60%;
+  height: 10%;
+  float: left;
+  margin-bottom: 20px;
+}
