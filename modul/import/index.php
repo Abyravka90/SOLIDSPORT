@@ -1,12 +1,16 @@
 <?php 
+    @session_start();
+    if (!isset($_SESSION['username'])){
+        @header("location:../login");
+    }else{
     include "../../config/templates/header.php";
     include "../../config/templates/sidebar.php";
     include "../../config/templates/mainContent.php";
     include "../../config/database/koneksi.php";
     include "excel_reader2.php";
-?>
-            <!-- Card header -->
-                <div class="card-header border-0">
+    ?>
+        <!-- Card header -->
+        <div class="card-header border-0">
                   <h1 class="mb-0">Data Atlet</h1>
                 </div>
             <!-- Se table -->
@@ -44,7 +48,7 @@
                         mysqli_query($conn,"INSERT INTO `atlet` values('','$namaAtlet','$kelas','$kontingen','$namaKata','$grup','$atribut','$bermain')");
                         $counter++;                    
                 }
-                if($counter>0){echo "<script>alert('data berhasil ditambahkan')</script>";}
+                if($counter>0){echo "<script>alert('data berhasil ditambahkan');window.location.href='http://localhost/solidsport/modul/atlet/';</script>";}
                 // hapus kembali file .xls yang di upload tadi
                 unlink($_FILES['fileAtlet']['name']);
             } 
@@ -55,8 +59,12 @@
 	<input name="fileAtlet" type="file" required="required"> 
 	<input name="upload" type="submit" value="Import">
                 </form>
+                <div class="card">
+                <div class="card-body"><span class="badge badge-warning">!pastikan format yang diimport dalam bentuk Excel 97 - 2003.xls</span></div>
+                </div>
             </div>
-                
+    <?php }
+    ?>                
                 <!-- Footer -->
 <?php 
     include "../../config/templates/footer.php";
