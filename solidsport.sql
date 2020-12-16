@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Nov 2020 pada 17.14
+-- Waktu pembuatan: 16 Des 2020 pada 18.19
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.4.11
 
@@ -37,6 +37,16 @@ CREATE TABLE `atlet` (
   `atribut` char(3) NOT NULL,
   `bermain` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `atlet`
+--
+
+INSERT INTO `atlet` (`idAtlet`, `namaAtlet`, `kelas`, `kontingen`, `namaKata`, `grup`, `atribut`, `bermain`) VALUES
+(1, 'Anji Nur Gilang', 'Kadet Putra', 'Citra Indah', 'Gojushiho', 'B', 'Ao', 0),
+(2, 'Raya Tegas Syuhada', 'Kadet Putra', 'Hiroshima', 'Unsu', 'B', 'Ao', 0),
+(3, 'Asep Cahya Nugraha', 'Kadet Putra', 'Gojukai Chaki', 'Popuren', 'B1', 'Ao', 0),
+(4, 'Ade Ajie Ferizal', 'Kadet Putra', 'INKAI Jakarta', 'Suparimpei', 'B1', 'Ao', 0);
 
 -- --------------------------------------------------------
 
@@ -79,10 +89,27 @@ INSERT INTO `papanskor` (`status`) VALUES
 
 CREATE TABLE `point` (
   `idPoint` int(11) NOT NULL,
+  `namaAtlet` varchar(50) NOT NULL,
+  `kelas` varchar(50) NOT NULL,
+  `kontingen` varchar(50) NOT NULL,
+  `namaKata` varchar(50) NOT NULL,
+  `grup` varchar(10) NOT NULL,
+  `atribut` char(3) NOT NULL,
   `namaJuri` varchar(50) NOT NULL,
   `nilaiTeknik` double NOT NULL,
   `nilaiAtletik` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `point`
+--
+
+INSERT INTO `point` (`idPoint`, `namaAtlet`, `kelas`, `kontingen`, `namaKata`, `grup`, `atribut`, `namaJuri`, `nilaiTeknik`, `nilaiAtletik`) VALUES
+(1, '-', '-', '-', '-', '-', '-', 'J-1', 0, 0),
+(2, '-', '-', '-', '-', '-', '-', 'J-2', 0, 0),
+(3, '-', '-', '-', '-', '-', '-', 'J-3', 0, 0),
+(4, '-', '-', '-', '-', '-', '-', 'J-4', 0, 0),
+(5, '-', '-', '-', '-', '-', '-', 'J-5', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -94,15 +121,16 @@ CREATE TABLE `user` (
   `idUser` int(11) NOT NULL,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `statusLogin` int(1) NOT NULL
+  `statusLogin` int(1) NOT NULL,
+  `level` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `user`
 --
 
-INSERT INTO `user` (`idUser`, `username`, `password`, `statusLogin`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 0);
+INSERT INTO `user` (`idUser`, `username`, `password`, `statusLogin`, `level`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -146,7 +174,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `atlet`
 --
 ALTER TABLE `atlet`
-  MODIFY `idAtlet` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAtlet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `klasemen`
@@ -158,7 +186,7 @@ ALTER TABLE `klasemen`
 -- AUTO_INCREMENT untuk tabel `point`
 --
 ALTER TABLE `point`
-  MODIFY `idPoint` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPoint` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
