@@ -1,7 +1,7 @@
 <?php 
     @session_start();
     if (!isset($_SESSION['username'])){
-        @header("location:../login");
+        header("location:../login");
     }else{
     include "../../config/templates/header.php";
     include "../../config/templates/sidebar.php";
@@ -48,7 +48,10 @@
                         mysqli_query($conn,"INSERT INTO `atlet` values('','$namaAtlet','$kelas','$kontingen','$namaKata','$grup','$atribut','$bermain')");
                         $counter++;                    
                 }
-                if($counter>0){echo "<script>alert('data berhasil ditambahkan');window.location.href='http://localhost/solidsport/modul/atlet/';</script>";}
+                if($counter>0){
+                    $ip = $_SERVER["HTTP_HOST"];
+                    echo "<script>window.location.href='http://$ip/solidsport/modul/atlet';</script>";
+                }
                 // hapus kembali file .xls yang di upload tadi
                 unlink($_FILES['fileAtlet']['name']);
             } 

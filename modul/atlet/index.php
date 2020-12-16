@@ -56,12 +56,12 @@ if(!isset($_SESSION['username'])){
                     <table table id="example" class="table table-striped table-bordered nowrap" cellspacing="0" width="120%">
                         <thead class="thead-light">
                             <tr>
-                                <th>action</th>
+                                <th>Delete</th>
                                 <th>No</th>
                                 <th>Nama Atlet</th>
                                 <th>Nama Kata</th>
                                 <th>Kontingen</th>
-                                <th>Grup</th>
+                                <th style="width:100px;">Grup</th>
                                 <th>Atribut</th>
                                 <th>Bermain</th>
                                 <th>Kelas</th>
@@ -74,19 +74,21 @@ if(!isset($_SESSION['username'])){
                             while($data = mysqli_fetch_array($sql)){
                                 ?>
                                 <tr>
-                                <td><a class="btn btn-danger" href="?idAtlet=<?= $data['idAtlet']?>"><i class="ni ni-fat-delete"></i></a></td>
+                                <td><a class="btn btn-danger" href="?idAtlet=<?= $data['idAtlet']?>"><span style='font-size:10px;'>&#10005;</span></a></td>
                                 <td><?= $i ?></td>
                                 <td><textarea class="form-control" name="namaAtlet[]" id="" cols="10" rows="4"><?= $data['namaAtlet']; ?></textarea></td>
                                 <td><textarea class="form-control" name="namaKata[]" id="" cols="10" rows="4"><?= $data['namaKata']; ?></textarea></td>
                                 <td><textarea class="form-control" name="kontingen[]" id="" cols="10" rows="4"><?= $data['kontingen']; ?></textarea></td>
-                                <td><input class = "form-control" type="text" name="grup[]" id="" value="<?= $data['grup']; ?>"></td>
+                                <td>
+                                    <input class="form-control" type="text" name="grup[]" value="<?= $data['grup']?>">
+                                </td>
                                 <td>
                                     <select class="form-control" name="atribut[]">
                                         <option value="Aka" <?php if($data['atribut'] == "Aka"){echo "selected";} ?>><span class="badge badge-default"> Aka</span></option>
                                         <option value="Ao" <?php if($data['atribut'] == "Ao"){echo "selected";}?>><span class="badge badge-danger">Ao</span></option>
                                     </select>
                                 </td>
-                                <td>sudah</td>
+                                <td><?= $data['bermain'];?></td>
                                 <td><textarea class="form-control" name="kelas[]" id="" cols="10" rows="4"><?= $data['kelas']; ?></textarea></td>
                                 <input type="hidden" name="idAtlet[]" value=<?= $data['idAtlet']; ?>>
                                 </tr>
@@ -98,7 +100,31 @@ if(!isset($_SESSION['username'])){
                     </table>
                 <div class="pl-3">
                     <input type="submit" class="btn btn-primary" name="update" value="update"></input>
-                    <a href="?reset=<?= md5(11) ?>" class="btn btn-success">reset</a>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmResetModal">
+                        reset
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="confirmResetModal" tabindex="-1" role="dialog" aria-labelledby="confirmResetModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Reset Data</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Apakah anda yakin menghapus semua data atlet
+                        </div>
+                        <div class="modal-footer">
+                            <a href="?reset=<?= md5(11) ?>" class="btn btn-danger">ya</a>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
                 </div>
                 </form>
             </div> 
