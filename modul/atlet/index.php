@@ -99,10 +99,10 @@ if(!isset($_SESSION['username'])){
                         </tbody>
                     </table>
                 <div class="pl-3">
-                    <input type="submit" class="btn btn-primary" name="update" value="update"></input>
+                    <input type="submit" class="btn btn-primary" name="update" value="rubah data"></input>
                     <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmResetModal">
-                        reset
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#confirmResetModal">
+                        reset atlet
                     </button>
 
                     <!-- Modal -->
