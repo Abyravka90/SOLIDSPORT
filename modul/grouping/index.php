@@ -72,8 +72,34 @@
                             mysqli_query($conn, $sqlAtlet);
                         }
                     } else {
-                        echo '<script>alert("bukan atlet yang sedang bermain")</script>';
+                        echo '<script>alert("pilih atlet yang sedang bermain")</script>';
                     }   
+                    }
+                ?>
+                <!-- proses reset nilai -->
+                <?php 
+                if(isset($_GET['reset'])){
+                    $reset = $_GET['reset'];
+                    if($reset > 0 ){
+                        mysqli_query($conn, "UPDATE `point` SET idAtlet = '-', namaAtlet = '-', kelas = '-', kontingen = '-', namaKata = '-',
+                        grup = '-', atribut = '-', statusPenilaian = 'standby'");
+                        mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby', bermain = bermain-1 WHERE idAtlet = '$reset'");
+                        echo "<script>alert('data berhasil di kosongkan');</script>";}
+                }
+                ?>
+                <!--proses update data atlet-->
+                <?php 
+                    if(isset($_POST['idAtlet'])){
+                        $idAtlet = $_POST['idAtlet'];
+                        $namaKata = $_POST['namaKata'];
+                        $atribut = $_POST['atribut'];
+                        
+                        foreach($idAtlet as $key => $val){
+                            $sqlPoint = "UPDATE `point` SET `namaKata` = '$namaKata[$key]', `atribut` = '$atribut[$key]' WHERE `idAtlet` = '$idAtlet[$key]';";
+                            $sqlAtlet = "UPDATE `atlet` SET `namaKata` = '$namaKata[$key]', `atribut` = '$atribut[$key]' WHERE `idAtlet` = '$idAtlet[$key]';";
+                            mysqli_query($conn, $sqlPoint);
+                            mysqli_query($conn, $sqlAtlet);
+                        }
                     }
                 ?>
             <!-- Card header -->
@@ -94,11 +120,12 @@
                         ?>
                     </select>
                     <br>
-                    <input class="btn btn-default" type="submit">
+                    <input class="btn btn-default" type="submit" value="proses">
                     </form>
                   </h3>
                 </div>
             <!-- Se table -->
+            <form action="#" method="POST">
                 <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
                 <thead>
                     <tr>
@@ -111,6 +138,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                
                     <?php 
                     if(isset($_GET['grup'])){
                         //jika grup dipilih
@@ -127,10 +155,12 @@
                                 <!-- dari sini proses dilempar ke line 23 -->
                                     <a href="?grup=<?= $data['grup'] ?>&&idAtlet=<?= $data['idAtlet'] ?>" class="btn btn-warning"><i class="ni ni-button-play"></i>&nbsp;play</a>
                                         <br><br>
-                                <!-- dari sini proses dilempar ke line 44-->
+                                <!-- dari sini proses dilempar ke line 51-->
                                     <a href="?grup=<?= $data['grup'] ?>&&idSimpan=<?= $data['idAtlet'] ?>" class="btn btn-primary"><i class="ni ni-button-power"></i>&nbsp;stop</a>
+                                <!--dilanjutkan ke line 79-->
+                                    <a href="?grup=<?= $data['grup'] ?>&&reset=<?= $data['idAtlet'] ?>" class="btn btn-secondary"><i class="ni ni-atom"></i>&nbsp;reset</a>
                                 </td>
-                                <form action="">
+                                <input type="hidden" name="idAtlet[]" value="<?= $data['idAtlet']?>">
                                 <td><input type="text" name="namaKata[]" class="form-control" value="<?= $data['namaKata']?>"></td>
                                 <td>
                                     <select name="atribut[]" class="form-control">
@@ -145,9 +175,8 @@
                 </tbody>
                 </table>
                 <div class="pl-3">
-                <input class="btn btn-primary" type="submit" value="rubah data">
+                    <input class="btn btn-primary" name="update" type="submit" value="rubah data">
                 </form>
-                <input class="btn btn-secondary" type="submit" value="reset pertandingan">
                 </div>
                 <!-- Footer -->
 <?php 
