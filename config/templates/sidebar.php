@@ -40,7 +40,7 @@
             <li class="nav-item">
               <a class="nav-link" href="http://<?php echo "$_SERVER[HTTP_HOST]/"; ?>solidsport/modul/klasemen/">
                 <i class="ni ni-chart-bar-32 text-yellow"></i>
-                <span class="nav-link-text">Kelasemen</span>
+                <span class="nav-link-text">Klasemen</span>
               </a>
             </li>
             <li class="nav-item">

@@ -44,8 +44,7 @@
                     }
                     }else{
                         echo '<script>alert("silahkan klik tombol stop terlebih dahulu")</script>';
-                    }
-                    
+                    }   
                 }
                 ?>
                 <!-- proses simpan ke table klasemen -->
@@ -84,7 +83,7 @@
                         mysqli_query($conn, "UPDATE `point` SET idAtlet = '-', namaAtlet = '-', kelas = '-', kontingen = '-', namaKata = '-',
                         grup = '-', atribut = '-', statusPenilaian = 'standby'");
                         mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby', bermain = bermain-1 WHERE idAtlet = '$reset'");
-                        echo "<script>alert('data berhasil di kosongkan');</script>";}
+                        echo "<script>alert('penilaian berhasil di reset');</script>";}
                 }
                 ?>
                 <!--proses update data atlet-->
@@ -93,13 +92,13 @@
                         $idAtlet = $_POST['idAtlet'];
                         $namaKata = $_POST['namaKata'];
                         $atribut = $_POST['atribut'];
-                        
+                        $grup = $_POST['grup'];
                         foreach($idAtlet as $key => $val){
-                            $sqlPoint = "UPDATE `point` SET `namaKata` = '$namaKata[$key]', `atribut` = '$atribut[$key]' WHERE `idAtlet` = '$idAtlet[$key]';";
-                            $sqlAtlet = "UPDATE `atlet` SET `namaKata` = '$namaKata[$key]', `atribut` = '$atribut[$key]' WHERE `idAtlet` = '$idAtlet[$key]';";
-                            mysqli_query($conn, $sqlPoint);
-                            mysqli_query($conn, $sqlAtlet);
-                        }
+                                $sqlPoint = "UPDATE `point` SET `namaKata` = '$namaKata[$key]', `atribut` = '$atribut[$key]' WHERE `idAtlet` = '$idAtlet[$key]';";
+                                $sqlAtlet = "UPDATE `atlet` SET `grup` = '$grup[$key]', `namaKata` = '$namaKata[$key]', `atribut` = '$atribut[$key]' WHERE `idAtlet` = '$idAtlet[$key]';";
+                                mysqli_query($conn, $sqlPoint);
+                                mysqli_query($conn, $sqlAtlet);
+                            }
                     }
                 ?>
             <!-- Card header -->
@@ -115,7 +114,9 @@
                             $sql = "SELECT DISTINCT grup from atlet";
                             $hasil = mysqli_query($conn, $sql);
                             while($data=mysqli_fetch_array($hasil)){
-                                echo "<option value='$data[0]'>$data[0]</option>";
+                                if($data[0] != "final"){
+                                    echo "<option value='$data[0]'>$data[0]</option>";
+                                }
                             }
                         ?>
                     </select>
@@ -126,7 +127,7 @@
                 </div>
             <!-- Se table -->
             <form action="#" method="POST">
-                <table id="example" class="table table-striped table-bordered nowrap" style="width:100%">
+                <table id="example" class="table table-striped table-bordered nowrap" style="width:110%">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -134,7 +135,8 @@
                         <th>Nama Atlet</th>
                         <th>Proses</th>
                         <th>Nama Kata</th>
-                        <th>Atribut</th>
+                        <th style="width:100px">Grup</th>
+                        <th style="width:100px">Atribut</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -161,7 +163,13 @@
                                     <a href="?grup=<?= $data['grup'] ?>&&reset=<?= $data['idAtlet'] ?>" class="btn btn-secondary"><i class="ni ni-atom"></i>&nbsp;reset</a>
                                 </td>
                                 <input type="hidden" name="idAtlet[]" value="<?= $data['idAtlet']?>">
-                                <td><input type="text" name="namaKata[]" class="form-control" value="<?= $data['namaKata']?>"></td>
+                                <td><textarea name="namaKata[]" cols="10" rows="3"><?= $data['namaKata']?></textarea></td>
+                                <td>
+                                    <select name="grup[]" class="form-control">
+                                        <option value="<?= $data['grup'] ?>"><?= $data['grup'] ?></option>
+                                        <option value="final">Lanjut Final</option>
+                                    </select>
+                                </td>
                                 <td>
                                     <select name="atribut[]" class="form-control">
                                         <option value="Aka" <?php if($data['atribut'] == 'Aka'){ echo 'selected';} ?>>Aka</option>
@@ -169,12 +177,13 @@
                                     </select>
                                 </td>
                             </tr>
-                        <?php }
+                        <?php $i++;}
                     }
                     ?>
                 </tbody>
                 </table>
                 <div class="pl-3">
+                <!-- lanjut ke line 90-->
                     <input class="btn btn-primary" name="update" type="submit" value="rubah data">
                 </form>
                 </div>
