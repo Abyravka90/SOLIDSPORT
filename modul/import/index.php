@@ -44,17 +44,20 @@ if (!isset($_SESSION['username'])) {
             $grup  = $data->val($i, 5);
             $atribut  = $data->val($i, 6);
             $bermain  = $data->val($i, 7);
+            $statusPenilaian = 'standby';
             // input data ke database (table data_atlet)
-            $sql = "INSERT INTO `atlet` values('','$namaAtlet','$kelas','$kontingen','$namaKata','$grup','$atribut','$bermain')";
-            mysqli_query($conn, "INSERT INTO `atlet` values('','$namaAtlet','$kelas','$kontingen','$namaKata','$grup','$atribut','$bermain')");
+            $sql = "INSERT INTO `atlet` values('','$namaAtlet','$kelas','$kontingen','$namaKata','$grup','$atribut','$bermain','$statusPenilaian');";
+            mysqli_query($conn, $sql);
             $counter++;
         }
+        
         if ($counter > 0) {
             $ip = $_SERVER["HTTP_HOST"];
             echo "<script>window.location.href='http://$ip/solidsport/modul/atlet';</script>";
         }
         // hapus kembali file .xls yang di upload tadi
         unlink($_FILES['fileAtlet']['name']);
+        
     }
     ?>
     <div class="col-md-9">
