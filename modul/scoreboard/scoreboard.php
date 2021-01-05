@@ -140,7 +140,7 @@
                                 <th class="text-center">Nama atlet</th>
                                 <th class="text-center">Kontingen</th>
                                 <th class="text-center">Atribut</th>
-                                <th class="text-center">Point rekap</th>
+                                <th class="text-center">Point</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -149,7 +149,7 @@
                                 <td class="text-center text-capitalize">
                                     Ade Adjie
                                 </td>
-                                <td class="text-center">Citra Indah</td>
+                                <td class="text-center text-capitalize">Citra Indah</td>
                                 <td class="text-center bg-danger text-uppercase">
                                     AKA
                                 </td>
