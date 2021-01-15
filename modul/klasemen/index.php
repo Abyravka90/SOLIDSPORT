@@ -65,6 +65,7 @@ if (isset($_GET['reset'])) {
         <tbody>
             <tr>
                 <?php
+                $grup='';
                 if (isset($_GET['grup'])) {
                     $grup = $_GET['grup'];
                     $sqlKlasemen = "SELECT * from `klasemen` WHERE grup = '$grup' ";
@@ -81,12 +82,21 @@ if (isset($_GET['reset'])) {
                                     </tr>";
                     }
                 }
+                //proses merubah nilai papan skor
+                if(isset($_POST['updatePapanskor'])){
+                    $sqlTampilPapanskor = "UPDATE `papanskor` SET `status` = 'idle' WHERE `jenisScoreboard` = 'scoreboard'";
+                    $sqlTampilKlasemen = "UPDATE `papanskor` SET `status` = 'aktif', `grup` = '$grup' WHERE `jenisScoreboard` = 'klasemen'";
+                    mysqli_query($conn, $sqlTampilPapanskor);
+                    mysqli_query($conn, $sqlTampilKlasemen);
+                }
                 ?>
             </tr>
         </tbody>
     </table>
     <div class="pl-3">
-        <a href="../scoreboard/scoreboard.php" target='_blank' class="btn btn-info"> <i class="ni ni-tv-2"></i>&nbsp;&nbsp;Tampilkan di layar </a>
+        <form action="#" method="post">
+            <input type="submit" name="updatePapanskor" value="tampilkan" class="btn btn-info"></input>
+        </form>
         <a href="?reset=1" class="btn btn-danger"><i class="fas fa-trash"></i>&nbsp;&nbsp;Reset</a>
     </div>
 </div>

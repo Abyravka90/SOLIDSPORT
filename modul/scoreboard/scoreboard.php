@@ -1,7 +1,16 @@
 <html>
 <link rel="stylesheet" href="../../assets/css/style.css">
-<?php include "../../config/templates/header.php"; ?>
+<?php 
 
+include "../../config/templates/header.php";
+include "../../config/database/koneksi.php";
+
+$sqlScoreBoard = "SELECT * FROM `papanskor` WHERE `status` = 'aktif'"; 
+$data = mysqli_query($conn, $sqlScoreBoard);
+$row = mysqli_fetch_array($data);
+$tampil = $row['jenisScoreboard'];
+$grup = $row['grup'];
+?>
 <body style="position:fixed; width: 100%; height: 100%;background:url('../../assets/img/banner3.jpg');background-repeat: no-repeat;background-size: cover;">
     <div class="container mt-2">
         <div class="row">
@@ -18,7 +27,9 @@
             </div>
         </div>
     </div>
-    <div class="container-fluid">
+    <!--Jika Yang ditampilkan adalah Score Board-->
+    <?php if($tampil == 'scoreboard'){ ?>
+        <div class="container-fluid">
         <div class="col-md-12 col-lg-12 col-xl-12">
 
             <div class="row">
@@ -65,7 +76,7 @@
     </div>
 
     <!-- ========================SCOREBOARD======================== -->
-    <!-- <div class="container-fluid">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-md-12 col-lg-12 col-xl-12">
 
@@ -122,13 +133,10 @@
                 </div>
             </div>
         </div>
-    </div> -->
-
-
-
-
-    <!-- ========================LISTSCORE======================== -->
-    <div class="container mt-4">
+    </div> 
+    <?php }else{ ?>
+ <!-- ========================LISTSCORE======================== -->
+ <div class="container mt-4">
         <div class="row">
             <div class="col"></div>
             <div class="col-md-12">
@@ -156,7 +164,6 @@
                                 <td class="text-center score blinking">20.0</td>
                             </tr>
                         </tbody>
-
                         <!-- ========================NOTHING ATLET======================== -->
                         <!-- <tbody>
                             <tr>
@@ -171,6 +178,7 @@
             <div class="col"></div>
         </div>
     </div>
+    <?php } ?>
 </body>
 
 </html>
