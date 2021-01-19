@@ -63,8 +63,9 @@ if(isset($_POST['nilaiTeknik'])){
             </tr>
         </tbody>
     </table>
-    <input name = "simpan" type="submit" value="simpan" class="btn btn-primary">&nbsp;<a style="font-size:17px;" href="#" class="btn btn-info">&#8635;</a>
+    <input name = "simpan" type="submit" value="simpan" class="btn btn-primary">&nbsp;
 </form>
+<a style="font-size:17px;" href="" class="btn btn-info">&#8635;</a>
 </div>
 
 <!-- Footer -->

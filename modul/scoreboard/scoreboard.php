@@ -1,4 +1,5 @@
 <html>
+<meta http-equiv="refresh" content="0.5" charset=UTF-8">
 <link rel="stylesheet" href="../../assets/css/style.css">
 <?php 
 
@@ -10,6 +11,17 @@ $data = mysqli_query($conn, $sqlScoreBoard);
 $row = mysqli_fetch_array($data);
 $tampil = $row['jenisScoreboard'];
 $grup = $row['grup'];
+//ambil value  atlet dari table point ke layar
+$sqlPoint = mysqli_query($conn, "SELECT DISTINCT `namaAtlet`,`kontingen`, `namaKata` FROM `point`");
+$rowPoint = mysqli_fetch_array($sqlPoint);
+$namaAtlet = $rowPoint['namaAtlet'];
+$kontingen = $rowPoint['kontingen'];
+$namaKata = $rowPoint['namaKata'];
+//ambil value nilai dan data Juri dari table point ke table yang ditampilkan
+$sqlNilai = mysqli_query($conn, "SELECT `namaJuri`, `nilaiTeknik`, `nilaiAtletik` from `point`");
+$sqlNilai2 = mysqli_query($conn, "SELECT `namaJuri`, `nilaiTeknik`, `nilaiAtletik` from `point`");
+$sqlNilai3 = mysqli_query($conn, "SELECT `namaJuri`, `nilaiTeknik`, `nilaiAtletik` from `point`");
+include '../../config/prosesPerhitungan.php';
 ?>
 <body style="position:fixed; width: 100%; height: 100%;background:url('../../assets/img/banner3.jpg');background-repeat: no-repeat;background-size: cover;">
     <div class="container mt-2">
@@ -38,7 +50,7 @@ $grup = $row['grup'];
                         <div class="card-body">
                             <h1 class="text-center blinking" *ngIf="finalScore && finalScore !== 1001 && finalScore !== 10000" style="font-size: 150px;color: white;">
                                 <b>
-                                    20.0
+                                    <?= $totalNilai; ?>
                                 </b>
 
                             </h1>
@@ -49,7 +61,7 @@ $grup = $row['grup'];
                     <div class="card">
                         <div class="container">
                             <h1 class="mb-0" style="font-family: 'Arial', sans-serif;font-size: 50px;text-transform: uppercase;">
-                                Ade Adjie
+                                <?= $namaAtlet ?>
                             </h1>
                         </div>
                     </div>
@@ -57,7 +69,7 @@ $grup = $row['grup'];
                         <div class="container">
 
                             <h1 class="mb-0" style="font-family: 'Arial', sans-serif;font-size: 50px;text-transform: uppercase;">
-                                Citra indah
+                                <?= $kontingen ?>
                             </h1>
                         </div>
                     </div>
@@ -65,7 +77,7 @@ $grup = $row['grup'];
                         <div class="container">
 
                             <h1 class="mb-0" style="font-family: 'Arial', sans-serif;font-size: 50px;text-transform: uppercase;">
-                                UNSU
+                                <?= $namaKata ?>
                             </h1>
 
                         </div>
@@ -91,11 +103,11 @@ $grup = $row['grup'];
                                         <img src="../../assets/img/logo-2.jpeg" class="img-fluid" style="width: 80px;" alt="">
                                     </div>
                                 </th>
-                                <th>J-1 <span class="dot bg-success" style="position:absolute"></span></th>
-                                <th>J-2 <span class="dot bg-success" style="position:absolute"></span></th>
-                                <th>J-3 <span class="dot bg-success" style="position:absolute"></span></th>
-                                <th>J-4 <span class="dot bg-success" style="position:absolute"></span></th>
-                                <th>J-5 <span class="dot bg-success" style="position:absolute"></span></th>
+                                <!--selama ada data juri-->
+                                <?php while($rowJuri = mysqli_fetch_array($sqlNilai)){ ?>
+                                    <th><?= $rowJuri['namaJuri'] ?><span class="dot bg-success" style="position:absolute"></span></th>
+                                <?php } ?>
+                                
                                 <th>FAC</th>
                                 <th>JUMLAH</th>
                                 <th>HASIL</th>
@@ -104,28 +116,45 @@ $grup = $row['grup'];
                         <tbody>
                             <tr class="text-center">
                                 <th style="color: #fff;font-weight: 700;">TEKNIK</th>
-
-                                <td data-column="J-1">0</td>
-                                <td data-column="J-2">0</td>
-                                <td data-column="J-3">0</td>
-                                <td data-column="J-4">0</td>
-                                <td data-column="J-5">0</td>
-                                <td data-column="FAC">0.3</td>
-                                <td data-column="JUMLAH">0</td>
-                                <td data-column="HASIL">0</td>
+                                <?php
+                                    $hitungTeknik1 = 1;
+                                    $hitungTeknik2 = 1; 
+                                    while($rowTeknik = mysqli_fetch_array($sqlNilai2)){ ?>
+                                    <td data-column="<?= $rowTeknik['namaJuri'] ?>">
+                                    <?php if($rowTeknik['nilaiTeknik'] == $deretSisaTeknik1 AND $hitungTeknik1 <= 1 ){
+                                        echo "<del style = 'color:red;'>$rowTeknik[nilaiTeknik]</del></td>";$hitungTeknik1++;
+                                    }else if($rowTeknik['nilaiTeknik'] == $deretSisaTeknik2 AND $hitungTeknik2 <= 1 ){
+                                        echo "<del style = 'color:red;'>$rowTeknik[nilaiTeknik]</del></td>";$hitungTeknik2++;
+                                    }else{
+                                        echo "$rowTeknik[nilaiTeknik]";
+                                    } 
+                                    }  
+                                    ?>
+                                <td data-column="FAC">0.7</td>
+                                <td data-column="JUMLAH"><?= $sumTeknik ?></td>
+                                <td data-column="HASIL"><?= $totalNilaiTeknik ?></td>
                                 </td>
                             </tr>
                             <tr class="text-center">
                                 <th style="color: #fff;font-weight: 700;">ATLETIK</th>
 
-                                <td data-column="J-1">0</td>
-                                <td data-column="J-2">0</td>
-                                <td data-column="J-3">0</td>
-                                <td data-column="J-4">0</td>
-                                <td data-column="J-5">0</td>
+                                <?php
+                                    $hitungAtletik1 = 1;
+                                    $hitungAtletik2 = 1; 
+                                    while($rowAtletik = mysqli_fetch_array($sqlNilai3)){ ?>
+                                    <td data-column="<?= $rowAtletik['namaJuri'] ?>">
+                                    <?php if($rowAtletik['nilaiAtletik'] == $deretSisaAtletik1 AND $hitungAtletik1 <= 1 ){
+                                        echo "<del style = 'color:red;'>$rowAtletik[nilaiAtletik]</del></td>";$hitungAtletik1++;
+                                    }else if($rowAtletik['nilaiAtletik'] == $deretSisaAtletik2 AND $hitungAtletik2 <= 1 ){
+                                        echo "<del style = 'color:red;'>$rowAtletik[nilaiAtletik]</del></td>";$hitungAtletik2++;
+                                    }else{
+                                        echo "$rowAtletik[nilaiAtletik]";
+                                    } 
+                                    } 
+                                    ?>
                                 <td data-column="FAC">0.3</td>
-                                <td data-column="JUMLAH">0</td>
-                                <td data-column="HASIL">0</td>
+                                <td data-column="JUMLAH"><?= $sumAtletik ?></td>
+                                <td data-column="HASIL"><?= $totalNilaiAtletik ?></td>
                                 </td>
                             </tr>
                         </tbody>
