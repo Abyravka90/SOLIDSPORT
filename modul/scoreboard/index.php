@@ -7,9 +7,12 @@ include "../../config/database/koneksi.php";
 <div class="container-fluid mt-5 mb-5">
     <!-- Se table -->
     <?php
+    //JIKA TOMBOL RESET DI KLLIK!
     if (isset($_POST['reset'])) {
         mysqli_query($conn, "UPDATE `papanskor` SET `status` = 'aktif' where jenisScoreboard = 'scoreboard'");
         mysqli_query($conn, "UPDATE `papanskor` SET `status` = 'idle' where jenisScoreboard = 'klasemen'");
+        mysqli_query($conn, "UPDATE `point` SET idAtlet = '-', namaAtlet = '-', kelas = '-', kontingen = '-', namaKata = '-',
+                        grup = '-', atribut = '-', nilaiTeknik = 0, nilaiAtletik = 0, statusPenilaian = 'standby', juriMenilai = 0");
     }
     ?>
     <form action="" method="post">

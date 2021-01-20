@@ -175,7 +175,7 @@ include '../../config/prosesPerhitungan.php';
             <div class="col"></div>
             <div class="col-md-12">
                 <div class="">
-                    <table class="table table-small table-bordered table-sm align-items-center">
+                <table class="table table-small table-bordered table-sm align-items-center">
                         <thead class="thead-light">
                             <tr>
                                 <th class="text-center">Peringkat</th>
@@ -185,27 +185,41 @@ include '../../config/prosesPerhitungan.php';
                                 <th class="text-center">Point</th>
                             </tr>
                         </thead>
+                    <?php
+                    //Ambil Data dari database klasemen dan tentuukan peringkat
+                    $cekDataKlasemen = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM klasemen WHERE grup = '$grup' ORDER BY `totalPoint` DESC LIMIT 4"));
+                    if ($cekDataKlasemen != 0){
+                        $sqlKlasemen = "SELECT * FROM klasemen WHERE grup = '$grup' ORDER BY `totalPoint` DESC LIMIT 4";
+                        $dataKlasemen = mysqli_query($conn, $sqlKlasemen);
+                        $no = 1;
+                        ?>
                         <tbody>
-                            <tr>
-                                <td class="text-center">1</td>
-                                <td class="text-center text-capitalize">
-                                    Ade Adjie
-                                </td>
-                                <td class="text-center text-capitalize">Citra Indah</td>
-                                <td class="text-center bg-danger text-uppercase">
-                                    AKA
-                                </td>
-                                <td class="text-center score blinking">20.0</td>
-                            </tr>
+                            <?php
+                                while($rowKlasemen = mysqli_fetch_array($dataKlasemen)){?>
+                                <tr>
+                                        <td class="text-center"><?= $no; ?></td>
+                                        <td class="text-center text-capitalize">
+                                           <?= $rowKlasemen['namaAtlet'] ?>
+                                        </td>
+                                        <td class="text-center text-capitalize"><?= $rowKlasemen['kontingen'] ?></td>
+                                        <td class="text-center text-capitalize bg-<?php if($rowKlasemen['atribut'] == 'Ao'){ echo 'primary'; } else {echo 'danger'; } ?>"><?= $rowKlasemen['atribut'] ?></td>
+                                        <td class="text-center score <?php if($no == 1){echo 'blinking';} ?>"><?= $rowKlasemen['totalPoint'] ?></td>
+                                </tr>
+                            <?php    
+                                $no+=1;}
+                            ?>  
                         </tbody>
-                        <!-- ========================NOTHING ATLET======================== -->
-                        <!-- <tbody>
-                            <tr>
-                                <td class="text-center py-5" colspan="5">
-                                    Ranking atlet belum tersedia
-                                </td>
-                            </tr>
-                        </tbody> -->
+                    <?php    
+                    } else {
+                        echo '<tbody>
+                        <tr>
+                            <td class="text-center py-5" colspan="5">
+                                Data Belum Tersedia
+                            </td>
+                        </tr>
+                    </tbody';
+                    }
+                    ?>
                     </table>
                 </div>
             </div>

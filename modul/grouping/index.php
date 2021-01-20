@@ -91,12 +91,13 @@ if (isset($_GET['idSimpan'])) {
             while ($data = mysqli_fetch_array($hasil)) {
                 $idAtlet = $data['idAtlet'];
                 $namaAtlet = $data['namaAtlet'];
+                $atribut = $data['atribut'];
                 $kontingen = $data['kontingen'];
                 $grup = $data['grup'];
                 include '../../config/prosesPerhitungan.php';
                 $totalPoint = $totalNilai;
-                $sqlKlasemen = "INSERT INTO klasemen (idKlasemen, idAtlet, namaAtlet, kontingen, grup, totalPoint) 
-                                VALUES ('','$idAtlet','$namaAtlet','$kontingen','$grup','$totalPoint')";
+                $sqlKlasemen = "INSERT INTO klasemen (idKlasemen, idAtlet, namaAtlet, atribut, kontingen, grup, totalPoint) 
+                                VALUES ('','$idAtlet','$namaAtlet','$atribut','$kontingen','$grup','$totalPoint')";
                 mysqli_query($conn, $sqlKlasemen);
                 $sqlPoint = "UPDATE `point` SET statusPenilaian = 'saved'";
                 mysqli_query($conn, $sqlPoint);
