@@ -1,5 +1,5 @@
 <html>
-<meta http-equiv="refresh" content="0.5" charset=UTF-8">
+<meta http-equiv="refresh" content="0.5" charset="UTF-8">
 <link rel="stylesheet" href="../../assets/css/style.css">
 <?php 
 
@@ -12,11 +12,16 @@ $row = mysqli_fetch_array($data);
 $tampil = $row['jenisScoreboard'];
 $grup = $row['grup'];
 //ambil value  atlet dari table point ke layar
-$sqlPoint = mysqli_query($conn, "SELECT DISTINCT `namaAtlet`,`kontingen`, `namaKata` FROM `point`");
+$sqlJuriMenilai = mysqli_query($conn, "SELECT SUM(juriMenilai) as juriMenilai from `point`");
+$rowJuriMenilai = mysqli_fetch_array($sqlJuriMenilai);
+$sqlPoint = mysqli_query($conn, "SELECT DISTINCT `namaAtlet`,`kontingen`, `namaKata`, `atribut` FROM `point`");
 $rowPoint = mysqli_fetch_array($sqlPoint);
 $namaAtlet = $rowPoint['namaAtlet'];
 $kontingen = $rowPoint['kontingen'];
 $namaKata = $rowPoint['namaKata'];
+$atribut = $rowPoint['atribut'];
+//menghitung jumlah penilaian juri
+$JuriMenilai = $rowJuriMenilai['juriMenilai'];
 //ambil value nilai dan data Juri dari table point ke table yang ditampilkan
 $sqlNilai = mysqli_query($conn, "SELECT `namaJuri`, `nilaiTeknik`, `nilaiAtletik` from `point`");
 $sqlNilai2 = mysqli_query($conn, "SELECT `namaJuri`, `nilaiTeknik`, `nilaiAtletik` from `point`");
@@ -46,11 +51,11 @@ include '../../config/prosesPerhitungan.php';
 
             <div class="row">
                 <div class="col-md-4">
-                    <div class="card bg-danger" style="width: 100%;height: auto;">
+                    <div class="card bg-<?php if($atribut == 'Ao'){echo "primary";}else  if($atribut == 'Aka'){echo "danger";} else{echo 'dark';}?>" style="width: 100%;height: auto;">
                         <div class="card-body">
                             <h1 class="text-center blinking" *ngIf="finalScore && finalScore !== 1001 && finalScore !== 10000" style="font-size: 150px;color: white;">
                                 <b>
-                                    <?= $totalNilai; ?>
+                                    <?php if($JuriMenilai <5){echo "-";}else{echo number_format($totalNilai,2); }; ?>
                                 </b>
 
                             </h1>
@@ -95,7 +100,7 @@ include '../../config/prosesPerhitungan.php';
                 <div class="table-responsive">
 
                     <table class="table">
-                        <thead class="bg-danger">
+                        <thead class="bg-<?php if($atribut == 'Ao'){echo "primary";}else  if($atribut == 'Aka'){echo "danger";} else{echo 'dark';}?>">
 
                             <tr class="text-center">
                                 <th style="background-color: #fff !important;">
@@ -122,11 +127,11 @@ include '../../config/prosesPerhitungan.php';
                                     while($rowTeknik = mysqli_fetch_array($sqlNilai2)){ ?>
                                     <td data-column="<?= $rowTeknik['namaJuri'] ?>">
                                     <?php if($rowTeknik['nilaiTeknik'] == $deretSisaTeknik1 AND $hitungTeknik1 <= 1 ){
-                                        echo "<del style = 'color:red;'>$rowTeknik[nilaiTeknik]</del></td>";$hitungTeknik1++;
+                                        echo "<del style = 'color:red;'>".number_format($rowTeknik['nilaiTeknik'], 1)."</del></td>";$hitungTeknik1++;
                                     }else if($rowTeknik['nilaiTeknik'] == $deretSisaTeknik2 AND $hitungTeknik2 <= 1 ){
-                                        echo "<del style = 'color:red;'>$rowTeknik[nilaiTeknik]</del></td>";$hitungTeknik2++;
+                                        echo "<del style = 'color:red;'>".number_format($rowTeknik['nilaiTeknik'], 1)."</del></td>";$hitungTeknik2++;
                                     }else{
-                                        echo "$rowTeknik[nilaiTeknik]";
+                                        echo number_format($rowTeknik['nilaiTeknik'], 1);
                                     } 
                                     }  
                                     ?>
@@ -144,11 +149,11 @@ include '../../config/prosesPerhitungan.php';
                                     while($rowAtletik = mysqli_fetch_array($sqlNilai3)){ ?>
                                     <td data-column="<?= $rowAtletik['namaJuri'] ?>">
                                     <?php if($rowAtletik['nilaiAtletik'] == $deretSisaAtletik1 AND $hitungAtletik1 <= 1 ){
-                                        echo "<del style = 'color:red;'>$rowAtletik[nilaiAtletik]</del></td>";$hitungAtletik1++;
+                                        echo "<del style = 'color:red;'>".number_format($rowAtletik['nilaiAtletik'], 1)."</del></td>";$hitungAtletik1++;
                                     }else if($rowAtletik['nilaiAtletik'] == $deretSisaAtletik2 AND $hitungAtletik2 <= 1 ){
-                                        echo "<del style = 'color:red;'>$rowAtletik[nilaiAtletik]</del></td>";$hitungAtletik2++;
+                                        echo "<del style = 'color:red;'>".number_format($rowAtletik['nilaiAtletik'], 1)."</del></td>";$hitungAtletik2++;
                                     }else{
-                                        echo "$rowAtletik[nilaiAtletik]";
+                                        echo number_format($rowAtletik['nilaiAtletik'], 1);
                                     } 
                                     } 
                                     ?>

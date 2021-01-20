@@ -14,11 +14,30 @@ if(isset($_POST['nilaiTeknik'])){
     $nilaiTeknik = $_POST['nilaiTeknik'];
     $nilaiAtletik = $_POST['nilaiAtletik'];
     foreach($nilaiTeknik as $key => $val){
-    $sql = "UPDATE `point` SET `nilaiTeknik` = '$nilaiTeknik[$key]', `nilaiAtletik` = '$nilaiAtletik[$key]' WHERE `namaJuri` = '$namaJuri[$key]' ;";
+    $sql = "UPDATE `point` SET `nilaiTeknik` = '$nilaiTeknik[$key]', `nilaiAtletik` = '$nilaiAtletik[$key]', `juriMenilai` = 1 WHERE `namaJuri` = '$namaJuri[$key]' ;";
     mysqli_query($conn, $sql);
     $i+=1;
     }
-    if($i>0){echo "<script>alert('data berhasil dirubah');</script>";}else{echo "<script>alert('data gagal dirubah');</script>";}
+    if($i>0)
+    {
+        echo '<div class="card card-body"><div class="alert alert-success alert-dismissible fade show" role="alert">
+        <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+        <span class="alert-text"><strong>Berhasil</strong> data nilai disimpan</span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div></div>';
+    }
+    else
+    {
+        echo '<div class="card card-body"><div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+        <span class="alert-text"><strong>Gagal!</strong> data tidak disimpan</span>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div></div>';
+    }
 }
     //kumpulan data tiap record
     $sql = "SELECT `namaJuri`, `nilaiTeknik`, `nilaiAtletik` FROM `point`";

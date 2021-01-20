@@ -47,6 +47,7 @@ include "../../config/database/koneksi.php";
         <!-- dilempar ke line 15-->
         <div class="card-header border-0">
             <input name="reset" type="submit" value="Reset data" class="btn btn-danger">
+            <a href="scoreboard.php" target="blank_" class="btn btn-info">tampilkan di layar</a>
     </form>
 </div>
 </div>

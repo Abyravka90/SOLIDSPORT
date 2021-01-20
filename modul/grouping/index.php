@@ -33,7 +33,7 @@ include "../../config/database/koneksi.php";
         }
     }
 </style>
-<!-- proses update ke table point -->
+<!--TOMBOL PLAY DI KLIK! proses update ke table point -->
 <?php
 if (isset($_GET['idAtlet'])) {
     $idAtlet = $_GET['idAtlet'];
@@ -54,17 +54,25 @@ if (isset($_GET['idAtlet'])) {
             $atribut = $data['atribut'];
             //proses update ke table point
             $sqlPoint = "UPDATE `point` SET idAtlet = '$idAtlet', namaAtlet = '$namaAtlet', kelas = '$kelas', kontingen = '$kontingen', namaKata = '$namaKata', 
-                        grup = '$grup', atribut = '$atribut', statusPenilaian = 'staging';";
+                        grup = '$grup', atribut = '$atribut', statusPenilaian = 'staging', nilaiTeknik = 0, nilaiAtletik=0, juriMenilai = 0;";
             mysqli_query($conn, $sqlPoint);
-            $sqlAtlet = "UPDATE `atlet` SET bermain = bermain+1, statusPenilaian = 'staging' WHERE idAtlet = '$idAtlet';";
+            $sqlAtlet = "UPDATE `atlet` SET statusPenilaian = 'staging' WHERE idAtlet = '$idAtlet';";
             mysqli_query($conn, $sqlAtlet);
         }
     } else {
-        echo '<script>alert("silahkan klik tombol stop terlebih dahulu")</script>';
+        echo 
+            '<div class="card card-body"><div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                <span class="alert-text"><strong>Gagal Play!</strong> belum di stop!</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+            </div>';
     }
 }
 ?>
-<!-- proses simpan ke table klasemen -->
+<!-- TOMBOL STOP DI KLIK! proses simpan ke table klasemen -->
 <?php
 if (isset($_GET['idSimpan'])) {
     $idAtlet = $_GET['idSimpan'];
@@ -73,36 +81,65 @@ if (isset($_GET['idSimpan'])) {
         $statusPenilaian = $cekData['statusPenilaian'];
     }
     if ($statusPenilaian == 'staging') {
-        $sql = "SELECT * FROM `point` WHERE idAtlet = '$idAtlet' LIMIT 1";
-        $hasil = mysqli_query($conn, $sql);
-        while ($data = mysqli_fetch_array($hasil)) {
-            $idAtlet = $data['idAtlet'];
-            $namaAtlet = $data['namaAtlet'];
-            $kontingen = $data['kontingen'];
-            $grup = $data['grup'];
-            $totalPoint = 0;
-            $sqlKlasemen = "INSERT INTO klasemen (idKlasemen, idAtlet, namaAtlet, kontingen, grup, totalPoint) 
-                            VALUES ('','$idAtlet','$namaAtlet','$kontingen','$grup','$totalPoint')";
-            mysqli_query($conn, $sqlKlasemen);
-            $sqlPoint = "UPDATE `point` SET statusPenilaian = 'saved'";
-            mysqli_query($conn, $sqlPoint);
-            $sqlAtlet = "UPDATE `atlet` SET statusPenilaian = 'standby'";
-            mysqli_query($conn, $sqlAtlet);
-        }
+        //jika jumlah juri menilai kurang dari yang ditentukan
+        $sqlJuriMenilai = mysqli_query($conn, "SELECT SUM(juriMenilai) as `juriMenilai` from `point`");
+        $rowJuriMenilai = mysqli_fetch_array($sqlJuriMenilai);
+        $jumlahJuriMenilai = $rowJuriMenilai['juriMenilai'];
+        if($jumlahJuriMenilai == 5){
+            $sql = "SELECT * FROM `point` WHERE idAtlet = '$idAtlet' LIMIT 1";
+            $hasil = mysqli_query($conn, $sql);
+            while ($data = mysqli_fetch_array($hasil)) {
+                $idAtlet = $data['idAtlet'];
+                $namaAtlet = $data['namaAtlet'];
+                $kontingen = $data['kontingen'];
+                $grup = $data['grup'];
+                include '../../config/prosesPerhitungan.php';
+                $totalPoint = $totalNilai;
+                $sqlKlasemen = "INSERT INTO klasemen (idKlasemen, idAtlet, namaAtlet, kontingen, grup, totalPoint) 
+                                VALUES ('','$idAtlet','$namaAtlet','$kontingen','$grup','$totalPoint')";
+                mysqli_query($conn, $sqlKlasemen);
+                $sqlPoint = "UPDATE `point` SET statusPenilaian = 'saved'";
+                mysqli_query($conn, $sqlPoint);
+                $sqlAtlet = "UPDATE `atlet` SET statusPenilaian = 'standby'";
+                mysqli_query($conn, $sqlAtlet);
+                $sqlHitungBermain = "UPDATE `atlet` SET bermain = bermain+1 WHERE idAtlet = '$idAtlet'";
+                mysqli_query($conn, $sqlHitungBermain);
+                echo '<div class="card card-body"><div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                <span class="alert-text"><strong>Berhasil</strong> data disimpan di tabel klasemen</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div></div>';
+                }
+            }else{
+                echo '<div class="card card-body"><div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                <span class="alert-text"><strong>Gagal Proses!</strong> ada Juri Belum Menilai</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div></div>';
+            }
     } else {
-        echo '<script>alert("pilih atlet yang sedang bermain")</script>';
+        echo '<div class="card card-body"><div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                <span class="alert-text"><strong>Gagal Proses!</strong>Perhatikan Kembali Data Anda</span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div></div>';
     }
 }
 ?>
-<!-- proses reset nilai -->
+<!-- TOMBOL RESET DI KLIK! proses reset nilai -->
 <?php
 if (isset($_GET['reset'])) {
     $reset = $_GET['reset'];
     if ($reset > 0) {
         mysqli_query($conn, "UPDATE `point` SET idAtlet = '-', namaAtlet = '-', kelas = '-', kontingen = '-', namaKata = '-',
-                        grup = '-', atribut = '-', statusPenilaian = 'standby'");
-        mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby', bermain = bermain-1 WHERE idAtlet = '$reset'");
-        echo "<script>alert('penilaian berhasil di reset');</script>";
+                        grup = '-', atribut = '-', nilaiTeknik = 0, nilaiAtletik = 0, statusPenilaian = 'standby', juriMenilai = 0");
+        mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby' WHERE idAtlet = '$reset'");
     }
 }
 ?>
@@ -190,13 +227,13 @@ if (isset($_POST['idAtlet'])) {
                                 } ?></td>
                             <td><?= $data['namaAtlet']; ?></td>
                             <td>
-                                <!-- dari sini proses dilempar ke line 23 -->
+                                <!-- dari sini proses dilempar ke TOMBOL PLAY DIATAS  -->
                                 <a href="?grup=<?= $data['grup'] ?>&&idAtlet=<?= $data['idAtlet'] ?>" class="btn btn-warning"><i class="ni ni-button-play"></i>&nbsp;play</a>
-                                <br><br>
-                                <!-- dari sini proses dilempar ke line 51-->
-                                <a href="?grup=<?= $data['grup'] ?>&&idSimpan=<?= $data['idAtlet'] ?>" class="btn btn-primary"><i class="ni ni-button-power"></i>&nbsp;stop</a>
-                                <!--dilanjutkan ke line 79-->
-                                <a href="?grup=<?= $data['grup'] ?>&&reset=<?= $data['idAtlet'] ?>" class="btn btn-secondary"><i class="ni ni-atom"></i>&nbsp;reset</a>
+                                
+                                <!-- dari sini proses dilempar ke TOMBOL STOP DIATAS  -->
+                                <a href="?grup=<?= $data['grup'] ?>&&idSimpan=<?= $data['idAtlet'] ?>" class="btn btn-primary"><i class="ni ni-button-power"></i>&nbsp;stop / save</a>
+                                <!--dilanjutkan ke line TOMBOL RESET DIATAS-->
+                                <a href="?grup=<?= $data['grup'] ?>&&reset=<?= $data['idAtlet'] ?>" class="btn btn-danger">↻&nbsp;reset</a>
                             </td>
                             <input type="hidden" name="idAtlet[]" value="<?= $data['idAtlet'] ?>">
                             <td><textarea name="namaKata[]" cols="10" rows="3"><?= $data['namaKata'] ?></textarea></td>
