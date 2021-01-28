@@ -29,6 +29,14 @@ if (!isset($_SESSION['username'])) {
         </div>';
       }
     }
+    //JIKA TOMBOL LOGOUT DI KLIK 
+    if(isset($_GET['logout'])){
+      $logout = $_GET['logout'];
+      if($logout != 'admin'){
+        mysqli_query($conn, "UPDATE `user` set `statusLogin` = 0 WHERE `username` = '$logout'");
+        echo '<script>window.location.href="index.php";</script>';
+      }
+    }
 ?>
         <!-- Card header -->
         <div class="container-fluid mt-5 mb-5 border-0">
@@ -41,6 +49,7 @@ if (!isset($_SESSION['username'])) {
                     <th>Status Login</th>
                     <th>Level</th>
                     <th>Edit</th>
+                    <th>Logout</th>
                 </tr>
                 <?php 
                 $sqlUser = mysqli_query($conn, "SELECT * FROM `user` ");
@@ -56,11 +65,15 @@ if (!isset($_SESSION['username'])) {
                     <td>
                     <?= $row -> password ?>
                     </td><td>
-                    <?= $row -> statusLogin ?>
+                    <?php if($row -> statusLogin == 0 ) {echo '<span class="badge badge-danger">logout</span>';} else { echo '<span class="badge badge-success">login</span>'; } ?>
                     </td><td>
                     <?php if($row -> level == 1 ) {echo 'admin';} else { echo 'juri'; } ?>
-                    </td><td>
+                    </td>
+                    <td>
                     <a href="?idUser=<?= $row -> idUser ?>" class="btn btn-success">ubah password</a>
+                    </td>
+                    <td>
+                    <?php if($row -> level == 2) {?><a href="?logout=<?= $row -> username ?>" class="btn btn-danger">Reset Login</a> <?php } ?>
                     </td>
                 </tr>
                 <?php 
