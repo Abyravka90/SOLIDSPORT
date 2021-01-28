@@ -123,7 +123,7 @@ $mod = $test[count($test) - 2];
                   echo 'class="nav-link active"';
                 } else {
                   echo 'class="nav-link"';
-                } ?> href="../../modul/undercons.php">
+                } ?> href="http://<?php echo "$_SERVER[HTTP_HOST]/"; ?>solidsport/modul/user/">
               <i class="ni ni-badge text-primary"></i>
               <span class="nav-link-text">User</span>
             </a>

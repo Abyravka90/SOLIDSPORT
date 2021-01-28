@@ -14,12 +14,14 @@ $grup = $row['grup'];
 //ambil value  atlet dari table point ke layar
 $sqlJuriMenilai = mysqli_query($conn, "SELECT SUM(juriMenilai) as juriMenilai from `point`");
 $rowJuriMenilai = mysqli_fetch_array($sqlJuriMenilai);
-$sqlPoint = mysqli_query($conn, "SELECT DISTINCT `namaAtlet`,`kontingen`, `namaKata`, `atribut` FROM `point`");
+$sqlPoint = mysqli_query($conn, "SELECT DISTINCT `namaAtlet`,`kontingen`,`grup`,`kelas`,`namaKata`, `atribut` FROM `point`");
 $rowPoint = mysqli_fetch_array($sqlPoint);
 $namaAtlet = $rowPoint['namaAtlet'];
 $kontingen = $rowPoint['kontingen'];
 $namaKata = $rowPoint['namaKata'];
 $atribut = $rowPoint['atribut'];
+$grup = $rowPoint['grup'];
+$kelas = $rowPoint['kelas'];
 //menghitung jumlah penilaian juri
 $JuriMenilai = $rowJuriMenilai['juriMenilai'];
 //ambil value nilai dan data Juri dari table point ke table yang ditampilkan
@@ -35,8 +37,8 @@ include '../../config/prosesPerhitungan.php';
 
                 <h1 class="text-center pt-3" style="font-family: 'Montserrat', sans-serif;text-transform: uppercase;color: #fff;">
                     <b>
-                        Kadet Putra -
-                        <i>Group A</i>
+                        <?= $kelas ?> -
+                        <i>Group <?= $grup ?></i>
                     </b>
                     <hr class="bg-white" />
                 </h1>
@@ -55,7 +57,7 @@ include '../../config/prosesPerhitungan.php';
                         <div class="card-body">
                             <h1 class="text-center blinking" *ngIf="finalScore && finalScore !== 1001 && finalScore !== 10000" style="font-size: 150px;color: white;">
                                 <b>
-                                    <?php if($JuriMenilai <5){echo "-";}else{echo number_format($totalNilai,2); }; ?>
+                                    <?php if($JuriMenilai <5){echo "-";}else{if($grup == 'final'){echo '-';}else{echo number_format($totalNilai,2);}}; ?>
                                 </b>
 
                             </h1>
