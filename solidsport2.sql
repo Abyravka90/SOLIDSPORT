@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.3
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Jan 2021 pada 07.51
--- Versi server: 10.4.14-MariaDB
--- Versi PHP: 7.4.11
+-- Waktu pembuatan: 29 Jan 2021 pada 11.20
+-- Versi server: 10.4.11-MariaDB
+-- Versi PHP: 7.4.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -44,10 +45,31 @@ CREATE TABLE `atlet` (
 --
 
 INSERT INTO `atlet` (`idAtlet`, `namaAtlet`, `kelas`, `kontingen`, `namaKata`, `grup`, `atribut`, `bermain`, `statusPenilaian`) VALUES
-(1, 'Anji Nur Gilang', 'Kadet Putra', 'Citra Indah', 'Gojushiho', 'B', 'Ao', 1, 'standby'),
-(2, 'Raya Tegas Syuhada', 'Kadet Putra', 'Hiroshima', 'Unsu', 'B', 'Ao', 1, 'standby'),
-(3, 'Asep Cahya Nugraha', 'Kadet Putra', 'Gojukai Chaki', 'Popuren', 'B1', 'Ao', 1, 'standby'),
-(4, 'Ade Ajie Ferizal', 'Kadet Putra', 'INKAI Jakarta', 'Suparimpei', 'B1', 'Ao', 0, 'standby');
+(1, 'ALIF LANGIT RAMADHAN ', 'USIA DINI PUTRA', ' PREDATOR KARATE CLUB', 'HEIAN YONDAN ', 'A1', 'Ao', 0, 'standby'),
+(2, 'NIZAM FAIZ', 'USIA DINI PUTRA', 'DOJO OPUNG ASKI', 'HEIAN YONDAN', 'A1', 'Ao', 0, 'standby'),
+(3, 'Wahyu Williansah', 'USIA DINI PUTRA', 'BENGPUSHUB PUSHUBAD KOTA BANDUNG', 'HEIAN YONDAN', 'A1', 'Ao', 0, 'standby'),
+(4, 'Daniel Florencio Dermawan', 'USIA DINI PUTRA', 'SDN RRI CISALAK', 'HEIAN YONDAN', 'A1', 'Ao', 0, 'standby'),
+(5, 'ABDILLATUL QUBRO', 'USIA DINI PUTRA', 'AMC INKANAS DKI JAKARTA', 'HEIAN YONDAN', 'A1', 'Ao', 0, 'standby'),
+(6, 'TRAVIS NATHA DAFFA KUMARA', 'USIA DINI PUTRA', 'DONSKA', 'HEIAN YONDAN', 'A1', 'Ao', 0, 'standby'),
+(7, 'YUSUF AR RAHMAN RUSLI', 'USIA DINI PUTRA', 'COAST GUARD KARATE TEAM - SULAWESI TENGGARA', 'HEIAN YONDAN', 'A2', 'Ao', 0, 'standby'),
+(8, 'HAFIZH MAULANA', 'USIA DINI PUTRA', 'GOJU ASS LAMPUNG', 'Gekisai Dai Ich', 'A2', 'Ao', 0, 'standby'),
+(9, 'Mochamad  Raihan NN', 'USIA DINI PUTRA', 'CIPAISAN PURWAKARTA', 'HEIAN SODAN', 'A2', 'Ao', 0, 'standby'),
+(10, 'HIROKI AMMARKIANDRA PITANA', 'USIA DINI PUTRA', 'AGGAZI KARATE CLUB', 'HEIAN YONDAN', 'A2', 'Ao', 0, 'standby'),
+(11, 'MUHAMMAD SAFARAZ AKMA WAFRIE', 'USIA DINI PUTRA', 'UNTAN KARATE CLUB', 'HEIAN YONDAN', 'A2', 'Ao', 0, 'standby'),
+(12, 'MUHAMMAD ALIEF PUTRA SATRIA', 'USIA DINI PUTRA', 'DONSKA', 'HEIAN YONDAN', 'A2', 'Ao', 0, 'standby'),
+(13, 'ALFATH RIZQY NASRUDDIN ', 'USIA DINI PUTRA', ' PREDATOR KARATE CLUB', 'HEIAN YONDAN ', 'B1', 'Ao', 0, 'standby'),
+(14, 'M. FAUZAN AL-BARIZY', 'USIA DINI PUTRA', 'GOJU ASS LAMPUNG', 'Gekisai Dai Ich', 'B1', 'Ao', 0, 'standby'),
+(15, 'ALFARIZI', 'USIA DINI PUTRA', 'DOJO OPUNG ASKI', 'HEIAN YONDAN', 'B1', 'Ao', 0, 'standby'),
+(16, 'Bintang Aleka Pratama Yusa', 'USIA DINI PUTRA', 'KOREM 064 MAULANA YUSUF', 'HEIAN YONDAN', 'B1', 'Ao', 0, 'standby'),
+(17, 'M. Akbar Alfatih M', 'USIA DINI PUTRA', 'SDN RRI CISALAK', 'HEIAN YONDAN ', 'B1', 'Ao', 0, 'standby'),
+(18, 'ZESHAN EXEL RIZKY SATRIA RAMADHAN', 'USIA DINI PUTRA', 'AMC INKANAS DKI JAKARTA', 'HEIAN YONDAN', 'B1', 'Ao', 0, 'standby'),
+(19, 'RAYYAN AGHA MURDANA', 'USIA DINI PUTRA', 'DONSKA', 'HEIAN YONDAN ', 'B1', 'Ao', 0, 'standby'),
+(20, 'MUHAMMAD KAUTSAR MEHAGA PERANGINANGIN', 'USIA DINI PUTRA', 'BUMI MAKMUR', 'HEIAN YONDAN', 'B2', 'Ao', 0, 'standby'),
+(21, 'M. ASKAR GOJURYU', 'USIA DINI PUTRA', 'GOJU ASS LAMPUNG', 'Gekisai Dai Ich', 'B2', 'Ao', 0, 'standby'),
+(22, 'Virzatollah Ramadhan hillary', 'USIA DINI PUTRA', 'CIPAISAN PURWAKARTA', 'HEIAN YONDAN', 'B2', 'Ao', 0, 'standby'),
+(23, 'M. AKBAR RAFSANJANI', 'USIA DINI PUTRA', 'PUMA KARATE CLUB PONTIANAK TIMUR KALBAR', 'HEIAN YONDAN', 'B2', 'Ao', 0, 'standby'),
+(24, 'AHMAD MADINAH', 'USIA DINI PUTRA', 'DONSKA', 'HEIAN YONDAN', 'B2', 'Ao', 0, 'standby'),
+(25, 'MUHAMMAD YAZID ILMANY WIJAYA', 'USIA DINI PUTRA', 'DONSKA', 'HEIAN YONDAN', 'B2', 'Ao', 0, 'standby');
 
 -- --------------------------------------------------------
 
@@ -64,13 +86,6 @@ CREATE TABLE `klasemen` (
   `grup` varchar(50) NOT NULL,
   `totalPoint` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `klasemen`
---
-
-INSERT INTO `klasemen` (`idKlasemen`, `idAtlet`, `namaAtlet`, `atribut`, `kontingen`, `grup`, `totalPoint`) VALUES
-(1, '3', 'Asep Cahya Nugraha', 'Ao', 'Gojukai Chaki', 'B1', 21.48);
 
 -- --------------------------------------------------------
 
@@ -90,8 +105,8 @@ CREATE TABLE `papanskor` (
 --
 
 INSERT INTO `papanskor` (`jenisScoreboard`, `status`, `kelas`, `grup`) VALUES
-('klasemen', 'idle', '', 'B'),
-('scoreboard', 'aktif', '', '-');
+('klasemen', 'aktif', '', ''),
+('scoreboard', 'idle', '', '-');
 
 -- --------------------------------------------------------
 
@@ -194,13 +209,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `atlet`
 --
 ALTER TABLE `atlet`
-  MODIFY `idAtlet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idAtlet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT untuk tabel `klasemen`
 --
 ALTER TABLE `klasemen`
-  MODIFY `idKlasemen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idKlasemen` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `point`
