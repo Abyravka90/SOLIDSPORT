@@ -142,7 +142,8 @@ if (!isset($_SESSION['username'])) {
     if (isset($_GET['reset'])) {
         $reset = $_GET['reset'];
         if ($reset > 0) {
-            mysqli_query($conn, "UPDATE `point` SET nilaiTeknik = 0, nilaiAtletik = 0, statusPenilaian = 'standby', juriMenilai = 0");
+            mysqli_query($conn, "UPDATE `point` SET idAtlet = '-', namaAtlet = '-', kelas = '-', kontingen = '-', namaKata = '-',
+            grup = '-', atribut = '-', nilaiTeknik = 0, nilaiAtletik = 0, statusPenilaian = 'standby', juriMenilai = 0");
             mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby' WHERE idAtlet = '$reset'");
         }
     }
