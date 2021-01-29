@@ -2,7 +2,7 @@
 <meta http-equiv="refresh" content="0.5" charset="UTF-8">
 <link rel="stylesheet" href="../../assets/css/style.css">
 <?php 
-
+error_reporting(0);
 include "../../config/templates/header.php";
 include "../../config/database/koneksi.php";
 
@@ -22,8 +22,12 @@ $namaKata = $rowPoint['namaKata'];
 $atribut = $rowPoint['atribut'];
 $grup = $rowPoint['grup'];
 $kelas = $rowPoint['kelas'];
+
+
 //menghitung jumlah penilaian juri
 $JuriMenilai = $rowJuriMenilai['juriMenilai'];
+
+
 //ambil value nilai dan data Juri dari table point ke table yang ditampilkan
 $sqlNilai = mysqli_query($conn, "SELECT `namaJuri`, `nilaiTeknik`, `nilaiAtletik` from `point`");
 $sqlNilai2 = mysqli_query($conn, "SELECT `namaJuri`, `nilaiTeknik`, `nilaiAtletik` from `point`");
@@ -46,6 +50,9 @@ include '../../config/prosesPerhitungan.php';
             </div>
         </div>
     </div>
+  
+  
+  
     <!--Jika Yang ditampilkan adalah Score Board-->
     <?php if($tampil == 'scoreboard'){ ?>
         <div class="container-fluid">
@@ -188,10 +195,14 @@ include '../../config/prosesPerhitungan.php';
                             </tr>
                         </thead>
                     <?php
-                    //Ambil Data dari database klasemen dan tentuukan peringkat
-                    $cekDataKlasemen = mysqli_num_rows(mysqli_query($conn, "SELECT * FROM klasemen WHERE grup = '$grup' ORDER BY `totalPoint` DESC LIMIT 4"));
-                    if ($cekDataKlasemen != 0){
-                        $sqlKlasemen = "SELECT * FROM klasemen WHERE grup = '$grup' ORDER BY `totalPoint` DESC LIMIT 4";
+                    //Ambil Data dari database klasemen dan tentukan peringkat
+                    $sqlDataKlasemen = mysqli_query($conn, "SELECT grup from `klasemen`");
+                    $row = mysqli_fetch_object($sqlDataKlasemen);
+                    $grupKlasemen = $row -> grup; 
+                    $queryKlas = "SELECT * FROM klasemen WHERE grup = '$grupKlasemen' ORDER BY `totalPoint` DESC LIMIT 4";
+                    $cekDataKlasemen = mysqli_num_rows(mysqli_query($conn, $queryKlas));
+                    if ($cekDataKlasemen > 0){
+                        $sqlKlasemen = "SELECT * FROM klasemen WHERE grup = '$grupKlasemen' ORDER BY `totalPoint` DESC LIMIT 4";
                         $dataKlasemen = mysqli_query($conn, $sqlKlasemen);
                         $no = 1;
                         ?>

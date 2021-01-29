@@ -228,6 +228,14 @@ if (!isset($_SESSION['username'])) {
                                 <td><?= $i ?></td>
                                 <td><?php if ($data['statusPenilaian'] == "staging") {
                                         echo '<span class="blinking badge badge-success">bermain</span>';
+                                    }else{
+                                        $query = "SELECT DISTINCT idAtlet, statusPenilaian FROM `point` WHERE idAtlet = $data[idAtlet]";
+                                        $dataPoint = mysqli_query($conn, $query);
+                                        $cekDataPoint = mysqli_num_rows($dataPoint);
+                                        if($cekDataPoint > 0){
+                                            $rowPoint = mysqli_fetch_object($dataPoint);
+                                            if($rowPoint -> statusPenilaian == 'saved'){echo '<span class="blinking badge badge-primary">disimpan</span>';}
+                                        }
                                     } ?></td>
                                 <td><?= $data['namaAtlet']; ?></td>
                                 <td>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Jan 2021 pada 09.30
+-- Waktu pembuatan: 29 Jan 2021 pada 07.51
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.4.11
 
@@ -46,7 +46,7 @@ CREATE TABLE `atlet` (
 INSERT INTO `atlet` (`idAtlet`, `namaAtlet`, `kelas`, `kontingen`, `namaKata`, `grup`, `atribut`, `bermain`, `statusPenilaian`) VALUES
 (1, 'Anji Nur Gilang', 'Kadet Putra', 'Citra Indah', 'Gojushiho', 'B', 'Ao', 1, 'standby'),
 (2, 'Raya Tegas Syuhada', 'Kadet Putra', 'Hiroshima', 'Unsu', 'B', 'Ao', 1, 'standby'),
-(3, 'Asep Cahya Nugraha', 'Kadet Putra', 'Gojukai Chaki', 'Popuren', 'B1', 'Ao', 0, 'standby'),
+(3, 'Asep Cahya Nugraha', 'Kadet Putra', 'Gojukai Chaki', 'Popuren', 'B1', 'Ao', 1, 'standby'),
 (4, 'Ade Ajie Ferizal', 'Kadet Putra', 'INKAI Jakarta', 'Suparimpei', 'B1', 'Ao', 0, 'standby');
 
 -- --------------------------------------------------------
@@ -59,6 +59,7 @@ CREATE TABLE `klasemen` (
   `idKlasemen` int(11) NOT NULL,
   `idAtlet` char(3) NOT NULL,
   `namaAtlet` varchar(50) NOT NULL,
+  `atribut` char(3) NOT NULL,
   `kontingen` varchar(50) NOT NULL,
   `grup` varchar(50) NOT NULL,
   `totalPoint` double NOT NULL
@@ -68,9 +69,8 @@ CREATE TABLE `klasemen` (
 -- Dumping data untuk tabel `klasemen`
 --
 
-INSERT INTO `klasemen` (`idKlasemen`, `idAtlet`, `namaAtlet`, `kontingen`, `grup`, `totalPoint`) VALUES
-(1, '1', 'Anji Nur Gilang', 'Citra Indah', 'B', 21.26),
-(2, '2', 'Raya Tegas Syuhada', 'Hiroshima', 'B', 22.02);
+INSERT INTO `klasemen` (`idKlasemen`, `idAtlet`, `namaAtlet`, `atribut`, `kontingen`, `grup`, `totalPoint`) VALUES
+(1, '3', 'Asep Cahya Nugraha', 'Ao', 'Gojukai Chaki', 'B1', 21.48);
 
 -- --------------------------------------------------------
 
@@ -81,6 +81,7 @@ INSERT INTO `klasemen` (`idKlasemen`, `idAtlet`, `namaAtlet`, `kontingen`, `grup
 CREATE TABLE `papanskor` (
   `jenisScoreboard` varchar(10) NOT NULL,
   `status` varchar(10) NOT NULL,
+  `kelas` varchar(150) NOT NULL,
   `grup` varchar(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -88,9 +89,9 @@ CREATE TABLE `papanskor` (
 -- Dumping data untuk tabel `papanskor`
 --
 
-INSERT INTO `papanskor` (`jenisScoreboard`, `status`, `grup`) VALUES
-('klasemen', 'idle', ''),
-('scoreboard', 'aktif', '-');
+INSERT INTO `papanskor` (`jenisScoreboard`, `status`, `kelas`, `grup`) VALUES
+('klasemen', 'idle', '', 'B'),
+('scoreboard', 'aktif', '', '-');
 
 -- --------------------------------------------------------
 
@@ -119,11 +120,11 @@ CREATE TABLE `point` (
 --
 
 INSERT INTO `point` (`idPoint`, `idAtlet`, `namaAtlet`, `kelas`, `kontingen`, `namaKata`, `grup`, `atribut`, `namaJuri`, `nilaiTeknik`, `nilaiAtletik`, `statusPenilaian`, `juriMenilai`) VALUES
-(1, '2', 'Raya Tegas Syuhada', 'Kadet Putra', 'Hiroshima', 'Unsu', 'B', 'Ao', 'J-1', 7.4, 7.2, 'saved', 1),
-(2, '2', 'Raya Tegas Syuhada', 'Kadet Putra', 'Hiroshima', 'Unsu', 'B', 'Ao', 'J-2', 7.4, 7.2, 'saved', 1),
-(3, '2', 'Raya Tegas Syuhada', 'Kadet Putra', 'Hiroshima', 'Unsu', 'B', 'Ao', 'J-3', 7.4, 7.2, 'saved', 1),
-(4, '2', 'Raya Tegas Syuhada', 'Kadet Putra', 'Hiroshima', 'Unsu', 'B', 'Ao', 'J-4', 7.4, 7.2, 'saved', 1),
-(5, '2', 'Raya Tegas Syuhada', 'Kadet Putra', 'Hiroshima', 'Unsu', 'B', 'Ao', 'J-5', 7.4, 7.2, 'saved', 1);
+(1, '-', '-', '-', '-', '-', '-', '-', 'J-1', 0, 0, 'standby', 0),
+(2, '-', '-', '-', '-', '-', '-', '-', 'J-2', 0, 0, 'standby', 0),
+(3, '-', '-', '-', '-', '-', '-', '-', 'J-3', 0, 0, 'standby', 0),
+(4, '-', '-', '-', '-', '-', '-', '-', 'J-4', 0, 0, 'standby', 0),
+(5, '-', '-', '-', '-', '-', '-', '-', 'J-5', 0, 0, 'standby', 0);
 
 -- --------------------------------------------------------
 
@@ -144,7 +145,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`idUser`, `username`, `password`, `statusLogin`, `level`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 1, 1);
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 2, 1),
+(2, 'J-1', '6caeba444797a281a0110e0c80ad5814', 0, 2),
+(3, 'J-2', '843eca7556234d9c90eae1fc0f1e2939', 0, 2),
+(4, 'J-3', '6050b64b6ad6fa8f163ca9e06c05a815', 0, 2),
+(5, 'J-4', '6a0cf6edf20060344b465706b61719aa', 0, 2),
+(6, 'J-5', '839b73fc7ea3dbf8ad62b3bf4434d094', 0, 2);
 
 --
 -- Indexes for dumped tables
@@ -194,7 +200,7 @@ ALTER TABLE `atlet`
 -- AUTO_INCREMENT untuk tabel `klasemen`
 --
 ALTER TABLE `klasemen`
-  MODIFY `idKlasemen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idKlasemen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `point`
@@ -206,7 +212,7 @@ ALTER TABLE `point`
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idUser` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
