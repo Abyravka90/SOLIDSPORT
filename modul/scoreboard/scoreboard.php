@@ -196,7 +196,7 @@ include '../../config/prosesPerhitungan.php';
                         </thead>
                     <?php
                     //Ambil Data dari database klasemen dan tentukan peringkat
-                    $sqlDataKlasemen = mysqli_query($conn, "SELECT grup from `klasemen`");
+                    $sqlDataKlasemen = mysqli_query($conn, "SELECT grup from `papanskor`");
                     $row = mysqli_fetch_object($sqlDataKlasemen);
                     $grupKlasemen = $row -> grup; 
                     $queryKlas = "SELECT * FROM klasemen WHERE grup = '$grupKlasemen' ORDER BY `totalPoint` DESC LIMIT 4";

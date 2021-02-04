@@ -3,11 +3,7 @@
     if (!isset($_SESSION['username'])){
         header("location:../login");
     } else {
-        include "../../config/database/koneksi.php";
-        $login = "SELECT * from `user` WHERE `username` = '$_SESSION[username]'";
-        $sqlLogin = mysqli_query($conn, $login);
-        $cekLogin = mysqli_fetch_object($sqlLogin);
-        if($cekLogin -> statusLogin == 1){
+      if($_SESSION['statusLogin'] == 0){
       include "../../config/templates/header.php";
       ?>
 <html>
@@ -15,7 +11,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
-    <meta name="author" http-equiv="refresh"  content="2">
+    <meta name="author">
     <title>.:SOLIDSPORTS:.</title>
     <!-- Favicon -->
     <link rel="icon" href="assets/img/brand/favicon.png" type="image/png">
@@ -46,6 +42,7 @@
                       </form>
                         <img height="75px" src="../../assets/img/logo-2.jpeg">
                       </div>
+                      <p class="text-center" ><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/solidsport/modul/logout">logout</a></p>
               </div>
             </div>
           </div>
@@ -61,22 +58,12 @@
     <script src="../../assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
     <!-- Argon JS -->
     <script src="../../assets/js/argon.js?v=1.2.0"></script><div class="backdrop d-xl-none" data-action="sidenav-unpin" data-target="undefined"></div>
-  
-  
   </body></html>
   <?php 
-        } else if($cekLogin -> statusLogin > 1){
-                $resetCounter = "UPDATE `user` SET `statusLogin` = 1 WHERE `username` = '$_SESSION[username]'";
-                mysqli_query($conn, $resetCounter);
+        } else {
                 echo 
                 '<script>
-                    alert("hubungi admin untuk login kembali");
-                    window.location.href="../login";
-                </script>';
-            }else{
-                echo 
-                '<script>
-                alert("hubungi admin untuk login kembali");
+                alert("reset login melalui admin");
                 window.location.href="../login";
                 </script>';
             }
