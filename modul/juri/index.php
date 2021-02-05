@@ -42,7 +42,7 @@
                       </form>
                         <img height="75px" src="../../assets/img/logo-2.jpeg">
                       </div>
-                      <p class="text-center" ><a href="http://<?= $_SERVER['HTTP_HOST'] ?>/solidsport/modul/logout">logout</a></p>
+                     
               </div>
             </div>
           </div>
@@ -50,7 +50,7 @@
       </div>
     </div>
 
-    
+    <center><a style="margin-top:400px;" class="btn btn-danger" href="http://<?= $_SERVER['HTTP_HOST'] ?>/solidsport/modul/logout">logout</a></center>
     <!-- Argon Scripts -->
     <!-- Core -->
     <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
