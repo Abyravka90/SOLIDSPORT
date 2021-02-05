@@ -9,6 +9,7 @@
   <title>Solidsport</title>
   <!-- Favicon -->
   <link rel="icon" href="../../assets/img/brand/solid.png" type="image/png">
+  <link rel="stylesheet" href="../../assets/css/style.css">
   <!-- Icons -->
   <link rel="stylesheet" href="../../assets/vendor/nucleo/css/nucleo.css" type="text/css">
   <link rel="stylesheet" href="../../assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">

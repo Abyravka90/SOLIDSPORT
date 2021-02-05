@@ -1,4 +1,8 @@
-th {
+@font-face {
+  font-family: 'Montserrat', sans-serif;
+  src: url(../fonts/Montserrat/Montserrat-ExtraLight.ttf);
+}
+/* th {
   font-size: 30px !important;
   color: #fff;
   font-family: 'Arial', sans-serif;
@@ -10,7 +14,7 @@ td {
   font-weight: 900;
   color: #fff;
 
-}
+} */
 
 .dot {
   height: 20px;
