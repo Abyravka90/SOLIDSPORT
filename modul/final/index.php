@@ -76,19 +76,22 @@ if (!isset($_SESSION['username'])) {
         }
     }
     ?>
+
+
     <!-- TOMBOL STOP DI KLIK! proses simpan ke table klasemen -->
     <?php
     if (isset($_GET['idSimpan'])) {
         $idAtlet = $_GET['idSimpan'];
         $sqlStatusPenilaian = mysqli_query($conn, "SELECT statusPenilaian from `atlet` WHERE idAtlet = '$idAtlet' LIMIT 1");
-        while ($cekData = mysqli_fetch_array($sqlStatusPenilaian)) {
-            $statusPenilaian = $cekData['statusPenilaian'];
-        }
+        $cekData = mysqli_fetch_array($sqlStatusPenilaian);
+        $statusPenilaian = $cekData['statusPenilaian'];
         if ($statusPenilaian == 'staging') {
+        
             //jika jumlah juri menilai kurang dari yang ditentukan
             $sqlJuriMenilai = mysqli_query($conn, "SELECT SUM(juriMenilai) as `juriMenilai` from `point`");
             $rowJuriMenilai = mysqli_fetch_array($sqlJuriMenilai);
             $jumlahJuriMenilai = $rowJuriMenilai['juriMenilai'];
+        
             if($jumlahJuriMenilai == 5){
                 $sql = "SELECT * FROM `point` WHERE idAtlet = '$idAtlet' LIMIT 1";
                 $hasil = mysqli_query($conn, $sql);
@@ -118,7 +121,9 @@ if (!isset($_SESSION['username'])) {
                     </div></div>';
                     }
                 }else{
-                    echo '<div class="card card-body"><div class="alert alert-warning alert-dismissible fade show" role="alert">
+
+                    //JIKA JUMLAH JURI MENILAI KURANG DARI 5
+                    echo '<div class="card card-body"><div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                     <span class="alert-text"><strong>Gagal Proses!</strong> ada Juri Belum Menilai</span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -126,10 +131,12 @@ if (!isset($_SESSION['username'])) {
                     </button>
                     </div></div>';
                 }
-        } else {
+        } else{
+
+            //STATUS PENILAIAN SELAIN STAGING
             echo '<div class="card card-body"><div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-                    <span class="alert-text"><strong>Gagal Proses!</strong>Perhatikan Kembali Data Anda</span>
+                    <span class="alert-text"><strong>Gagal Proses!</strong>BELUM AKTIF atau Bukan Atlet yang dimaksud</span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -142,12 +149,14 @@ if (!isset($_SESSION['username'])) {
     if (isset($_GET['reset'])) {
         $reset = $_GET['reset'];
         if ($reset > 0) {
-            mysqli_query($conn, "UPDATE `point` SET nilaiTeknik = 0, nilaiAtletik = 0, statusPenilaian = 'standby', juriMenilai = 0");
-            mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby' WHERE idAtlet = '$reset'");
+            mysqli_query($conn, "UPDATE `point` SET idAtlet = '-', namaAtlet = '-', kelas = '-', kontingen = '-', namaKata = '-',
+            grup = '-', atribut = '-', nilaiTeknik = 0, nilaiAtletik = 0, statusPenilaian = 'standby', juriMenilai = 0");
+            mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby'");
         }
     }
     ?>
-    <!--proses update data atlet-->
+
+    <!--PROSES UPDATE DATA ATLET-->
     <?php
     if (isset($_POST['idAtlet'])) {
         $idAtlet = $_POST['idAtlet'];
@@ -181,9 +190,10 @@ if (!isset($_SESSION['username'])) {
     
                     <?php
                     $i = 1;
-                    $sql = "SELECT * FROM atlet WHERE grup = 'final'";
+                    $sql = "SELECT * FROM atlet WHERE grup = 'final' OR grup = 'Bronze-1' OR grup = 'Bronze-2' ";
                     $hasil = mysqli_query($conn, $sql);
                     while ($data = mysqli_fetch_array($hasil)) { ?>
+                        <tr><td colspan=7><p align=center style="font-size:25px;font-weight:bold;"><?= $data['grup'] ?></p></td></tr>
                         <tr>
                             <td><?= $i ?></td>
                             <td><?php if ($data['statusPenilaian'] == "staging") {
@@ -196,7 +206,7 @@ if (!isset($_SESSION['username'])) {
                                 <!-- Tombol Stop-->
                                 <a href="?grup=<?= $data['grup'] ?>&&idSimpan=<?= $data['idAtlet'] ?>" class="btn btn-primary"><i class="ni ni-button-power"></i>&nbsp;stop</a>
                                 <!--Tombol Reset-->
-                                <a href="?grup=<?= $data['grup'] ?>&&reset=<?= $data['idAtlet'] ?>" class="btn btn-secondary"><i class="ni ni-atom"></i>&nbsp;reset</a>
+                                <a href="?grup=<?= $data['grup'] ?>&&reset=<?= $data['idAtlet'] ?>" class="btn btn-danger">↻&nbsp;reset</a>
                             </td>
                             <input type="hidden" name="idAtlet[]" value="<?= $data['idAtlet'] ?>">
                             <td><textarea name="namaKata[]" cols="10" rows="3"><?= $data['namaKata'] ?></textarea></td>

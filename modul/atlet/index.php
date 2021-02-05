@@ -75,7 +75,7 @@ if (!isset($_SESSION['username'])) {
                         while ($data = mysqli_fetch_array($sql)) {
                         ?>
                             <tr>
-                                <td><a class="btn btn-danger" href="?idAtlet=<?= $data['idAtlet'] ?>"><span style='font-size:10px;'>&#10005;</span></a></td>
+                                <td><a class="btn btn-danger" href="?idAtlet=<?= $data['idAtlet'] ?>"><i class="fas fa-trash"></i></a></td>
                                 <td><?= $i ?></td>
                                 <td><textarea class="form-control" name="namaAtlet[]" id="" cols="10" rows="3"><?= $data['namaAtlet']; ?></textarea></td>
                                 <td><textarea class="form-control" name="namaKata[]" id="" cols="10" rows="3"><?= $data['namaKata']; ?></textarea></td>

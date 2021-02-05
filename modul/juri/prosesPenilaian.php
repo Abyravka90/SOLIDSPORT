@@ -1,8 +1,14 @@
 <?php 
-  include "../../config/templates/header.php";
-  include "../../config/database/koneksi.php";
-?> 
-<html>
+  session_start();
+  if( !isset($_SESSION['username'])){
+    header("location:../login");
+  } else if($_SESSION['statusLogin'] == 1){
+    header("location:../login");
+  } else { 
+    include "../../config/templates/header.php";
+    include "../../config/database/koneksi.php";
+  ?> 
+  <html>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -101,6 +107,9 @@
   
   
   </body></html>
+<?php
+   } ?> 
+
 
 
 

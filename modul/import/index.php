@@ -52,7 +52,7 @@ if (!isset($_SESSION['username'])) {
 
             if ($counter > 0) {
                 $ip = $_SERVER["HTTP_HOST"];
-                echo "<script>window.location.href='http://$ip/modul/atlet';</script>";
+                echo "<script>window.location.href='http://$ip/solidsport/modul/atlet';</script>";
             }
             // hapus kembali file .xls yang di upload tadi
             unlink($_FILES['fileAtlet']['name']);

@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 5.0.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 29 Jan 2021 pada 11.20
--- Versi server: 10.4.11-MariaDB
--- Versi PHP: 7.4.1
+-- Waktu pembuatan: 04 Feb 2021 pada 03.11
+-- Versi server: 10.4.14-MariaDB
+-- Versi PHP: 7.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -97,7 +96,7 @@ CREATE TABLE `papanskor` (
   `jenisScoreboard` varchar(10) NOT NULL,
   `status` varchar(10) NOT NULL,
   `kelas` varchar(150) NOT NULL,
-  `grup` varchar(2) NOT NULL
+  `grup` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -105,8 +104,8 @@ CREATE TABLE `papanskor` (
 --
 
 INSERT INTO `papanskor` (`jenisScoreboard`, `status`, `kelas`, `grup`) VALUES
-('klasemen', 'aktif', '', ''),
-('scoreboard', 'idle', '', '-');
+('klasemen', 'idle', '', 'final'),
+('scoreboard', 'aktif', '', '-');
 
 -- --------------------------------------------------------
 
@@ -160,7 +159,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`idUser`, `username`, `password`, `statusLogin`, `level`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 2, 1),
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 4, 1),
 (2, 'J-1', '6caeba444797a281a0110e0c80ad5814', 0, 2),
 (3, 'J-2', '843eca7556234d9c90eae1fc0f1e2939', 0, 2),
 (4, 'J-3', '6050b64b6ad6fa8f163ca9e06c05a815', 0, 2),
@@ -209,7 +208,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `atlet`
 --
 ALTER TABLE `atlet`
-  MODIFY `idAtlet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `idAtlet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT untuk tabel `klasemen`

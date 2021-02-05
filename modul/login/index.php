@@ -25,7 +25,7 @@
                           $_SESSION['username'] = $data['username'];
                           $_SESSION['level'] = $data['level'];
                           $_SESSION['statusLogin'] = $data['statusLogin'];
-                          $username = $data['username'];;
+                          $username = $data['username'];
                           $updateStatusLogin = "UPDATE `user` SET statusLogin = statusLogin+1 WHERE `username` = '$username' ";
                           mysqli_query($conn, $updateStatusLogin);
                           if ($_SESSION['level'] == 1 ) {
