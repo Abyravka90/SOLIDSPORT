@@ -7,28 +7,7 @@ if (!isset($_SESSION['username'])) {
     include "../../config/templates/sidebar.php";
     include "../../config/templates/mainContent.php";
     include "../../config/database/koneksi.php";
-    //JIKA TOMBOL UBAH PASSWORD DI KLIK
-    if(isset ($_GET['idUser'])){
-      $idUser = $_GET['idUser'];
-      $sqlUser = mysqli_query($conn, "SELECT * FROM `user` WHERE `idUser` = '$idUser' ");
-      if(mysqli_num_rows($sqlUser)>0){
-        $row = mysqli_fetch_object($sqlUser);
-        echo '
-        <div class="card">
-          <div class="card-body">
-            <form action="tambahUser.php" method="post">
-            <h1><span class="badge badge-danger">UBAH DATA : </span><span class="badge badge-success">'.$row -> username.'</span></h1>
-            <input type="hidden" name="idUser" value='.$row -> idUser.'>
-            <h5>Password baru</h5>
-            <input style="width:300px;" type="password"  name="password1" class="form-control">
-            <h5>Ulangi Password</h5>
-            <input type="password" style="width:300px;"  name="password2" class="form-control" required>
-            <br/><button type="submit" class="btn btn-info">Simpan</button>
-            </form>
-          </div>
-        </div>';
-      }
-    }
+
     //JIKA TOMBOL LOGOUT DI KLIK 
     if(isset($_GET['logout'])){
       $logout = $_GET['logout'];
@@ -70,7 +49,7 @@ if (!isset($_SESSION['username'])) {
                     <?php if($row -> level == 1 ) {echo 'admin';} else { echo 'juri'; } ?>
                     </td>
                     <td>
-                    <a href="?idUser=<?= $row -> idUser ?>" class="btn btn-success">ubah password</a>
+                    <button class="btn btn-success" onclick="getUserId(<?= $row->idUser ?>)" data-toggle="modal" data-target="#resetPasswordModal">ubah password</button>
                     </td>
                     <td>
                     <?php if($row -> level == 2) {?><a href="?logout=<?= $row -> username ?>" class="btn btn-danger">Reset Login</a> <?php } ?>
@@ -81,12 +60,51 @@ if (!isset($_SESSION['username'])) {
                 ?>
             </thead>
         </table>
+        <!-- Modal reset password -->
+        <div class="modal fade" id="resetPasswordModal" tabindex="-1" role="dialog" aria-labelledby="resetPasswordModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+              <form action="tambahUser.php" method="POST">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Reset Password User</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input type="hidden" name="idUser" value="" id="idUser">
+                  <div class="row">
+                    <div class="col-md-12 pb-2">
+                      <label>Password baru: </label>
+                      <input type="password" class="form-control" name="password1" />
+                    </div>
+                    <div class="col-md-12">
+                      <label>Ulangi password baru: </label>
+                      <input type="password" class="form-control" name="password2"/>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                  <button type="submit" class="btn btn-primary">Simpan</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
         </div>
         <!-- Footer -->
     <?php
     include "../../config/templates/footer.php";
     ?>
     </body>
+    <script>
+      function getUserId(idUser) {
+        document.getElementById('idUser').value = idUser;
+      }
+    </script>
     </html>
     <?php }
     ?>
