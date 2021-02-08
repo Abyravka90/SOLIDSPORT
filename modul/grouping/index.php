@@ -2,36 +2,36 @@
 @session_start();
 if (!isset($_SESSION['username'])) {
     @header("location:../login");
-} else{
+} else {
     include "../../config/templates/header.php";
     include "../../config/templates/sidebar.php";
     include "../../config/templates/mainContent.php";
     include "../../config/database/koneksi.php";
-    
-    ?>
+
+?>
     <style>
         .blinking {
             animation: blinkingText 1.2s infinite;
             font-size: 40px;
         }
-    
+
         @keyframes blinkingText {
             0% {
                 color: #000;
             }
-    
+
             49% {
                 color: #000;
             }
-    
+
             60% {
                 color: transparent;
             }
-    
+
             99% {
                 color: transparent;
             }
-    
+
             100% {
                 color: #000;
             }
@@ -64,8 +64,8 @@ if (!isset($_SESSION['username'])) {
                 mysqli_query($conn, $sqlAtlet);
             }
         } else {
-            echo 
-                '<div class="card card-body"><div class="alert alert-danger alert-dismissible fade show" role="alert">
+            echo
+            '<div class="card card-body"><div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                     <span class="alert-text"><strong>Gagal Play!</strong> belum di stop!</span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -86,13 +86,13 @@ if (!isset($_SESSION['username'])) {
         $cekData = mysqli_fetch_array($sqlStatusPenilaian);
         $statusPenilaian = $cekData['statusPenilaian'];
         if ($statusPenilaian == 'staging') {
-        
+
             //jika jumlah juri menilai kurang dari yang ditentukan
             $sqlJuriMenilai = mysqli_query($conn, "SELECT SUM(juriMenilai) as `juriMenilai` from `point`");
             $rowJuriMenilai = mysqli_fetch_array($sqlJuriMenilai);
             $jumlahJuriMenilai = $rowJuriMenilai['juriMenilai'];
-        
-            if($jumlahJuriMenilai == 5){
+
+            if ($jumlahJuriMenilai == 5) {
                 $sql = "SELECT * FROM `point` WHERE idAtlet = '$idAtlet' LIMIT 1";
                 $hasil = mysqli_query($conn, $sql);
                 while ($data = mysqli_fetch_array($hasil)) {
@@ -119,19 +119,19 @@ if (!isset($_SESSION['username'])) {
                         <span aria-hidden="true">&times;</span>
                     </button>
                     </div></div>';
-                    }
-                }else{
+                }
+            } else {
 
-                    //JIKA JUMLAH JURI MENILAI KURANG DARI 5
-                    echo '<div class="card card-body"><div class="alert alert-danger alert-dismissible fade show" role="alert">
+                //JIKA JUMLAH JURI MENILAI KURANG DARI 5
+                echo '<div class="card card-body"><div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <span class="alert-icon"><i class="ni ni-like-2"></i></span>
                     <span class="alert-text"><strong>Gagal Proses!</strong> ada Juri Belum Menilai</span>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                     </div></div>';
-                }
-        } else{
+            }
+        } else {
 
             //STATUS PENILAIAN SELAIN STAGING
             echo '<div class="card card-body"><div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -174,13 +174,13 @@ if (!isset($_SESSION['username'])) {
     <!-- Se table -->
     <div class="container-fluid mt-4">
         <!-- Card header -->
-    
+
         <div class="card-header border-0">
             <div class="row">
                 <div class="col-md-12 mb-2">
                     <p class="mb-0">Pilih Grup :
                     </p>
-    
+
                 </div>
                 <div class="col-md-6">
                     <form action="" method="GET">
@@ -192,7 +192,7 @@ if (!isset($_SESSION['username'])) {
                                     $sql = "SELECT DISTINCT grup from atlet";
                                     $hasil = mysqli_query($conn, $sql);
                                     while ($data = mysqli_fetch_array($hasil)) {
-                                        if ($data[0] != "final" AND $data[0] != "Bronze-1" AND $data[0] != "Bronze-2") {
+                                        if ($data[0] != "final" and $data[0] != "Bronze-1" and $data[0] != "Bronze-2") {
                                             echo "<option value='$data[0]'>$data[0]</option>";
                                         }
                                     }
@@ -200,16 +200,16 @@ if (!isset($_SESSION['username'])) {
                                 </select>
                             </div>
                             <div class="col-md-4">
-    
+
                                 <input class="btn btn-success" type="submit" value="proses">
                             </div>
                         </div>
-    
+
                     </form>
                 </div>
             </div>
         </div>
-    
+
         <form action="#" method="POST">
             <table id="example" class="table table-striped table-bordered nowrap" style="width:110%">
                 <thead>
@@ -224,7 +224,7 @@ if (!isset($_SESSION['username'])) {
                     </tr>
                 </thead>
                 <tbody>
-    
+
                     <?php
                     if (isset($_GET['grup'])) {
                         //jika grup dipilih
@@ -234,31 +234,33 @@ if (!isset($_SESSION['username'])) {
                         $hasil = mysqli_query($conn, $sql);
                         while ($data = mysqli_fetch_array($hasil)) { ?>
                             <tr>
-                                <td><?= $i ?></td>
-                                <td><?php if ($data['statusPenilaian'] == "staging") {
-                                        echo '<span class="blinking badge badge-success">bermain</span>';
-                                    }else{
-                                        $query = "SELECT DISTINCT idAtlet, statusPenilaian FROM `point` WHERE idAtlet = $data[idAtlet]";
-                                        $dataPoint = mysqli_query($conn, $query);
-                                        $cekDataPoint = mysqli_num_rows($dataPoint);
-                                        if($cekDataPoint > 0){
-                                            $rowPoint = mysqli_fetch_object($dataPoint);
-                                            if($rowPoint -> statusPenilaian == 'saved'){echo '<span class="blinking badge badge-primary">disimpan</span>';}
-                                        }
-                                    } ?></td>
-                                <td><?= $data['namaAtlet']; ?></td>
-                                <td>
+                                <td class="text-muted"><?= $i ?></td>
+                                <td class="text-muted"><?php if ($data['statusPenilaian'] == "staging") {
+                                                            echo '<span class="blinking badge badge-success">bermain</span>';
+                                                        } else {
+                                                            $query = "SELECT DISTINCT idAtlet, statusPenilaian FROM `point` WHERE idAtlet = $data[idAtlet]";
+                                                            $dataPoint = mysqli_query($conn, $query);
+                                                            $cekDataPoint = mysqli_num_rows($dataPoint);
+                                                            if ($cekDataPoint > 0) {
+                                                                $rowPoint = mysqli_fetch_object($dataPoint);
+                                                                if ($rowPoint->statusPenilaian == 'saved') {
+                                                                    echo '<span class="blinking badge badge-primary">disimpan</span>';
+                                                                }
+                                                            }
+                                                        } ?></td>
+                                <td class="text-muted"><?= $data['namaAtlet']; ?></td>
+                                <td class="text-muted">
                                     <!-- dari sini proses dilempar ke TOMBOL PLAY DIATAS  -->
                                     <a href="?grup=<?= $data['grup'] ?>&&idAtlet=<?= $data['idAtlet'] ?>" class="btn btn-warning"><i class="ni ni-button-play"></i>&nbsp;play</a>
-                                    
+
                                     <!-- dari sini proses dilempar ke TOMBOL STOP DIATAS  -->
                                     <a href="?grup=<?= $data['grup'] ?>&&idSimpan=<?= $data['idAtlet'] ?>" class="btn btn-primary"><i class="ni ni-button-power"></i>&nbsp;stop / save</a>
                                     <!--dilanjutkan ke line TOMBOL RESET DIATAS-->
                                     <a href="?grup=<?= $data['grup'] ?>&&reset=<?= $data['idAtlet'] ?>" class="btn btn-danger">↻&nbsp;reset</a>
                                 </td>
                                 <input type="hidden" name="idAtlet[]" value="<?= $data['idAtlet'] ?>">
-                                <td><textarea name="namaKata[]" cols="10" rows="3"><?= $data['namaKata'] ?></textarea></td>
-                                <td>
+                                <td class="text-muted"><textarea class="form-control" name="namaKata[]" cols="30" rows="3"><?= $data['namaKata'] ?></textarea></td>
+                                <td class="text-muted">
                                     <select name="grup[]" class="form-control">
                                         <option value="<?= $data['grup'] ?>"><?= $data['grup'] ?></option>
                                         <option value="Bronze-1">Lanjut Bronze-1</option>
@@ -294,6 +296,6 @@ if (!isset($_SESSION['username'])) {
     include "../../config/templates/footer.php";
     ?>
     </body>
-    
+
     </html>
 <?php } ?>

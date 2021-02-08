@@ -78,7 +78,7 @@ if (!isset($_SESSION['username'])) {
                                 <td><a class="btn btn-danger" href="?idAtlet=<?= $data['idAtlet'] ?>"><i class="fas fa-trash"></i></a></td>
                                 <td><?= $i ?></td>
                                 <td><textarea class="form-control" name="namaAtlet[]" id="" cols="10" rows="3"><?= $data['namaAtlet']; ?></textarea></td>
-                                <td><textarea class="form-control" name="namaKata[]" id="" cols="10" rows="3"><?= $data['namaKata']; ?></textarea></td>
+                                <td><input type="text" class="form-control awesomplete" name="namaKata[]" id="kata" cols="10" rows="3" value="<?= $data['namaKata']; ?>"></td>
                                 <td><textarea class="form-control" name="kontingen[]" id="" cols="10" rows="3"><?= $data['kontingen']; ?></textarea></td>
                                 <td>
                                     <input class="form-control" type="text" name="grup[]" value="<?= $data['grup'] ?>">
@@ -139,5 +139,15 @@ if (!isset($_SESSION['username'])) {
 include "../../config/templates/footer.php";
 ?>
 </body>
+<script>
+    const input = document.getElementById("kata");
+    const awesomplete = new Awesomplete(input, {
+        minChars: 1
+    })
 
+    setTimeout(function() {
+        awesomplete.list = ["UNSU", "INKAI", "DOJO"];
+        awesomplete.evaluate();
+    }, 3000)
+</script>
 </html>

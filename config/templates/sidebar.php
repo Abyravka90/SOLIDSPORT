@@ -5,7 +5,7 @@ $base_url = "http://$_SERVER[HTTP_HOST]/solidsport/modul";
 ?>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index: 100000;">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -135,6 +135,7 @@ $base_url = "http://$_SERVER[HTTP_HOST]/solidsport/modul";
               <span class="nav-link-text">Logout</span>
             </a>
           </li>
+
         </ul>
       </div>
     </div>
