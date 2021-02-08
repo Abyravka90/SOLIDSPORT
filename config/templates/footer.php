@@ -19,6 +19,9 @@
 <script src="../../assets/js/dataTables.bootstrap4.min.js"></script>
 <script src="../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../../assets/js/argon.min.js"></script>
+<script src="../../assets/js/awesomplete.js"></script>
+<!-- <script src="https://cdn.rawgit.com/LeaVerou/awesomplete/gh-pages/awesomplete.min.js"></script> -->
+
 <script>
   $(document).ready(function() {
     $('#example').DataTable({
