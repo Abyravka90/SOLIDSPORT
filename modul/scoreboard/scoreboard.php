@@ -74,7 +74,7 @@ include '../../config/prosesPerhitungan.php';
                                         <?php if ($JuriMenilai < 5) {
                                             echo "-";
                                         } else {
-                                            if ($grup == 'final') {
+                                            if ($grup == 'final' or $grup == 'Bronze-1' or $grup =='Bronze-2') {
                                                 echo '-';
                                             } else {
                                                 echo number_format($totalNilai, 2);
@@ -247,7 +247,7 @@ include '../../config/prosesPerhitungan.php';
                                                                                         } ?>"><?= $rowKlasemen['atribut'] ?></td>
                                             <td class="text-center score <?php if ($no == 1) {
                                                                                 echo 'blinking';
-                                                                            } ?>"><?= $rowKlasemen['totalPoint'] ?></td>
+                                                                            } ?>"><?= number_format($rowKlasemen['totalPoint'], 2) ?></td>
                                         </tr>
                                     <?php
                                         $no += 1;

@@ -20,11 +20,19 @@
 <script src="../../assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../../assets/js/argon.min.js"></script>
 <script src="../../assets/js/awesomplete.js"></script>
+
+<script src="../../assets/js/dataTables.buttons.min.js"></script>
+<script src="../../assets/js/jszip.min.js"></script>
+<script src="../../assets/js/pdfmake.min.js"></script>
+<script src="../../assets/js/vfs_fonts.js"></script>
+<script src="../../assets/js/buttons.html5.min.js"></script>
+
 <!-- <script src="https://cdn.rawgit.com/LeaVerou/awesomplete/gh-pages/awesomplete.min.js"></script> -->
 
 <script>
   $(document).ready(function() {
     $('#example').DataTable({
+      
       "scrollX": true,
       "language": {
         "paginate": {

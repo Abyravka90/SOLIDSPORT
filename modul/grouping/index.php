@@ -56,9 +56,11 @@ if (!isset($_SESSION['username'])) {
                 $namaKata = $data['namaKata'];
                 $grup = $data['grup'];
                 $atribut = $data['atribut'];
+                //HARUS DI TAMBAHKAN 1 UNTUK MENYIMPAN KE REKAP
+                $bermain = $data['bermain']+1;
                 //proses update ke table point
                 $sqlPoint = "UPDATE `point` SET idAtlet = '$idAtlet', namaAtlet = '$namaAtlet', kelas = '$kelas', kontingen = '$kontingen', namaKata = '$namaKata', 
-                            grup = '$grup', atribut = '$atribut', statusPenilaian = 'staging', nilaiTeknik = 0, nilaiAtletik=0, juriMenilai = 0;";
+                            grup = '$grup', atribut = '$atribut', statusPenilaian = 'staging', nilaiTeknik = 0, nilaiAtletik=0, juriMenilai = 0, bermain = '$bermain';";
                 mysqli_query($conn, $sqlPoint);
                 $sqlAtlet = "UPDATE `atlet` SET statusPenilaian = 'staging' WHERE idAtlet = '$idAtlet';";
                 mysqli_query($conn, $sqlAtlet);
@@ -101,11 +103,22 @@ if (!isset($_SESSION['username'])) {
                     $atribut = $data['atribut'];
                     $kontingen = $data['kontingen'];
                     $grup = $data['grup'];
+                    $bermain = $data['bermain'];
                     include '../../config/prosesPerhitungan.php';
-                    $totalPoint = $totalNilai;
+                    $totalPoint = $totalNilai; 
+                    
+                    //MENYIMPAN KE TABEL KLASEMEN
                     $sqlKlasemen = "INSERT INTO klasemen (idKlasemen, idAtlet, namaAtlet, atribut, kontingen, grup, totalPoint) 
                                     VALUES ('','$idAtlet','$namaAtlet','$atribut','$kontingen','$grup','$totalPoint')";
                     mysqli_query($conn, $sqlKlasemen);
+                    
+                     
+                    //MENYIMPAN DATA REKAP
+                    $sqlRekap = "INSERT INTO rekap (idRekap, idAtlet, grup, T1, T2, T3, T4, T5, A1, A2, A3, A4, A5, bermain, totalPoint)
+                    VALUES ('', '$idAtlet','$grup', '$nilaiTeknik[0]', '$nilaiTeknik[1]', '$nilaiTeknik[2]', '$nilaiTeknik[3]', '$nilaiTeknik[4]',
+                    '$nilaiAtletik[0]', '$nilaiAtletik[1]', '$nilaiAtletik[2]', '$nilaiAtletik[3]', '$nilaiAtletik[4]', '$bermain', '$totalPoint')";
+                    mysqli_query($conn, $sqlRekap);
+
                     $sqlPoint = "UPDATE `point` SET statusPenilaian = 'saved'";
                     mysqli_query($conn, $sqlPoint);
                     $sqlAtlet = "UPDATE `atlet` SET statusPenilaian = 'standby'";
@@ -150,7 +163,7 @@ if (!isset($_SESSION['username'])) {
         $reset = $_GET['reset'];
         if ($reset > 0) {
             mysqli_query($conn, "UPDATE `point` SET idAtlet = '-', namaAtlet = '-', kelas = '-', kontingen = '-', namaKata = '-',
-            grup = '-', atribut = '-', nilaiTeknik = 0, nilaiAtletik = 0, statusPenilaian = 'standby', juriMenilai = 0");
+            grup = '-', atribut = '-', nilaiTeknik = 0, nilaiAtletik = 0, statusPenilaian = 'standby', juriMenilai = 0, bermain = 0");
             mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby'");
         }
     }
@@ -297,50 +310,50 @@ if (!isset($_SESSION['username'])) {
     ?>
     </body>
     <script>
-    const input = document.getElementById("kata");
-    const awesomplete = new Awesomplete(input, {
-        minChars: 1
-    })
-
-    setTimeout(function() {
+    const input = document.querySelectorAll("[id='kata']");
+    for(var i = 0; i < input.length; i++) {
+        const awesomplete = new Awesomplete(input[i], {
+            minChars: 1
+        })
         awesomplete.list = ["ANAN"  ,   "JIIN"  ,   "PASSAI" ,
-"ANAN DAI"  ,   "JION"  ,   "PINAN SHODAN",
-"ANANKO"    ,   "JITTE" ,   "PINAN NIDAN",
-"AOYAGI"    ,   "JYUROKU"   ,   "PINAN SANDAN",
-"BASSAI"    ,   "KANCHIN"   ,   "PINAN YONDAN",
-"BASSAI DAI",   "KANKU DAI" ,   "PINAN GODAN",
-"BASSAI SHO"    ,   "KANKU SHO" ,   "ROHAI",
-"CHATANYARA KUSHANKU"   ,   "KANSHU"    ,   "SAIFA",
-"CHIBANA NO KUSHANKU"   ,   "KISHIMOTO NO KUSHANKU" ,   "SANCHIN",
-"CHINTE"    ,   "KOSOUKUN"  ,   "SANSAI",
-"CHINTO"    ,   "KOSOUKUN DAI"  ,   "SANSEIRU",
-"ENPI"  ,   "KOSOUKUN  SHO" ,   "SANSERU",
-"FUKYGATA ICHI" ,   "KURURUNFA" ,   "SEICHAN",
-"FUKYGATA NI"   ,   "KUSANKU",      "SEIENCHIN (SEIYUNCHIN)",
-"GANKAKU",      "KYAN NO CHINTO",       "SEIPAI",
-"GARYU" ,   "KYAN NO WANSHU",       "SEIRYU",
-"GEKISAI (GEKSAI) ICH",     "MATSUKAZE" ,   "SEISHAN",
-"GEKISAI (GEKSAI) NI"   ,   "MATSUMURA BASSAI",     "SEISAN (SESAN)",
-"GOJUSHIHO" ,   "MATSUMURA ROHAI"   ,   "SHIHO KOUSOUKUN",
-"GOJUSHIHO DAI" ,   "MEIKYO"    ,   "SHINPA",
-"GOJUSHIHO SHO" ,   "MYOJO" ,   "SHINSEI",
-"HAKUCHO"   ,   "NAIFANCHIN SHODAN" ,   "SHISOCHIN",
-"HANGETSU"  ,   "NAIFANCHIN NIDAN"  ,   "SOCHIN",
-"HAUFA (HAFFA)" ,   "NAIFANCHIN SANDAN" ,   "SUPARINPEI",
-"HEIAN SHODAN"  ,   "NAIHANCHIN",       "TEKKI SHODAN",
-"HEIAN NIDAN"   ,   "NIJUSHIHO" ,   "TEKKI NIDAN",
-"HEIAN SANDAN"  ,   "NIPAIPO",      "TEKKI SANDAN",
-"HEIAN YONDAN",     "NISEISHI",     "TENSHO",
-"HEIAN GODAN",      "OHAN",     "TOMARI BASSAI",
-"HEIKU",        "OHAN DAI",     "UNSHU",
-"ISHIMINE BASSAI",      "OYADOMARI NO PASSAI",      "UNSU",
-"ITOSU ROHAI SHODAN",       "PACHU" ,   "USEISHI",
-"ITOSU ROHAI NIDAN" ,   "PAIKU",        "WANKAN",
-"ITOSU ROHAI SANDAN",       "PAPUREN",      "WANSHU",
+            "ANAN DAI"  ,   "JION"  ,   "PINAN SHODAN",
+            "ANANKO"    ,   "JITTE" ,   "PINAN NIDAN",
+            "AOYAGI"    ,   "JYUROKU"   ,   "PINAN SANDAN",
+            "BASSAI"    ,   "KANCHIN"   ,   "PINAN YONDAN",
+            "BASSAI DAI",   "KANKU DAI" ,   "PINAN GODAN",
+            "BASSAI SHO"    ,   "KANKU SHO" ,   "ROHAI",
+            "CHATANYARA KUSHANKU"   ,   "KANSHU"    ,   "SAIFA",
+            "CHIBANA NO KUSHANKU"   ,   "KISHIMOTO NO KUSHANKU" ,   "SANCHIN",
+            "CHINTE"    ,   "KOSOUKUN"  ,   "SANSAI",
+            "CHINTO"    ,   "KOSOUKUN DAI"  ,   "SANSEIRU",
+            "ENPI"  ,   "KOSOUKUN  SHO" ,   "SANSERU",
+            "FUKYGATA ICHI" ,   "KURURUNFA" ,   "SEICHAN",
+            "FUKYGATA NI"   ,   "KUSANKU",      "SEIENCHIN (SEIYUNCHIN)",
+            "GANKAKU",      "KYAN NO CHINTO",       "SEIPAI",
+            "GARYU" ,   "KYAN NO WANSHU",       "SEIRYU",
+            "GEKISAI (GEKSAI) ICH",     "MATSUKAZE" ,   "SEISHAN",
+            "GEKISAI (GEKSAI) NI"   ,   "MATSUMURA BASSAI",     "SEISAN (SESAN)",
+            "GOJUSHIHO" ,   "MATSUMURA ROHAI"   ,   "SHIHO KOUSOUKUN",
+            "GOJUSHIHO DAI" ,   "MEIKYO"    ,   "SHINPA",
+            "GOJUSHIHO SHO" ,   "MYOJO" ,   "SHINSEI",
+            "HAKUCHO"   ,   "NAIFANCHIN SHODAN" ,   "SHISOCHIN",
+            "HANGETSU"  ,   "NAIFANCHIN NIDAN"  ,   "SOCHIN",
+            "HAUFA (HAFFA)" ,   "NAIFANCHIN SANDAN" ,   "SUPARINPEI",
+            "HEIAN SHODAN"  ,   "NAIHANCHIN",       "TEKKI SHODAN",
+            "HEIAN NIDAN"   ,   "NIJUSHIHO" ,   "TEKKI NIDAN",
+            "HEIAN SANDAN"  ,   "NIPAIPO",      "TEKKI SANDAN",
+            "HEIAN YONDAN",     "NISEISHI",     "TENSHO",
+            "HEIAN GODAN",      "OHAN",     "TOMARI BASSAI",
+            "HEIKU",        "OHAN DAI",     "UNSHU",
+            "ISHIMINE BASSAI",      "OYADOMARI NO PASSAI",      "UNSU",
+            "ITOSU ROHAI SHODAN",       "PACHU" ,   "USEISHI",
+            "ITOSU ROHAI NIDAN" ,   "PAIKU",        "WANKAN",
+            "ITOSU ROHAI SANDAN",       "PAPUREN",      "WANSHU",
 
- ];
+        ];
         awesomplete.evaluate();
-    }, 3000)
+        
+    }
 </script>
-    </html>
+
 <?php } ?>
