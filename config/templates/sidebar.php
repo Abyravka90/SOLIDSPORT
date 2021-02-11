@@ -69,7 +69,7 @@ $base_url = "http://$_SERVER[HTTP_HOST]/solidsport/modul";
                   echo 'class="nav-link"';
                 } ?>href="<?= $base_url ?>/final/">
               <i class="ni ni-paper-diploma text-primary"></i>
-              <span class="nav-link-text">Final</span>
+              <span class="nav-link-text">Head To Head</span>
             </a>
           </li>
           </li>
@@ -93,6 +93,17 @@ $base_url = "http://$_SERVER[HTTP_HOST]/solidsport/modul";
                 } ?> href="<?= $base_url ?>/klasemen/">
               <i class="ni ni-chart-bar-32 text-primary"></i>
               <span class="nav-link-text">Klasemen</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a <?php
+                if ($mod == "klasemen") {
+                  echo 'class="nav-link active"';
+                } else {
+                  echo 'class="nav-link"';
+                } ?> href="<?= $base_url ?>/rekap/">
+              <i class="ni ni-collection text-primary"></i>
+              <span class="nav-link-text">Rekapitulasi</span>
             </a>
           </li>
           <li class="nav-item">
