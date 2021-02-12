@@ -235,12 +235,12 @@ include '../../config/prosesPerhitungan.php';
                                     <?php
                                     while ($rowKlasemen = mysqli_fetch_array($dataKlasemen)) { ?>
                                         <tr>
-                                            <td class="text-center text-white text-capitalize" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;"><?= $no; ?></td>
-                                            <td class="text-center text-white text-capitalize" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;">
+                                            <td class="text-center text-white" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;"><?= $no; ?></td>
+                                            <td class="text-center text-white" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;">
                                                 <?= $rowKlasemen['namaAtlet'] ?>
                                             </td>
-                                            <td class="text-center text-white text-capitalize" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;"><?= $rowKlasemen['kontingen'] ?></td>
-                                            <td class="text-center text-white text-capitalize bg-<?php if ($rowKlasemen['atribut'] == 'Ao') {
+                                            <td class="text-center text-white" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;"><?= $rowKlasemen['kontingen'] ?></td>
+                                            <td class="text-center text-white bg-<?php if ($rowKlasemen['atribut'] == 'Ao') {
                                                                                             echo 'primary';
                                                                                         } else {
                                                                                             echo 'danger';
