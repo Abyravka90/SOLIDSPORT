@@ -212,11 +212,11 @@ include '../../config/prosesPerhitungan.php';
                         <table class="table table-small table-bordered table-sm align-items-center">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="text-dark" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:25px;" class="text-center">Peringkat</th>
-                                    <th class="text-dark" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:25px;" class="text-center">Nama atlet</th>
-                                    <th class="text-dark" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:25px;" class="text-center">Kontingen</th>
-                                    <th class="text-dark" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:25px;" class="text-center">Atribut</th>
-                                    <th class="text-dark" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:25px;" class="text-center">Point</th>
+                                    <th class="text-center">Peringkat</th>
+                                    <th class="text-center">Nama atlet</th>
+                                    <th class="text-center">Kontingen</th>
+                                    <th class="text-center">Atribut</th>
+                                    <th class="text-center">Point</th>
                                 </tr>
                             </thead>
                             <?php
@@ -235,19 +235,19 @@ include '../../config/prosesPerhitungan.php';
                                     <?php
                                     while ($rowKlasemen = mysqli_fetch_array($dataKlasemen)) { ?>
                                         <tr>
-                                            <td class="text-center text-white" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:25px;"><?= $no; ?></td>
-                                            <td class="text-center text-white text-capitalize" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:25px;">
+                                            <td class="text-center text-white text-capitalize" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:5px;"><?= $no; ?></td>
+                                            <td class="text-center text-white text-capitalize" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:5px;">
                                                 <?= $rowKlasemen['namaAtlet'] ?>
                                             </td>
-                                            <td class="text-center text-white text-capitalize" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:25px;"><?= $rowKlasemen['kontingen'] ?></td>
+                                            <td class="text-center text-white text-capitalize" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:5px;"><?= $rowKlasemen['kontingen'] ?></td>
                                             <td class="text-center text-white text-capitalize bg-<?php if ($rowKlasemen['atribut'] == 'Ao') {
                                                                                             echo 'primary';
                                                                                         } else {
                                                                                             echo 'danger';
-                                                                                        } ?>" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:25px;"><?= $rowKlasemen['atribut'] ?></td>
+                                                                                        } ?>" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:5px;"><?= $rowKlasemen['atribut'] ?></td>
                                             <td class="text-center <?php if ($no == 1) {
                                                                                 echo 'blinking';
-                                                                            } ?>" style="font-family: 'Arial', sans-serif; color:white; font-weight:bold;font-size:25px;"><?= number_format($rowKlasemen['totalPoint'], 2) ?></td>
+                                                                            } ?>" style="font-family: 'Arial', sans-serif; color:white; font-weight:bold;font-size:20px;padding:5px;"><?= number_format($rowKlasemen['totalPoint'], 2) ?></td>
                                         </tr>
                                     <?php
                                         $no += 1;
