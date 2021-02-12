@@ -42,4 +42,46 @@
       }
     });
   });
+
+  
+
+  function checkMatchStatus() {
+      const getProp = decodeURI(window.location.search)
+      .replace('?', '')
+      .split('&')
+      .map(param => param.split('='))
+      .reduce((values, [ key, value ]) => {
+          values[ key ] = value
+          return values
+      }, {})
+
+      return getProp;
+  }
+
+  const isPlay = checkMatchStatus();
+
+  if(isPlay.idAtlet) {
+      const {idAtlet} = isPlay;
+      console.log("masuk gag", idAtlet)
+      $(`#btn-stop-${idAtlet}`).prop("disabled", false);
+      $(`#btn-stop-${idAtlet}`).prop("disabled", false);
+
+      $(`#btn-reset-${idAtlet}`).prop("disabled", false);
+  } else {
+
+      const buttonPlay = $('[id^="btn-play"]');
+      const buttonStop = $('[id^="btn-stop"]');
+      const buttonReset = $('[id^="btn-reset"]');
+      console.log(buttonPlay)
+      for(let i in buttonStop) {
+          buttonPlay[i].disabled = false;
+          buttonStop[i].disabled = false;
+          buttonReset[i].disabled = false;
+      }
+  }
+
+  function handleURL(url) {
+      console.log(url)
+      window.location.href = url;
+  }
 </script>

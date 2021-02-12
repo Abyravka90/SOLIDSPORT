@@ -165,14 +165,12 @@ if (!isset($_SESSION['username'])) {
                     }
                 }else{
 
-                    //JIKA JUMLAH JURI MENILAI KURANG DARI 5
-                    echo '<div class="card card-body"><div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-                    <span class="alert-text"><strong>Gagal Proses!</strong> ada Juri Belum Menilai</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div></div>';
+                    echo "
+                        <script>
+                            alert('Gagal Proses!  ada Juri Belum Menilai');
+                            window.history.back();
+                        </script>
+                        ";
                 }
         } else{
 
@@ -255,12 +253,13 @@ if (!isset($_SESSION['username'])) {
                             <td><?= $data['namaAtlet']; ?></td>
                             <td style="font-size:40px;"><?= $data['grup']; ?></td>
                             <td>
-                                <!-- Tombol Play -->
-                                <a href="?grup=<?= $data['grup'] ?>&&idAtlet=<?= $data['idAtlet'] ?>" class="btn btn-warning"><i class="ni ni-button-play"></i>&nbsp;play</a>
-                                <!-- Tombol Stop-->
-                                <a href="?grup=<?= $data['grup'] ?>&&idSimpan=<?= $data['idAtlet'] ?>" class="btn btn-primary"><i class="ni ni-button-power"></i>&nbsp;stop</a>
-                                <!--Tombol Reset-->
-                                <a href="?grup=<?= $data['grup'] ?>&&reset=<?= $data['idAtlet'] ?>" class="btn btn-danger">↻&nbsp;reset</a>
+                                <!-- dari sini proses dilempar ke TOMBOL PLAY DIATAS  -->
+                                <button type="button" onclick="handleURL('?grup=<?= $data['grup'] ?>&&idAtlet=<?= $data['idAtlet'] ?>')" class="btn btn-warning" id="btn-play-<?= $data['idAtlet'] ?>" disabled="disabled"><i class="ni ni-button-play"></i>&nbsp;play</button>
+
+                                <!-- dari sini proses dilempar ke TOMBOL STOP DIATAS  -->
+                                <button type="button" onclick="handleURL('?grup=<?= $data['grup'] ?>&&idSimpan=<?= $data['idAtlet'] ?>')" class="btn btn-primary" id="btn-stop-<?= $data['idAtlet'] ?>" disabled="disabled"><i class="ni ni-button-power"></i>&nbsp;stop / save</button>
+                                <!--dilanjutkan ke line TOMBOL RESET DIATAS-->
+                                <button type="button" onclick="handleURL('?grup=<?= $data['grup'] ?>&&reset=<?= $data['idAtlet'] ?>')" class="btn btn-danger" id="btn-reset-<?= $data['idAtlet'] ?>" disabled="disabled">↻&nbsp;reset</button>
                             </td>
                             <input type="hidden" name="idAtlet[]" value="<?= $data['idAtlet'] ?>">
                             <td><textarea class="form-control awesomplete" name="namaKata[]" id="kata" cols="10" rows="3"><?= $data['namaKata'] ?></textarea></td>
