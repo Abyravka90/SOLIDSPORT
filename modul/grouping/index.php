@@ -295,12 +295,12 @@ if (!isset($_SESSION['username'])) {
                                 <td class="text-muted"><?= $data['namaAtlet']; ?></td>
                                 <td class="text-muted">
                                     <!-- dari sini proses dilempar ke TOMBOL PLAY DIATAS  -->
-                                    <button type="button" onclick="handleURL('?grup=<?= $data['grup'] ?>&&idAtlet=<?= $data['idAtlet'] ?>')" class="btn btn-warning" id="btn-play-<?= $i ?>"><i class="ni ni-button-play"></i>&nbsp;play</button>
+                                    <button type="button" onclick="handleURL('?grup=<?= $data['grup'] ?>&&idAtlet=<?= $data['idAtlet'] ?>')" class="btn btn-warning" id="btn-play-<?= $i ?>" disabled="disabled"><i class="ni ni-button-play"></i>&nbsp;play</button>
 
                                     <!-- dari sini proses dilempar ke TOMBOL STOP DIATAS  -->
-                                    <button type="button" onclick="handleURL('?grup=<?= $data['grup'] ?>&&idSimpan=<?= $data['idAtlet'] ?>')" class="btn btn-primary" id="btn-stop-<?= $i ?>"><i class="ni ni-button-power"></i>&nbsp;stop / save</button>
+                                    <button type="button" onclick="handleURL('?grup=<?= $data['grup'] ?>&&idSimpan=<?= $data['idAtlet'] ?>')" class="btn btn-primary" id="btn-stop-<?= $i ?>" disabled="disabled"><i class="ni ni-button-power"></i>&nbsp;stop / save</button>
                                     <!--dilanjutkan ke line TOMBOL RESET DIATAS-->
-                                    <button type="button" onclick="handleURL('?grup=<?= $data['grup'] ?>&&reset=<?= $data['idAtlet'] ?>')" class="btn btn-danger" id="btn-reset-<?= $i ?>">↻&nbsp;reset</button>
+                                    <button type="button" onclick="handleURL('?grup=<?= $data['grup'] ?>&&reset=<?= $data['idAtlet'] ?>')" class="btn btn-danger" id="btn-reset-<?= $i ?>" disabled="disabled">↻&nbsp;reset</button>
                                 </td>
                                 <input type="hidden" name="idAtlet[]" value="<?= $data['idAtlet'] ?>">
                                 <td class="text-muted"><textarea class="form-control awesomplete" id="kata" name="namaKata[]" cols="30" rows="3"><?= $data['namaKata'] ?></textarea></td>
@@ -403,10 +403,26 @@ if (!isset($_SESSION['username'])) {
 
         if(isPlay.idAtlet) {
             const {idAtlet} = isPlay;
+            
+            $(`#btn-stop-${idAtlet}`).prop("disabled", false);
 
-            $(`#btn-play-${idAtlet}`).attr("disabled", "disabled");
-            $(`#btn-reset-${idAtlet}`).attr("disabled", "disabled");
+            $(`#btn-reset-${idAtlet}`).prop("disabled", false);
+        } else {
+
+            const buttonPlay = $('[id^="btn-play"]');
+            const buttonStop = $('[id^="btn-stop"]');
+            const buttonReset = $('[id^="btn-reset"]');
+    
+            for(let i in buttonStop) {
+                buttonPlay[i].disabled = false;
+                buttonStop[i].disabled = false;
+                buttonReset[i].disabled = false;
+            }
         }
+
+
+
+
         
 
         function handleURL(url) {
