@@ -235,19 +235,19 @@ include '../../config/prosesPerhitungan.php';
                                     <?php
                                     while ($rowKlasemen = mysqli_fetch_array($dataKlasemen)) { ?>
                                         <tr>
-                                            <td class="text-center text-white text-capitalize" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:5px;"><?= $no; ?></td>
-                                            <td class="text-center text-white text-capitalize" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:5px;">
+                                            <td class="text-center text-white text-capitalize" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;"><?= $no; ?></td>
+                                            <td class="text-center text-white text-capitalize" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;">
                                                 <?= $rowKlasemen['namaAtlet'] ?>
                                             </td>
-                                            <td class="text-center text-white text-capitalize" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:5px;"><?= $rowKlasemen['kontingen'] ?></td>
+                                            <td class="text-center text-white text-capitalize" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;"><?= $rowKlasemen['kontingen'] ?></td>
                                             <td class="text-center text-white text-capitalize bg-<?php if ($rowKlasemen['atribut'] == 'Ao') {
                                                                                             echo 'primary';
                                                                                         } else {
                                                                                             echo 'danger';
-                                                                                        } ?>" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:5px;"><?= $rowKlasemen['atribut'] ?></td>
+                                                                                        } ?>" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;"><?= $rowKlasemen['atribut'] ?></td>
                                             <td class="text-center <?php if ($no == 1) {
                                                                                 echo 'blinking';
-                                                                            } ?>" style="font-family: 'Arial', sans-serif; color:white; font-weight:bold;font-size:20px;padding:5px;"><?= number_format($rowKlasemen['totalPoint'], 2) ?></td>
+                                                                            } ?>" style="font-family: 'Arial', sans-serif; color:white; font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;"><?= number_format($rowKlasemen['totalPoint'], 2) ?></td>
                                         </tr>
                                     <?php
                                         $no += 1;
