@@ -50,9 +50,81 @@ if (!isset($_SESSION['username'])) {
         </div>
 
     </div>
+    <!-- Modal Add -->
+    <div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Tambah Atlet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Nama</label><br>
+                                            <input type="text" name="nameAtlet[]" class="form-control">
+                                        </div>
+                                      
+                                        <div class="form-group">
+                                            <label>Kelas</label><br>
+                                            <input type="text" class="form-control" name="kelas[]" id="">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <div class="form-group">
+                                                    <label>Kata</label><br>
+                                                    <input type="text" class="form-control awesomplete" name="namaKata[]" id="kata">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                               <div class="form-group">
+                                                    <label>Attribut</label><br>
+                                                    <select class="form-control" name="atribut[]">
+                                                        <option value="Ao" selected><span class="badge badge-danger">Ao</span></option>
+                                                        <option value="Aka"><span class="badge badge-default"> Aka</span></option>
+                                                    </select>
+                                               </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Grup</label><br>
+                                                    <input class="form-control" type="text text-uppercase" maxlength="2" style="text-transform:uppercase;" name="grup[]">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Kontingen</label><br>
+                                            <textarea name="kontingen[]"class="form-control"></textarea>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-success">Tambah</button>
+            </div>
+            </div>
+        </div>
+    </div>
     <!-- Se table -->
     <div class="card-body">
         <div class="col-md-12">
+            <!-- Button trigger modal -->
+            <button type="button" class="btn btn-primary mb-5" data-toggle="modal" data-target="#staticBackdrop">
+            Tambah Atlet
+            </button>
             <form action="#" method="POST" enctype="multipart/form-data">
                 <table table id="example" class="table table-striped table-bordered nowrap" cellspacing="0" width="120%">
                     <thead class="thead-light">
