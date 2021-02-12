@@ -77,6 +77,7 @@ if (!isset($_SESSION['username'])) {
                 </div>
                 <form role="form" method="post" action="simpanDataJuri.php">
                   <input type="hidden" name="username" value="<?= $username ?>">
+                  <input type="hidden" name="namaAtlet" value="<?= $namaAtlet ?>">
                   <div class="form-group mb-3">
                     <div class="form-group">
                       <label for="exampleFormControlSelect1">
