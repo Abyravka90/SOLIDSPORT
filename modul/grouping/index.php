@@ -45,6 +45,7 @@ if (!isset($_SESSION['username'])) {
         while ($cekData = mysqli_fetch_array($sqlStatusPenilaian)) {
             $statusPenilaian = $cekData['statusPenilaian'];
         }
+        echo $statusPenilaian;
         if ($statusPenilaian != 'staging') {
             $sql = "SELECT * FROM atlet WHERE idAtlet = '$idAtlet'";
             $hasil = mysqli_query($conn, $sql);
@@ -136,13 +137,12 @@ if (!isset($_SESSION['username'])) {
             } else {
 
                 //JIKA JUMLAH JURI MENILAI KURANG DARI 5
-                echo '<div class="card card-body"><div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-                    <span class="alert-text"><strong>Gagal Proses!</strong> ada Juri Belum Menilai</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div></div>';
+                echo "
+                <script>
+                    alert('Gagal Proses!  ada Juri Belum Menilai');
+                    window.history.back();
+                </script>
+                ";
             }
         } else {
 
@@ -264,12 +264,12 @@ if (!isset($_SESSION['username'])) {
                                 <td class="text-muted"><?= $data['namaAtlet']; ?></td>
                                 <td class="text-muted">
                                     <!-- dari sini proses dilempar ke TOMBOL PLAY DIATAS  -->
-                                    <a href="?grup=<?= $data['grup'] ?>&&idAtlet=<?= $data['idAtlet'] ?>" class="btn btn-warning"><i class="ni ni-button-play"></i>&nbsp;play</a>
+                                    <button type="button" onclick="handleURL('?grup=<?= $data['grup'] ?>&&idAtlet=<?= $data['idAtlet'] ?>')" class="btn btn-warning" id="btn-play-<?= $i ?>"><i class="ni ni-button-play"></i>&nbsp;play</button>
 
                                     <!-- dari sini proses dilempar ke TOMBOL STOP DIATAS  -->
-                                    <a href="?grup=<?= $data['grup'] ?>&&idSimpan=<?= $data['idAtlet'] ?>" class="btn btn-primary"><i class="ni ni-button-power"></i>&nbsp;stop / save</a>
+                                    <button type="button" onclick="handleURL('?grup=<?= $data['grup'] ?>&&idSimpan=<?= $data['idAtlet'] ?>')" class="btn btn-primary" id="btn-stop-<?= $i ?>"><i class="ni ni-button-power"></i>&nbsp;stop / save</button>
                                     <!--dilanjutkan ke line TOMBOL RESET DIATAS-->
-                                    <a href="?grup=<?= $data['grup'] ?>&&reset=<?= $data['idAtlet'] ?>" class="btn btn-danger">↻&nbsp;reset</a>
+                                    <button type="button" onclick="handleURL('?grup=<?= $data['grup'] ?>&&reset=<?= $data['idAtlet'] ?>')" class="btn btn-danger" id="btn-reset-<?= $i ?>">↻&nbsp;reset</button>
                                 </td>
                                 <input type="hidden" name="idAtlet[]" value="<?= $data['idAtlet'] ?>">
                                 <td class="text-muted"><textarea class="form-control awesomplete" id="kata" name="namaKata[]" cols="30" rows="3"><?= $data['namaKata'] ?></textarea></td>
@@ -310,50 +310,80 @@ if (!isset($_SESSION['username'])) {
     ?>
     </body>
     <script>
-    const input = document.querySelectorAll("[id='kata']");
-    for(var i = 0; i < input.length; i++) {
-        const awesomplete = new Awesomplete(input[i], {
-            minChars: 1
-        })
-        awesomplete.list = ["ANAN"  ,   "JIIN"  ,   "PASSAI" ,
-            "ANAN DAI"  ,   "JION"  ,   "PINAN SHODAN",
-            "ANANKO"    ,   "JITTE" ,   "PINAN NIDAN",
-            "AOYAGI"    ,   "JYUROKU"   ,   "PINAN SANDAN",
-            "BASSAI"    ,   "KANCHIN"   ,   "PINAN YONDAN",
-            "BASSAI DAI",   "KANKU DAI" ,   "PINAN GODAN",
-            "BASSAI SHO"    ,   "KANKU SHO" ,   "ROHAI",
-            "CHATANYARA KUSHANKU"   ,   "KANSHU"    ,   "SAIFA",
-            "CHIBANA NO KUSHANKU"   ,   "KISHIMOTO NO KUSHANKU" ,   "SANCHIN",
-            "CHINTE"    ,   "KOSOUKUN"  ,   "SANSAI",
-            "CHINTO"    ,   "KOSOUKUN DAI"  ,   "SANSEIRU",
-            "ENPI"  ,   "KOSOUKUN  SHO" ,   "SANSERU",
-            "FUKYGATA ICHI" ,   "KURURUNFA" ,   "SEICHAN",
-            "FUKYGATA NI"   ,   "KUSANKU",      "SEIENCHIN (SEIYUNCHIN)",
-            "GANKAKU",      "KYAN NO CHINTO",       "SEIPAI",
-            "GARYU" ,   "KYAN NO WANSHU",       "SEIRYU",
-            "GEKISAI (GEKSAI) ICH",     "MATSUKAZE" ,   "SEISHAN",
-            "GEKISAI (GEKSAI) NI"   ,   "MATSUMURA BASSAI",     "SEISAN (SESAN)",
-            "GOJUSHIHO" ,   "MATSUMURA ROHAI"   ,   "SHIHO KOUSOUKUN",
-            "GOJUSHIHO DAI" ,   "MEIKYO"    ,   "SHINPA",
-            "GOJUSHIHO SHO" ,   "MYOJO" ,   "SHINSEI",
-            "HAKUCHO"   ,   "NAIFANCHIN SHODAN" ,   "SHISOCHIN",
-            "HANGETSU"  ,   "NAIFANCHIN NIDAN"  ,   "SOCHIN",
-            "HAUFA (HAFFA)" ,   "NAIFANCHIN SANDAN" ,   "SUPARINPEI",
-            "HEIAN SHODAN"  ,   "NAIHANCHIN",       "TEKKI SHODAN",
-            "HEIAN NIDAN"   ,   "NIJUSHIHO" ,   "TEKKI NIDAN",
-            "HEIAN SANDAN"  ,   "NIPAIPO",      "TEKKI SANDAN",
-            "HEIAN YONDAN",     "NISEISHI",     "TENSHO",
-            "HEIAN GODAN",      "OHAN",     "TOMARI BASSAI",
-            "HEIKU",        "OHAN DAI",     "UNSHU",
-            "ISHIMINE BASSAI",      "OYADOMARI NO PASSAI",      "UNSU",
-            "ITOSU ROHAI SHODAN",       "PACHU" ,   "USEISHI",
-            "ITOSU ROHAI NIDAN" ,   "PAIKU",        "WANKAN",
-            "ITOSU ROHAI SANDAN",       "PAPUREN",      "WANSHU",
+        const input = document.querySelectorAll("[id='kata']");
+        for(var i = 0; i < input.length; i++) {
+            const awesomplete = new Awesomplete(input[i], {
+                minChars: 1
+            })
+            awesomplete.list = ["ANAN"  ,   "JIIN"  ,   "PASSAI" ,
+                "ANAN DAI"  ,   "JION"  ,   "PINAN SHODAN",
+                "ANANKO"    ,   "JITTE" ,   "PINAN NIDAN",
+                "AOYAGI"    ,   "JYUROKU"   ,   "PINAN SANDAN",
+                "BASSAI"    ,   "KANCHIN"   ,   "PINAN YONDAN",
+                "BASSAI DAI",   "KANKU DAI" ,   "PINAN GODAN",
+                "BASSAI SHO"    ,   "KANKU SHO" ,   "ROHAI",
+                "CHATANYARA KUSHANKU"   ,   "KANSHU"    ,   "SAIFA",
+                "CHIBANA NO KUSHANKU"   ,   "KISHIMOTO NO KUSHANKU" ,   "SANCHIN",
+                "CHINTE"    ,   "KOSOUKUN"  ,   "SANSAI",
+                "CHINTO"    ,   "KOSOUKUN DAI"  ,   "SANSEIRU",
+                "ENPI"  ,   "KOSOUKUN  SHO" ,   "SANSERU",
+                "FUKYGATA ICHI" ,   "KURURUNFA" ,   "SEICHAN",
+                "FUKYGATA NI"   ,   "KUSANKU",      "SEIENCHIN (SEIYUNCHIN)",
+                "GANKAKU",      "KYAN NO CHINTO",       "SEIPAI",
+                "GARYU" ,   "KYAN NO WANSHU",       "SEIRYU",
+                "GEKISAI (GEKSAI) ICH",     "MATSUKAZE" ,   "SEISHAN",
+                "GEKISAI (GEKSAI) NI"   ,   "MATSUMURA BASSAI",     "SEISAN (SESAN)",
+                "GOJUSHIHO" ,   "MATSUMURA ROHAI"   ,   "SHIHO KOUSOUKUN",
+                "GOJUSHIHO DAI" ,   "MEIKYO"    ,   "SHINPA",
+                "GOJUSHIHO SHO" ,   "MYOJO" ,   "SHINSEI",
+                "HAKUCHO"   ,   "NAIFANCHIN SHODAN" ,   "SHISOCHIN",
+                "HANGETSU"  ,   "NAIFANCHIN NIDAN"  ,   "SOCHIN",
+                "HAUFA (HAFFA)" ,   "NAIFANCHIN SANDAN" ,   "SUPARINPEI",
+                "HEIAN SHODAN"  ,   "NAIHANCHIN",       "TEKKI SHODAN",
+                "HEIAN NIDAN"   ,   "NIJUSHIHO" ,   "TEKKI NIDAN",
+                "HEIAN SANDAN"  ,   "NIPAIPO",      "TEKKI SANDAN",
+                "HEIAN YONDAN",     "NISEISHI",     "TENSHO",
+                "HEIAN GODAN",      "OHAN",     "TOMARI BASSAI",
+                "HEIKU",        "OHAN DAI",     "UNSHU",
+                "ISHIMINE BASSAI",      "OYADOMARI NO PASSAI",      "UNSU",
+                "ITOSU ROHAI SHODAN",       "PACHU" ,   "USEISHI",
+                "ITOSU ROHAI NIDAN" ,   "PAIKU",        "WANKAN",
+                "ITOSU ROHAI SANDAN",       "PAPUREN",      "WANSHU",
 
-        ];
-        awesomplete.evaluate();
+            ];
+            awesomplete.evaluate();
+            
+        }
+
+        function checkMatchStatus() {
+            const getProp = decodeURI(window.location.search)
+            .replace('?', '')
+            .split('&')
+            .map(param => param.split('='))
+            .reduce((values, [ key, value ]) => {
+                values[ key ] = value
+                return values
+            }, {})
+
+            return getProp;
+        }
+
+        const isPlay = checkMatchStatus();
+
+        if(isPlay.idAtlet) {
+            const {idAtlet} = isPlay;
+
+            $(`#btn-play-${idAtlet}`).attr("disabled", "disabled");
+            $(`#btn-reset-${idAtlet}`).attr("disabled", "disabled");
+        }
         
-    }
+
+        function handleURL(url) {
+            console.log(url)
+            window.location.href = url;
+        }
+
+
 </script>
 
 <?php } ?>
