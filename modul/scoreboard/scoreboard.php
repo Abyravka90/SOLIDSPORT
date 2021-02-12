@@ -245,9 +245,9 @@ include '../../config/prosesPerhitungan.php';
                                                                                         } else {
                                                                                             echo 'danger';
                                                                                         } ?>" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:25px;"><?= $rowKlasemen['atribut'] ?></td>
-                                            <td class="text-center text-white score <?php if ($no == 1) {
+                                            <td class="text-center <?php if ($no == 1) {
                                                                                 echo 'blinking';
-                                                                            } ?>" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:25px;"><?= number_format($rowKlasemen['totalPoint'], 2) ?></td>
+                                                                            } ?>" style="font-family: 'Arial', sans-serif; color:white; font-weight:bold;font-size:25px;"><?= number_format($rowKlasemen['totalPoint'], 2) ?></td>
                                         </tr>
                                     <?php
                                         $no += 1;

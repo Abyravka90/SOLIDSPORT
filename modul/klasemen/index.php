@@ -107,7 +107,7 @@ if (!isset($_SESSION['username'])) {
                 <input type="submit" name="updatePapanskor" value="tampilkan" class="btn btn-info"></input>
             </form>
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmResetModal">
-                        Reset atlet
+                        Reset 
                     </button>
 
                     <!-- Modal -->

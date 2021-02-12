@@ -108,14 +108,47 @@ if (!isset($_SESSION['username'])) {
                      $sqlKlasemen = "INSERT INTO klasemen (idKlasemen, idAtlet, namaAtlet, atribut, kontingen, grup, totalPoint) 
                      VALUES ('','$idAtlet','$namaAtlet','$atribut','$kontingen','$grup','$totalPoint')";
                      mysqli_query($conn, $sqlKlasemen);
-     
-      
-                    //MENYIMPAN DATA REKAP
-                    $sqlRekap = "INSERT INTO rekap (idRekap, idAtlet, grup, T1, T2, T3, T4, T5, A1, A2, A3, A4, A5, bermain, totalPoint)
-                    VALUES ('', '$idAtlet','$grup', '$nilaiTeknik[0]', '$nilaiTeknik[1]', '$nilaiTeknik[2]', '$nilaiTeknik[3]', '$nilaiTeknik[4]',
-                    '$nilaiAtletik[0]', '$nilaiAtletik[1]', '$nilaiAtletik[2]', '$nilaiAtletik[3]', '$nilaiAtletik[4]', '$bermain', '$totalPoint')";
-                    mysqli_query($conn, $sqlRekap);
-     
+                    //LOGIKA SELEKSI NILAI
+                         //LOGIKA SELEKSI NILAI
+                         $T1 = $nilaiTeknik[0]; $T2 = $nilaiTeknik[1]; $T3 = $nilaiTeknik[2]; $T4 = $nilaiTeknik[3]; $T5 = $nilaiTeknik[4];
+                         $A1 = $nilaiAtletik[0]; $A2 = $nilaiAtletik[1]; $A3 = $nilaiAtletik[2]; $A4 = $nilaiAtletik[3]; $A5 = $nilaiAtletik[4];
+                        //JIKA NILAINYA SAMA DENGAN NILAI DI CORET MAKA TAMBAH KE COUNTER
+                        $counterTeknik1 = 0;
+                        $counterTeknik2 = 0;
+                        $counterAtletik1 = 0;
+                        $counterAtletik2 = 0;
+                         //nilaiterendahTeknik
+                         if($T1 == $deretSisaTeknik1 AND $counterTeknik1 == 0 ){ $T1 = '('.$nilaiTeknik[0].')'; $counterTeknik1 = 1;}
+                         if($T2 == $deretSisaTeknik1  AND $counterTeknik1 == 0 ){ $T2 = '('.$nilaiTeknik[1].')'; $counterTeknik1 = 1;}
+                         if($T3 == $deretSisaTeknik1  AND $counterTeknik1 == 0 ){ $T3 = '('.$nilaiTeknik[2].')'; $counterTeknik1 = 1;}
+                         if($T4 == $deretSisaTeknik1  AND $counterTeknik1 == 0 ){ $T4 = '('.$nilaiTeknik[3].')'; $counterTeknik1 = 1;}
+                         if($T5 == $deretSisaTeknik1  AND $counterTeknik1 == 0 ){ $T5 = '('.$nilaiTeknik[4].')'; $counterTeknik1 = 1;}
+                         //nilaiTertinggiTeknik
+                         if($T1 == $deretSisaTeknik2 AND $counterTeknik2 == 0 ){ $T1 = '('.$nilaiTeknik[0].')'; $counterTeknik2 = 1;}
+                         if($T2 == $deretSisaTeknik2  AND $counterTeknik2 == 0 ){ $T2 = '('.$nilaiTeknik[1].')'; $counterTeknik2 = 1;}
+                         if($T3 == $deretSisaTeknik2  AND $counterTeknik2 == 0 ){ $T3 = '('.$nilaiTeknik[2].')'; $counterTeknik2 = 1;}
+                         if($T4 == $deretSisaTeknik2  AND $counterTeknik2 == 0 ){ $T4 = '('.$nilaiTeknik[3].')'; $counterTeknik2 = 1;}
+                         if($T5 == $deretSisaTeknik2  AND $counterTeknik2 == 0 ){ $T5 = '('.$nilaiTeknik[4].')'; $counterTeknik2 = 1;}
+                         //nilaiTerendahAtletik
+                         if($A1 == $deretSisaAtletik1 AND $counterAtletik1 == 0 ){ $A1 = '('.$nilaiAtletik[0].')'; $counterAtletik1 = 1;}
+                         if($A2 == $deretSisaAtletik1  AND $counterAtletik1 == 0 ){ $A2 = '('.$nilaiAtletik[1].')'; $counterAtletik1 = 1;}
+                         if($A3 == $deretSisaAtletik1  AND $counterAtletik1 == 0 ){ $A3 = '('.$nilaiAtletik[2].')'; $counterAtletik1 = 1;}
+                         if($A4 == $deretSisaAtletik1  AND $counterAtletik1 == 0 ){ $A4 = '('.$nilaiAtletik[3].')'; $counterAtletik1 = 1;}
+                         if($A5 == $deretSisaAtletik1  AND $counterAtletik1 == 0 ){ $A5 = '('.$nilaiAtletik[4].')'; $counterAtletik1 = 1;}
+                         //nilaiTertinggiAtletik
+                         if($A1 == $deretSisaAtletik2 AND $counterAtletik2 == 0 ){ $A1 = '('.$nilaiAtletik[0].')'; $counterAtletik2 = 1;}
+                         if($A2 == $deretSisaAtletik2  AND $counterAtletik2 == 0 ){ $A2 = '('.$nilaiAtletik[1].')'; $counterAtletik2 = 1;}
+                         if($A3 == $deretSisaAtletik2  AND $counterAtletik2 == 0 ){ $A3 = '('.$nilaiAtletik[2].')'; $counterAtletik2 = 1;}
+                         if($A4 == $deretSisaAtletik2  AND $counterAtletik2 == 0 ){ $A4 = '('.$nilaiAtletik[3].')'; $counterAtletik2 = 1;}
+                         if($A5 == $deretSisaAtletik2  AND $counterAtletik2 == 0 ){ $A5 = '('.$nilaiAtletik[4].')'; $counterAtletik2 = 1;}
+                        
+                         //MENYIMPAN DATA REKAP 
+                        $sqlRekap =  "INSERT INTO rekap (idRekap, idAtlet, grup, T1, T2, T3, T4, T5, A1, A2, A3, A4, A5, bermain, totalPoint)
+                        VALUES ('', '$idAtlet','$grup', '$T1', '$T2', '$T3', '$T4', '$T5',
+                        '$A1', '$A2', '$A3', '$A4', '$A5', '$bermain', '$totalPoint')";
+                         mysqli_query($conn, $sqlRekap);
+                   
+                   
                     $sqlPoint = "UPDATE `point` SET statusPenilaian = 'saved'";
                     mysqli_query($conn, $sqlPoint);
                     $sqlAtlet = "UPDATE `atlet` SET statusPenilaian = 'standby'";
