@@ -212,11 +212,11 @@ include '../../config/prosesPerhitungan.php';
                         <table class="table table-small table-bordered table-sm align-items-center">
                             <thead class="thead-light">
                                 <tr>
-                                    <th class="text-center">Peringkat</th>
-                                    <th class="text-center">Nama atlet</th>
-                                    <th class="text-center">Kontingen</th>
-                                    <th class="text-center">Atribut</th>
-                                    <th class="text-center">Point</th>
+                                    <th style="font-size:20px;" class="text-center">Peringkat</th>
+                                    <th style="font-size:20px;" class="text-center">Nama atlet</th>
+                                    <th style="font-size:20px;" class="text-center">Kontingen</th>
+                                    <th style="font-size:20px;" class="text-center">Atribut</th>
+                                    <th style="font-size:20px;" class="text-center">Point</th>
                                 </tr>
                             </thead>
                             <?php
