@@ -84,7 +84,7 @@ if (!isset($_SESSION['username'])) {
                         <h3 class="display-5" style="font-family: 'Montserrat', sans-serif;">Nilai Teknik : </h3>
                       </label>
                       <select name="nilaiTeknik" class="form-control">
-                        <option>0.0</option>
+                        <option>0.0 - Diskualifikasi</option>
                         <?php
                         for ($i = 5; $i <= 10; $i = $i + 0.2) {
                           echo '<option value="' . number_format($i, 1) . '">' . number_format($i, 1) . '</option>';
@@ -99,7 +99,7 @@ if (!isset($_SESSION['username'])) {
                         <h3 class="display-5" style="font-family: 'Montserrat', sans-serif;">Nilai Atletik : </h3>
                       </label>
                       <select name="nilaiAtletik" class="form-control">
-                        <option>0.0</option>
+                        <option>0.0 - Diskualifikasi</option>
                         <?php
                         for ($i = 5; $i <= 10; $i = $i + 0.2) {
                           echo '<option value="' . number_format($i, 1) . '">' . number_format($i, 1) . '</option>';
