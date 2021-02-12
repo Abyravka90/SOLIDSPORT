@@ -45,7 +45,6 @@ if (!isset($_SESSION['username'])) {
         while ($cekData = mysqli_fetch_array($sqlStatusPenilaian)) {
             $statusPenilaian = $cekData['statusPenilaian'];
         }
-        echo $statusPenilaian;
         if ($statusPenilaian != 'staging') {
             $sql = "SELECT * FROM atlet WHERE idAtlet = '$idAtlet'";
             $hasil = mysqli_query($conn, $sql);
