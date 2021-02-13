@@ -22,13 +22,13 @@ if (!isset($_SESSION['username'])) {
             $sukses = mysqli_query($conn, $sql);
         }
     }
-    //jika tombol hapus ditekan
+    //JIKA TOMBOL HAPUS DITEKAN
     if (isset($_GET['idAtlet'])) {
         $idAtlet = $_GET['idAtlet'];
         mysqli_query($conn, "DELETE FROM atlet WHERE idAtlet = '$idAtlet'");
     }
 
-    //jika tombol reset data ditekan
+    //JIKA TOMBOL RESET DITEKAN
     if (isset($_GET['reset'])) {
         $reset = $_GET['reset'];
         if ($reset == '6512bd43d9caa6e02c990b0a82652dca') {

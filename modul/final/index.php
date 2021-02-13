@@ -107,7 +107,10 @@ if (!isset($_SESSION['username'])) {
                      //MENYIMPAN KE TABEL KLASEMEN
                      $sqlKlasemen = "INSERT INTO klasemen (idKlasemen, idAtlet, namaAtlet, atribut, kontingen, grup, totalPoint) 
                      VALUES ('','$idAtlet','$namaAtlet','$atribut','$kontingen','$grup','$totalPoint')";
-                     mysqli_query($conn, $sqlKlasemen);
+                    if(!mysqli_query($conn, $sqlKlasemen)){
+                        echo("Errorcode: " . mysqli_errno($con));
+                        exit();
+                    }
                     //LOGIKA SELEKSI NILAI
                          //LOGIKA SELEKSI NILAI
                          $T1 = $nilaiTeknik[0]; $T2 = $nilaiTeknik[1]; $T3 = $nilaiTeknik[2]; $T4 = $nilaiTeknik[3]; $T5 = $nilaiTeknik[4];
@@ -205,7 +208,7 @@ if (!isset($_SESSION['username'])) {
         $atribut = $_POST['atribut'];
         foreach ($idAtlet as $key => $val) {
             $sqlPoint = "UPDATE `point` SET `namaKata` = '$namaKata[$key]', `atribut` = '$atribut[$key]' WHERE `idAtlet` = '$idAtlet[$key]';";
-            $sqlAtlet = "UPDATE `atlet` SET `grup` = 'final', `namaKata` = '$namaKata[$key]', `atribut` = '$atribut[$key]' WHERE `idAtlet` = '$idAtlet[$key]';";
+            $sqlAtlet = "UPDATE `atlet` SET `namaKata` = '$namaKata[$key]', `atribut` = '$atribut[$key]' WHERE `idAtlet` = '$idAtlet[$key]';";
             mysqli_query($conn, $sqlPoint);
             mysqli_query($conn, $sqlAtlet);
         }

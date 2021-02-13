@@ -14,7 +14,7 @@ if ($row -> juriMenilai == 1) {
     $row = mysqli_fetch_object($queryCekAtlitValid);
     $namaAtletValid = $row -> namaAtlet;
     if($namaAtlet != $namaAtletValid){
-        echo '<script>alert("data Atlet tidak cocok");window.location.href="index.php";</script>';
+        echo '<script>alert("data Atlet tidak cocok");window.location.reload()";</script>';
     } else {
         $nilaiTeknik = $_POST['nilaiTeknik'];
         $nilaiAtletik = $_POST['nilaiAtletik'];
