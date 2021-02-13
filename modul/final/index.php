@@ -56,9 +56,12 @@ if (!isset($_SESSION['username'])) {
                 $namaKata = $data['namaKata'];
                 $grup = $data['grup'];
                 $atribut = $data['atribut'];
+                 //HARUS DI TAMBAHKAN 1 UNTUK MENYIMPAN KE REKAP
+                 $bermain = $data['bermain']+1;
+                 echo $bermain;die();
                 //proses update ke table point
                 $sqlPoint = "UPDATE `point` SET idAtlet = '$idAtlet', namaAtlet = '$namaAtlet', kelas = '$kelas', kontingen = '$kontingen', namaKata = '$namaKata', 
-                            grup = '$grup', atribut = '$atribut', statusPenilaian = 'staging', nilaiTeknik = 0, nilaiAtletik=0, juriMenilai = 0;";
+                            grup = '$grup', atribut = '$atribut', statusPenilaian = 'staging', nilaiTeknik = 0, nilaiAtletik=0, juriMenilai = 0;bermain = '$bermain';";
                 mysqli_query($conn, $sqlPoint);
                 $sqlAtlet = "UPDATE `atlet` SET statusPenilaian = 'staging' WHERE idAtlet = '$idAtlet';";
                 mysqli_query($conn, $sqlAtlet);
