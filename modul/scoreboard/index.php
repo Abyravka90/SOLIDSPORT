@@ -54,7 +54,7 @@ if (!isset($_SESSION['username'])) {
             </table>
             <!-- dilempar ke line 15-->
             <div class="card-header border-0">
-                <input name="reset" type="submit" value="Reset data" class="btn btn-danger">
+                <input name="reset" type="submit" value="Ubah Layar" class="btn btn-warning">
                 <a href="scoreboard.php" target="blank_" class="btn btn-info">tampilkan di layar</a>
         </form>
     </div>

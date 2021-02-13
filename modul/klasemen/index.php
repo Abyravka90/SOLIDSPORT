@@ -103,13 +103,23 @@ if (!isset($_SESSION['username'])) {
             </tbody>
         </table>
         <div class="pl-3">
-            <form action="#" method="post">
-                <input type="submit" name="updatePapanskor" value="tampilkan" class="btn btn-info"></input>
-            </form>
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmResetModal">
-                        Reset 
-                    </button>
+        <div class="row">
+        <div class="col-md-2">
 
+            <form action="#" method="post">
+                <input type="submit" name="updatePapanskor" value="Tampilkan" class="btn btn-info"></input>
+            </form>
+        </div>
+        <div class="col"></div>
+        <div class="col-md-2">
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmResetModal">
+                        Reset Data
+            </button>
+
+        </div>
+        </div>
+         
+            
                     <!-- Modal -->
                     <div class="modal fade" id="confirmResetModal" tabindex="-1" role="dialog" aria-labelledby="confirmResetModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
