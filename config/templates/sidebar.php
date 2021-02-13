@@ -97,7 +97,7 @@ $base_url = "http://$_SERVER[HTTP_HOST]/solidsport/modul";
           </li>
           <li class="nav-item">
             <a <?php
-                if ($mod == "klasemen") {
+                if ($mod == "rekap") {
                   echo 'class="nav-link active"';
                 } else {
                   echo 'class="nav-link"';
