@@ -76,7 +76,7 @@ if (!isset($_SESSION['username'])) {
         </tbody>
         </table>
         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmResetModal">
-                        Reset atlet
+                        Reset Rekap
                     </button>
 
                     <!-- Modal -->

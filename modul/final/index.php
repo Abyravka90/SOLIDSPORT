@@ -61,7 +61,7 @@ if (!isset($_SESSION['username'])) {
                  
                 //proses update ke table point
                 $sqlPoint = "UPDATE `point` SET idAtlet = '$idAtlet', namaAtlet = '$namaAtlet', kelas = '$kelas', kontingen = '$kontingen', namaKata = '$namaKata', 
-                            grup = '$grup', atribut = '$atribut', statusPenilaian = 'staging', nilaiTeknik = 0, nilaiAtletik=0, juriMenilai = 0;bermain = '$bermain';";
+                            grup = '$grup', atribut = '$atribut', statusPenilaian = 'staging', nilaiTeknik = 0, nilaiAtletik=0, juriMenilai = 0, bermain = '$bermain';";
                 mysqli_query($conn, $sqlPoint);
                 $sqlAtlet = "UPDATE `atlet` SET statusPenilaian = 'staging' WHERE idAtlet = '$idAtlet';";
                 mysqli_query($conn, $sqlAtlet);
