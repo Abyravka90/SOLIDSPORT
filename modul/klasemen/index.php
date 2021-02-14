@@ -11,17 +11,10 @@ if (!isset($_SESSION['username'])) {
     if (isset($_GET['idKlasemen'])) {
         $idKlasemen = $_GET['idKlasemen'];
         mysqli_query($conn, "DELETE from `klasemen` WHERE idKlasemen = $idKlasemen");
-    }
-    //DELETE SEMUA DATA
-    if (isset($_GET['reset'])) {
-        $reset = $_GET['reset'];
-        if($reset == 1){
-            mysqli_query($conn, "TRUNCATE TABLE klasemen");
-            mysqli_query($conn, "ALTER TABLE klasemen auto_increment=0");
-        }
-    }
-    ?>
+    } 
     
+    ?>
+
     <!-- Card header -->
     <div class="card-header border-0">
     
@@ -134,7 +127,10 @@ if (!isset($_SESSION['username'])) {
                                     Apakah anda yakin menghapus semua data klasemen
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="?reset=1" class="btn btn-danger">ya</a>
+                                <form action="resetKlasemen.php" method="post">
+                                <input type="hidden" name="resetKlasemen" value="1">
+                                    <input type="submit" name="btnReset" value="yes" class="btn btn-danger"></input>
+                                </form>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
                                 </div>
                             </div>

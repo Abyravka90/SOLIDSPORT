@@ -90,10 +90,13 @@ if (!isset($_SESSION['username'])) {
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    Apakah anda yakin menghapus semua data rekap
+                                    Apakah anda yakin menghapus semua data rekap?
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="?reset=1" class="btn btn-danger">ya</a>
+                                <form action="resetRekap.php" method="post">
+                                <input type="hidden" name="resetRekap" value="1">
+                                    <input type="submit" name="btnReset" value="yes" class="btn btn-danger"></input>
+                                </form>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
                                 </div>
                             </div>
