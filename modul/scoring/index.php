@@ -54,7 +54,7 @@ if (!isset($_SESSION['username'])) {
     ?>
     <div class="container-fluid mt-5 mb-5">
         <form action="#" method="post">
-            <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <table class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>
                         <th class="text-dark text-center" colspan=3><small class="text-muted" style="font-size:16px;">Nama Atlet :</small>
