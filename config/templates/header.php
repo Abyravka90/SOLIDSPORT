@@ -17,4 +17,8 @@
   <link rel="stylesheet" href="../../assets/css/argon.css?v=1.2.0" type="text/css">
   <!-- <link rel="stylesheet" href="https://cdn.rawgit.com/LeaVerou/awesomplete/gh-pages/awesomplete.css" type="text/css"> -->
   <link rel="stylesheet" href="../../assets/css/awesomplete.css" type="text/css">
+  <!-- Sweet Alert -->
+  <link href="../../assets/css/sweetalert2.min.css" rel="stylesheet"></link>
+  <link crossorigin="anonymous" href="../../assets/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" rel="stylesheet"></link>
+
 </head>

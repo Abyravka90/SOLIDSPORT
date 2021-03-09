@@ -9,7 +9,9 @@
 </footer>
 </div>
 </div>
-
+<!-- Sweet Alert -->
+<script src="../../assets/js/sweetalert2.min.js"></script>
+    
 <!-- Core -->
 <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
 <script src="../../assets/vendor/js-cookie/js.cookie.js"></script>

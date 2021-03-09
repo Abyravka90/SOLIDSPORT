@@ -14,7 +14,6 @@ if (!isset($_SESSION['username'])) {
     } 
     
     ?>
-
     <!-- Card header -->
     <div class="card-header border-0">
     
@@ -91,6 +90,26 @@ if (!isset($_SESSION['username'])) {
                         mysqli_query($conn, $sqlTampilPapanskor);
                         mysqli_query($conn, $sqlTampilKlasemen);
                     }
+
+                    //JIKA TOMBOL RESET SCOREBOARD DI KLIK
+                    if(isset($_POST['resetPapanskor'])){
+                        mysqli_query($conn, "UPDATE `papanskor` SET `status` = 'aktif' where jenisScoreboard = 'scoreboard'");
+                        mysqli_query($conn, "UPDATE `papanskor` SET `status` = 'idle' where jenisScoreboard = 'klasemen'");
+                        mysqli_query($conn, "UPDATE `point` SET idAtlet = '-', namaAtlet = '-', kelas = '-', kontingen = '-', namaKata = '-',
+                                        grup = '-', atribut = '-', nilaiTeknik = 0, nilaiAtletik = 0, statusPenilaian = 'standby', juriMenilai = 0");
+                                        mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby'");
+                                        echo '<script>
+                                        setTimeout(function() {
+                                            swal({
+                                                title: "Berhasil!",
+                                                text: "Papan Skor berhasil di reset!",
+                                                type: "success"
+                                            }, function() {
+                                                window.location = "redirectURL";
+                                            });
+                                        }, 1000);
+                                    </script>';
+                                    }
                     ?>
                 </tr>
             </tbody>
@@ -98,10 +117,15 @@ if (!isset($_SESSION['username'])) {
         <div class="pl-3">
         <div class="row">
         <div class="col-md-2">
-
-            <form action="#" method="post">
+            <form action="" method="post">
                 <input type="submit" name="updatePapanskor" value="Tampilkan" class="btn btn-info"></input>
             </form>
+        </div>
+        <div class="col-md-2">
+            <form action="" method="post">
+                <input type="submit" name="resetPapanskor" value="Reset Scoreboard" class="btn btn-warning"></input>
+            </form>
+        
         </div>
         <div class="col"></div>
         <div class="col-md-2">
@@ -144,6 +168,5 @@ if (!isset($_SESSION['username'])) {
     include "../../config/templates/footer.php";
     ?>
     </body>
-    
-    </html>
+ </html>
 <?php } ?>
