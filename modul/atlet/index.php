@@ -22,6 +22,27 @@ if (!isset($_SESSION['username'])) {
             $sukses = mysqli_query($conn, $sql);
         }
     }
+    //JIKA TOMBOL TAMBAH DATA DITEKAN
+    if(isset($_POST['tambahAtlet'])){
+        $namaAtlet = $_POST['namaAtlet'];
+        $namaKata = $_POST['namaKata'];
+        $kontingen = $_POST['kontingen'];
+        $grup = $_POST['grup'];
+        $atribut = $_POST['atribut'];
+        $kelas = $_POST['kelas'];
+        $result = mysqli_query($conn, "INSERT INTO `atlet` (idAtlet, namaAtlet, kelas, kontingen, namaKata, grup, atribut, bermain, statusPenilaian) 
+        VALUES ('', '$namaAtlet', '$kelas', '$kontingen',  '$namaKata', '$grup', '$atribut', 0, 'standby')") or die(mysqli_error($conn));
+        if($result){
+            echo '<script>setTimeout(function(){
+                swal({
+                    title : "berhasil",
+                    text : "menambahkan data atlet",
+                    type : "success"
+                })
+            },1000)</script>';
+        }
+    }
+
     //JIKA TOMBOL HAPUS DITEKAN
     if (isset($_GET['idAtlet'])) {
         $idAtlet = $_GET['idAtlet'];
@@ -29,12 +50,20 @@ if (!isset($_SESSION['username'])) {
     }
 
     //JIKA TOMBOL RESET DITEKAN
-    if (isset($_GET['reset'])) {
-        $reset = $_GET['reset'];
-        if ($reset == '6512bd43d9caa6e02c990b0a82652dca') {
-            mysqli_query($conn, "DELETE FROM atlet");
-            mysqli_query($conn, "ALTER TABLE atlet auto_increment=0");
-        }
+    if (isset($_POST['resetAllData'])) {
+        
+        
+            mysqli_query($conn, "DELETE FROM `atlet`") or die(mysqli_error($conn));
+            mysqli_query($conn, "ALTER TABLE `atlet` auto_increment=0") or die(mysqli_error($conn));
+
+            //RESET KE TABLE KLASEMEN
+            mysqli_query($conn, "TRUNCATE TABLE `klasemen`") or die(mysqli_error($conn));
+            mysqli_query($conn, "ALTER TABLE `klasemen` auto_increment=0") or die(mysqli_error($conn));
+            
+            //RESET KE TABLE REKAP
+            mysqli_query($conn, "TRUNCATE TABLE `rekap`") or die(mysqli_error($conn));
+            mysqli_query($conn, "ALTER TABLE `rekap` auto_increment=0") or die(mysqli_error($conn));
+        
     }
 
 ?>
@@ -63,17 +92,17 @@ if (!isset($_SESSION['username'])) {
             <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
-                            <form>
+                            <form action="" method="POST">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label>Nama</label><br>
-                                            <input type="text" name="nameAtlet[]" class="form-control">
+                                            <input type="text" name="namaAtlet" class="form-control">
                                         </div>
                                       
                                         <div class="form-group">
                                             <label>Kelas</label><br>
-                                            <input type="text" class="form-control" name="kelas[]" id="">
+                                            <input type="text" class="form-control" name="kelas" id="">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -81,13 +110,13 @@ if (!isset($_SESSION['username'])) {
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <label>Kata</label><br>
-                                                    <input type="text" class="form-control awesomplete" name="namaKata[]" id="kata">
+                                                    <input type="text" class="form-control awesomplete" name="namaKata" id="kata">
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                <div class="form-group">
                                                     <label>Attribut</label><br>
-                                                    <select class="form-control" name="atribut[]">
+                                                    <select class="form-control" name="atribut">
                                                         <option value="Ao" selected><span class="badge badge-danger">Ao</span></option>
                                                         <option value="Aka"><span class="badge badge-default"> Aka</span></option>
                                                     </select>
@@ -96,25 +125,25 @@ if (!isset($_SESSION['username'])) {
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label>Grup</label><br>
-                                                    <input class="form-control" type="text text-uppercase" maxlength="2" style="text-transform:uppercase;" name="grup[]">
+                                                    <input class="form-control" type="text text-uppercase" maxlength="2" style="text-transform:uppercase;" name="grup">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label>Kontingen</label><br>
-                                            <textarea name="kontingen[]"class="form-control"></textarea>
+                                            <textarea name="kontingen"class="form-control"></textarea>
                                         </div>
                                         
                                     </div>
                                 </div>
-                            </form>
                         </div>
                     </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                <button type="button" class="btn btn-success">Tambah</button>
+                <button name="tambahAtlet" type="submit" class="btn btn-success">Tambah</button>
             </div>
+            </form>
             </div>
         </div>
     </div>
@@ -196,7 +225,9 @@ if (!isset($_SESSION['username'])) {
                                     Apakah anda yakin menghapus semua data atlet
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="?reset=<?= md5(11) ?>" class="btn btn-danger">ya</a>
+                                <form action="" method="post">
+                                    <button name="resetAllData" type="submit" class="btn btn-danger">ya</button>
+                                </form>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
                                 </div>
                             </div>

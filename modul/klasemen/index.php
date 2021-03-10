@@ -104,8 +104,6 @@ if (!isset($_SESSION['username'])) {
                                                 title: "Berhasil!",
                                                 text: "Papan Skor berhasil di reset!",
                                                 type: "success"
-                                            }, function() {
-                                                window.location = "redirectURL";
                                             });
                                         }, 1000);
                                     </script>';

@@ -52,14 +52,26 @@ if (!isset($_SESSION['username'])) {
 
             if ($counter > 0) {
                 $ip = $_SERVER["HTTP_HOST"];
-                echo "<script>window.location.href='http://$ip/solidsport/modul/atlet';</script>";
+                
+                echo "<script>
+                    setTimeout(function(){
+                        swal({
+                            title : 'Berhasil',
+                            text : 'Data Berhasil di Import',
+                            type : 'success'
+                        }).then(function(){
+                            window.location.href = 'http://$ip/solidsport/modul/atlet';
+                        })
+                    },1000);
+                </script>";
+                //echo "<script>window.location.href='http://$ip/solidsport/modul/atlet';</script>";
             }
             // hapus kembali file .xls yang di upload tadi
             unlink($_FILES['fileAtlet']['name']);
         }
         ?>
         <div class="col-md-6">
-            <form action="#" method="post" enctype="multipart/form-data">
+            <form action="" method="post" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
