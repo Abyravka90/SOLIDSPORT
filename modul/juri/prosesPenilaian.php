@@ -130,7 +130,8 @@ if (!isset($_SESSION['username'])) {
 
 
   </body>
-
+  <script src="../../assets/js/sweetalert2.min.js"></script>
   </html>
 <?php
-} ?>
+} 
+?>

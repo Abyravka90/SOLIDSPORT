@@ -63,6 +63,12 @@ if (!isset($_SESSION['username'])) {
             //RESET KE TABLE REKAP
             mysqli_query($conn, "TRUNCATE TABLE `rekap`") or die(mysqli_error($conn));
             mysqli_query($conn, "ALTER TABLE `rekap` auto_increment=0") or die(mysqli_error($conn));
+
+            mysqli_query($conn, "UPDATE `papanskor` SET `status` = 'aktif' where jenisScoreboard = 'scoreboard'");
+            mysqli_query($conn, "UPDATE `papanskor` SET `status` = 'idle' where jenisScoreboard = 'klasemen'");
+            mysqli_query($conn, "UPDATE `point` SET idAtlet = '-', namaAtlet = '-', kelas = '-', kontingen = '-', namaKata = '-',
+                            grup = '-', atribut = '-', nilaiTeknik = 0, nilaiAtletik = 0, statusPenilaian = 'standby', juriMenilai = 0");
+                            mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby'");
         
     }
 

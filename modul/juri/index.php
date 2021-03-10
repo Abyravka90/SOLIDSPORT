@@ -3,8 +3,8 @@ session_start();
 if (!isset($_SESSION['username'])) {
   header("location:../login");
 } else {
+  include "../../config/templates/header.php";
   if ($_SESSION['statusLogin'] == 0) {
-    include "../../config/templates/header.php";
 ?>
     <html>
 
@@ -72,9 +72,18 @@ if (!isset($_SESSION['username'])) {
   } else {
     echo
     '<script>
-                alert("reset login melalui admin");
-                window.location.href="../login";
-                </script>';
+    setTimeout(function(){
+      swal({
+        title : "Gagal Masuk!",
+        text : "coba reset login melalui admin",
+        type : "error",
+      }).then(function(){
+        window.location.href="../login";
+      })
+    },1000);
+    </script>';
   }
 }
 ?>
+<!-- Sweet Alert -->
+<script src="../../assets/js/sweetalert2.min.js"></script>
