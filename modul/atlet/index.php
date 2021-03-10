@@ -7,7 +7,8 @@ if (!isset($_SESSION['username'])) {
     include "../../config/templates/sidebar.php";
     include "../../config/templates/mainContent.php";
     include "../../config/database/koneksi.php";
-    //jika tombol update ditekan
+
+    //JIKA TOMBOL UPDATE DITEKAN
     if (isset($_POST['update'])) {
         $idAtlet = $_POST['idAtlet'];
         $namaAtlet = $_POST['namaAtlet'];
@@ -19,9 +20,10 @@ if (!isset($_SESSION['username'])) {
         foreach ($idAtlet as $key => $val) {
             $sql = "UPDATE atlet SET namaAtlet = '$namaAtlet[$key]', namaKata = '$namaKata[$key]', kontingen = '$kontingen[$key]',
             grup = '$grup[$key]', atribut = '$atribut[$key]', kelas = '$kelas[$key]' WHERE idAtlet = $idAtlet[$key];";
-            $sukses = mysqli_query($conn, $sql);
+            $sukses = mysqli_query($conn, $sql) or die(mysqli_error($conn));
         }
     }
+
     //JIKA TOMBOL TAMBAH DATA DITEKAN
     if(isset($_POST['tambahAtlet'])){
         $namaAtlet = $_POST['namaAtlet'];
@@ -46,13 +48,11 @@ if (!isset($_SESSION['username'])) {
     //JIKA TOMBOL HAPUS DITEKAN
     if (isset($_GET['idAtlet'])) {
         $idAtlet = $_GET['idAtlet'];
-        mysqli_query($conn, "DELETE FROM atlet WHERE idAtlet = '$idAtlet'");
+        mysqli_query($conn, "DELETE FROM atlet WHERE idAtlet = '$idAtlet'") or die(mysqli_error($conn));
     }
 
     //JIKA TOMBOL RESET DITEKAN
-    if (isset($_POST['resetAllData'])) {
-        
-        
+    if (isset($_POST['resetAllData'])) {    
             mysqli_query($conn, "DELETE FROM `atlet`") or die(mysqli_error($conn));
             mysqli_query($conn, "ALTER TABLE `atlet` auto_increment=0") or die(mysqli_error($conn));
 
@@ -68,7 +68,7 @@ if (!isset($_SESSION['username'])) {
             mysqli_query($conn, "UPDATE `papanskor` SET `status` = 'idle' where jenisScoreboard = 'klasemen'");
             mysqli_query($conn, "UPDATE `point` SET idAtlet = '-', namaAtlet = '-', kelas = '-', kontingen = '-', namaKata = '-',
                             grup = '-', atribut = '-', nilaiTeknik = 0, nilaiAtletik = 0, statusPenilaian = 'standby', juriMenilai = 0");
-                            mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby'");
+                            mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby'") or die(mysqli_error($conn)) ;
         
     }
 
@@ -160,7 +160,7 @@ if (!isset($_SESSION['username'])) {
             <button type="button" class="btn btn-primary mb-5" data-toggle="modal" data-target="#staticBackdrop">
             Tambah Atlet
             </button>
-            <form action="#" method="POST" enctype="multipart/form-data">
+            <form action="" method="POST" enctype="multipart/form-data">
                 <table table id="example" class="table table-striped table-bordered nowrap" cellspacing="0" width="120%">
                     <thead class="thead-light">
                         <tr>
@@ -178,31 +178,31 @@ if (!isset($_SESSION['username'])) {
                     <tbody class="list">
                         <?php
                         $i = 1;
-                        $sql = mysqli_query($conn, "SELECT * FROM atlet");
-                        while ($data = mysqli_fetch_array($sql)) {
+                        $sql = mysqli_query($conn, "SELECT * FROM atlet") or die(mysqli_error($conn));
+                        while ($data = mysqli_fetch_object($sql)) {
                         ?>
                             <tr>
-                                <td><a class="btn btn-danger" href="?idAtlet=<?= $data['idAtlet'] ?>"><i class="fas fa-trash"></i></a></td>
+                                <td><a class="btn btn-danger" href="?idAtlet=<?= $data -> idAtlet ?>"><i class="fas fa-trash"></i></a></td>
                                 <td><?= $i ?></td>
-                                <td><textarea class="form-control" name="namaAtlet[]" id="" cols="10" rows="3"><?= $data['namaAtlet']; ?></textarea></td>
-                                <td><input type="text" class="form-control awesomplete" name="namaKata[]" id="kata" cols="10" rows="3" value="<?= $data['namaKata']; ?>"></td>
-                                <td><textarea class="form-control" name="kontingen[]" id="" cols="10" rows="3"><?= $data['kontingen']; ?></textarea></td>
+                                <td><textarea class="form-control" name="namaAtlet[]" id="" cols="10" rows="3"><?= $data -> namaAtlet ?></textarea></td>
+                                <td><input type="text" class="form-control awesomplete" name="namaKata[]" id="kata" cols="10" rows="3" value="<?= $data -> namaKata ?>"></td>
+                                <td><textarea class="form-control" name="kontingen[]" id="" cols="10" rows="3"><?= $data -> kontingen ?></textarea></td>
                                 <td>
-                                    <input class="form-control" type="text" name="grup[]" value="<?= $data['grup'] ?>">
+                                    <input class="form-control" type="text" name="grup[]" value="<?= $data -> grup ?>">
                                 </td>
                                 <td>
                                     <select class="form-control" name="atribut[]">
-                                        <option value="Aka" <?php if ($data['atribut'] == "Aka") {
+                                        <option value="Aka" <?php if ($data -> atribut == "Aka") {
                                                                 echo "selected";
-                                                            } ?>><span class="badge badge-default"> Aka</span></option>
-                                        <option value="Ao" <?php if ($data['atribut'] == "Ao") {
+                                                            } ?> ><span class="badge badge-default"> Aka</span></option>
+                                        <option value="Ao" <?php if ($data -> atribut == "Ao") {
                                                                 echo "selected";
-                                                            } ?>><span class="badge badge-danger">Ao</span></option>
+                                                            } ?> ><span class="badge badge-danger">Ao</span></option>
                                     </select>
                                 </td>
-                                <td><?= $data['bermain']; ?></td>
-                                <td><textarea class="form-control" name="kelas[]" id="" cols="10" rows="3"><?= $data['kelas']; ?></textarea></td>
-                                <input type="hidden" name="idAtlet[]" value=<?= $data['idAtlet']; ?>>
+                                <td><?= $data -> bermain ?></td>
+                                <td><textarea class="form-control" name="kelas[]" id="" cols="10" rows="3"><?= $data -> kelas ?></textarea></td>
+                                <input type="hidden" name="idAtlet[]" value=<?= $data -> idAtlet ?> >
                             </tr>
                         <?php
                             $i++;
