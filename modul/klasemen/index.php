@@ -100,7 +100,7 @@ if (!isset($_SESSION['username'])) {
                                         mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby'");
                                         echo '<script>
                                         setTimeout(function() {
-                                            swal({
+                                            Swal.fire({
                                                 title: "Berhasil!",
                                                 text: "Papan Skor berhasil di reset!",
                                                 type: "success"
@@ -120,44 +120,15 @@ if (!isset($_SESSION['username'])) {
             </form>
         </div>
         <div class="col-md-2">
-            <form action="" method="post">
-                <input type="submit" name="resetPapanskor" value="Reset Scoreboard" class="btn btn-warning"></input>
-            </form>
-        
+            <input type="hidden" value=1 id='resetPapanSkor'>
+            <button class="btn btn-warning" id='resetPapanSkorButton' >reset Scoreboard</button>
         </div>
         <div class="col"></div>
         <div class="col-md-2">
-        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmResetModal">
-                        Reset Data
-            </button>
-
+        <input type="hidden" value=1 id="resetKlasemen">
+        <button class="btn btn-danger" id="resetKlasemenButton">           Reset Data
+        </button>
         </div>
-        </div>
-         
-            
-                    <!-- Modal -->
-                    <div class="modal fade" id="confirmResetModal" tabindex="-1" role="dialog" aria-labelledby="confirmResetModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Reset Data</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Apakah anda yakin menghapus semua data klasemen
-                                </div>
-                                <div class="modal-footer">
-                                <form action="resetKlasemen.php" method="post">
-                                <input type="hidden" name="resetKlasemen" value="1">
-                                    <input type="submit" name="btnReset" value="yes" class="btn btn-danger"></input>
-                                </form>
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tidak</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
         </div>
     </div>
     <br />
@@ -165,6 +136,72 @@ if (!isset($_SESSION['username'])) {
     <?php
     include "../../config/templates/footer.php";
     ?>
+    <script>
+    $(document).ready(function(){
+        //reset Klasemen
+        $('#resetKlasemenButton').click(function(){
+            var resetKlasemen = $('#resetKlasemen').val();
+            $.ajax({
+                url:'resetKlasemen.php',
+                type:'POST',
+                data:{
+                    "resetKlasemen": resetKlasemen,
+                },
+                //JIKA DATANYA COCOK
+                success:function(response){
+                    if (response=='success'){
+                        Swal.fire({
+                            type:'success',
+                            title:'berhasil',
+                            text:'data klasemen berhasil dihapus',
+                        }).then(function(){
+                            window.location.href='';
+                        });
+                    } else {
+                        Swal.fire({
+                            type:'error',
+                            title:'gagal',
+                            text:'data gagal disimpan',
+                        }).then(function(){
+                            window.location.href='';
+                        });
+                    }
+                }
+            });
+        });
+        //resetPapanSkor
+        $('#resetPapanSkorButton').click(function(){
+            var resetPapanSkor = $('#resetPapanSkor').val();
+            $.ajax({
+                url:'resetScoreboard.php',
+                type:'POST',
+                data:{
+                    "resetPapanSkor": resetPapanSkor,
+                },
+                //JIKA DATANYA COCOK
+                success:function(response){
+                    if(response=='success'){
+                        Swal.fire({
+                            type:'success',
+                            title:'berhasil',
+                            text:'papan Skor berhasil di reset',
+                        }).then(function(){
+                            window.location.href='';
+                        });
+                    } else {
+                        Swal.fire({
+                            type:'error',
+                            title:'gagal',
+                            text:'papan Skor gagal di reset',
+                        }).then(function(){
+                            window.location.href='';
+                        });
+                    }
+                }
+            })
+        });
+    });
+    </script>
     </body>
  </html>
 <?php } ?>
