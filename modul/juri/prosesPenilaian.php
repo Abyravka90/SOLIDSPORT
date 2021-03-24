@@ -75,15 +75,15 @@ if (!isset($_SESSION['username'])) {
 
                   </div>
                 </div>
-                <form role="form" method="post" action="simpanDataJuri.php">
-                  <input type="hidden" name="username" value="<?= $username ?>">
-                  <input type="hidden" name="namaAtlet" value="<?= $row -> namaAtlet ?>">
+                
+                  <input type="hidden" id="username" name="username" value="<?= $username ?>">
+                  <input type="hidden" id="namaAtlet" name="namaAtlet" value="<?= $row -> namaAtlet ?>">
                   <div class="form-group mb-3">
                     <div class="form-group">
                       <label for="exampleFormControlSelect1">
                         <h3 class="display-5" style="font-family: 'Montserrat', sans-serif;">Nilai Teknik : </h3>
                       </label>
-                      <select name="nilaiTeknik" class="form-control">
+                      <select id="nilaiTeknik" name="nilaiTeknik" class="form-control">
                         <?php
                         for ($i = 5; $i <= 10; $i = $i + 0.2) {
                           echo '<option value="' . number_format($i, 1) . '">' . number_format($i, 1) . '</option>';
@@ -97,7 +97,7 @@ if (!isset($_SESSION['username'])) {
                       <label for="exampleFormControlSelect1">
                         <h3 class="display-5" style="font-family: 'Montserrat', sans-serif;">Nilai Atletik : </h3>
                       </label>
-                      <select name="nilaiAtletik" class="form-control">
+                      <select id="nilaiAtletik" name="nilaiAtletik" class="form-control">
                         <?php
                         for ($i = 5; $i <= 10; $i = $i + 0.2) {
                           echo '<option value="' . number_format($i, 1) . '">' . number_format($i, 1) . '</option>';
@@ -107,9 +107,9 @@ if (!isset($_SESSION['username'])) {
                     </div>
                   </div>
                   <div class="text-center">
-                    <button type="submit" class="btn btn-primary btn-block mt-5 mb-4  ">Nilai</button>
+                    <button id="buttonNilai" class="btn btn-primary btn-block mt-5 mb-4  ">Nilai</button>
                   </div>
-                </form>
+                
               </div>
             </div>
           </div>
@@ -130,6 +130,69 @@ if (!isset($_SESSION['username'])) {
   </body>
   <script src="../../assets/js/sweetalert2.min.js"></script>
   </html>
+  <script>
+    $('document').ready(function(){
+      //PROSES INPUT DATA
+      $('#buttonNilai').click(function(){
+        var username = $('#username').val();
+        var namaAtlet = $('#namaAtlet').val();
+        var nilaiTeknik = $('#nilaiTeknik').val();
+        var nilaiAtletik = $('#nilaiAtletik').val();
+        //mainkan ajax nya
+        $.ajax({
+          url:'simpanDataJuri.php',
+          type:'POST',
+          data:{
+            "username":username,
+            "namaAtlet":namaAtlet,
+            "nilaiTeknik":nilaiTeknik,
+            "nilaiAtletik":nilaiAtletik,
+          },
+          success:function(response){
+            console.log("response: ", response);
+            response = response.trim()
+            if(response == "success"){
+                Swal.fire({
+                  type:'success',
+                  title:'berhasil',
+                  text:'nilai berhasil diinput',
+                }).then(function(){
+                  window.location.href='index.php';
+                  console.log(response);
+                });
+            }else if(response == 'sudah'){
+              Swal.fire({
+                type:'warning',
+                title:'gagal',
+                text:'Atlet ini sudah anda nilai klik untuk melanjutkan',
+              }).then(function(){
+                window.location.href='index.php';
+               
+              });
+            }else if(response == 'mismatch'){
+              Swal.fire({
+                type:'info',
+                title:'Update',
+                text:'Data atlet tidak cocok klik untuk melanjutkan',
+              }).then(function(){
+                window.location.href='index.php';
+               
+              });
+            }else {
+              Swal.fire({
+                type:'error',
+                title:'gagal',
+                text:'Gagal simpan data klik untuk melanjutkan',
+              }).then(function(){
+                window.location.href='index.php';
+               
+              });
+            }
+          }
+        });
+      });
+    });
+  </script>
 <?php
 } 
 ?>

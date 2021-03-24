@@ -9,7 +9,7 @@ if (!isset($_SESSION['username'])) {
     include "../../config/database/koneksi.php";
 
     //JIKA TOMBOL UPDATE DITEKAN
-    if (isset($_POST['update'])) {
+    if (isset($_POST['idAtlet'])) {
         $idAtlet = $_POST['idAtlet'];
         $namaAtlet = $_POST['namaAtlet'];
         $namaKata = $_POST['namaKata'];
