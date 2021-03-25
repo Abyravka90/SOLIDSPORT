@@ -66,16 +66,17 @@ if (!isset($_SESSION['username'])) {
                 mysqli_query($conn, $sqlAtlet);
             }
         } else {
-            echo
-            '<div class="card card-body"><div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-                    <span class="alert-text"><strong>Gagal Play!</strong> belum di stop!</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                </div>';
-        }
+            echo "
+            <script>
+            setTimeout(function(){
+                Swal.fire({
+                    type:'error',
+                    title : 'gagal',
+                    text : 'masih ada status atlet bermain',
+                });
+            },3)
+            </script>
+            ";        }
     }
     ?>
 
@@ -149,41 +150,54 @@ if (!isset($_SESSION['username'])) {
                     VALUES ('', '$idAtlet','$grup', '$T1', '$T2', '$T3', '$T4', '$T5',
                     '$A1', '$A2', '$A3', '$A4', '$A5', '$bermain', '$totalPoint')";
                      mysqli_query($conn, $sqlRekap);
-                    
+                    //merubah status atlet
                     $sqlPoint = "UPDATE `point` SET statusPenilaian = 'saved'";
                     mysqli_query($conn, $sqlPoint);
                     $sqlAtlet = "UPDATE `atlet` SET statusPenilaian = 'standby'";
                     mysqli_query($conn, $sqlAtlet);
                     $sqlHitungBermain = "UPDATE `atlet` SET bermain = bermain+1 WHERE idAtlet = '$idAtlet'";
                     mysqli_query($conn, $sqlHitungBermain);
-                    echo '<div class="card card-body"><div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-                    <span class="alert-text"><strong>Berhasil</strong> data disimpan di tabel klasemen</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div></div>';
+                    echo "
+                    <script>
+                    setTimeout(function(){
+                        Swal.fire({
+                            type:'success',
+                            title : 'berhasil',
+                            text : 'data disimpan di tabel klasemen',
+                        });
+                    },3)
+                    </script>
+                    ";
                 }
             } else {
 
                 //JIKA JUMLAH JURI MENILAI KURANG DARI 5
                 echo "
                 <script>
-                    alert('Gagal Proses!  ada Juri Belum Menilai');
-                    window.history.back();
+                setTimeout(function(){
+                    Swal.fire({
+                        type:'error',
+                        title : 'gagal',
+                        text : 'masih ada juri yang belum menilai',
+                    });
+                },3)
                 </script>
                 ";
             }
         } else {
 
             //STATUS PENILAIAN SELAIN STAGING
-            echo '<div class="card card-body"><div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-                    <span class="alert-text"><strong>Gagal Proses!</strong>BELUM AKTIF atau Bukan Atlet yang dimaksud</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div></div>';
+            echo "
+                <script>
+                setTimeout(function(){
+                    Swal.fire({
+                        type:'error',
+                        title : 'gagal',
+                        text : 'status penilaian bukan Staging',
+                    });
+                },3)
+                </script>
+                ";
         }
     }
     ?>
@@ -195,6 +209,17 @@ if (!isset($_SESSION['username'])) {
             mysqli_query($conn, "UPDATE `point` SET idAtlet = '-', namaAtlet = '-', kelas = '-', kontingen = '-', namaKata = '-',
             grup = '-', atribut = '-', nilaiTeknik = 0, nilaiAtletik = 0, statusPenilaian = 'standby', juriMenilai = 0, bermain = 0");
             mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby'");
+            echo "
+            <script>
+            setTimeout(function(){
+                Swal.fire({
+                    type:'success',
+                    title : 'berhasil',
+                    text : 'data atlet berhasil di reset',
+                });
+            },3)
+            </script>
+            ";
         }
     }
     ?>
@@ -212,6 +237,17 @@ if (!isset($_SESSION['username'])) {
             mysqli_query($conn, $sqlPoint);
             mysqli_query($conn, $sqlAtlet);
         }
+        echo "
+        <script>
+        setTimeout(function(){
+            Swal.fire({
+                type:'success',
+                title : 'berhasil',
+                text : 'data atlet sudah dirubah',
+            });
+        },3)
+        </script>
+        ";
     }
     ?>
     <!-- Se table -->
@@ -231,7 +267,7 @@ if (!isset($_SESSION['username'])) {
                             <div class="col-md-8">
                                 <select class="form-control" name="grup">
                                     <?php
-                                    //menghindari duplikasi pada record
+                                    //menghindari duplikasi data grup pada record
                                     $sql = "SELECT DISTINCT grup from atlet";
                                     $hasil = mysqli_query($conn, $sql);
                                     while ($data = mysqli_fetch_array($hasil)) {

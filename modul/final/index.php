@@ -173,8 +173,13 @@ if (!isset($_SESSION['username'])) {
 
                     echo "
                         <script>
-                            alert('Gagal Proses!  ada Juri Belum Menilai');
-                            window.history.back();
+                        setTimeout(function(){
+                            Swal.fire({
+                                type:'error',
+                                title:'gagal',
+                                text:'masih ada juri yang belum menilai',
+                            });
+                        }, 3);
                         </script>
                         ";
                 }
