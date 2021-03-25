@@ -215,7 +215,7 @@ if (!isset($_SESSION['username'])) {
                 Swal.fire({
                     type:'success',
                     title : 'berhasil',
-                    text : 'data atlet berhasil di reset',
+                    text : 'papan skor berhasil di reset',
                 });
             },3)
             </script>
@@ -289,7 +289,7 @@ if (!isset($_SESSION['username'])) {
             </div>
         </div>
 
-        <form action="#" method="POST">
+        <form action="" method="POST">
             <table id="example" class="table table-striped table-bordered nowrap" style="width:110%">
                 <thead>
                     <tr>

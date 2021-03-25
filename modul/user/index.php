@@ -13,7 +13,50 @@ if (!isset($_SESSION['username'])) {
       $logout = $_GET['logout'];
       if($logout != 'admin'){
         mysqli_query($conn, "UPDATE `user` set `statusLogin` = 0 WHERE `username` = '$logout'");
-        echo '<script>window.location.href="index.php";</script>';
+        echo "
+                    <script>
+                    setTimeout(function(){
+                        Swal.fire({
+                            type:'success',
+                            title : 'Berhasil',
+                            text : 'Login Berhasil di Reset',
+                        });
+                    },3)
+                    </script>
+                    ";
+      }
+    }
+
+    //JIKA TOMBOL UBAH PASSWORD DI KLIK
+    if(isset($_POST['password2'])){
+      $idUser = $_POST['idUser'];
+      $password1 = $_POST['password1'];
+      $password2 = $_POST['password2'];
+      if($password1 == $password2){
+      mysqli_query($conn,"UPDATE `user` SET `password` = md5('$password2') WHERE idUser = '$idUser'");
+      echo "
+      <script>
+      setTimeout(function(){
+          Swal.fire({
+              type:'success',
+              title : 'Berhasil',
+              text : 'Password Berhasil dirubah',
+          });
+      },3)
+      </script>
+      ";
+      }else{
+        echo "
+        <script>
+        setTimeout(function(){
+            Swal.fire({
+                type:'error',
+                title : 'Gagal',
+                text : 'Password tidak cocok',
+            });
+        },3)
+        </script>
+        ";
       }
     }
 ?>
@@ -65,7 +108,7 @@ if (!isset($_SESSION['username'])) {
           <div class="modal-dialog" role="document">
             <div class="modal-content">
 
-              <form action="tambahUser.php" method="POST">
+              <form action="" method="POST">
                 <div class="modal-header">
                   <h5 class="modal-title" id="exampleModalLabel">Reset Password User</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">

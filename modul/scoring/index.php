@@ -23,21 +23,29 @@ if (!isset($_SESSION['username'])) {
             $i += 1;
         }
         if ($i > 0) {
-            echo '<div class="card card-body"><div class="alert alert-success alert-dismissible fade show" role="alert">
-            <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-            <span class="alert-text"><strong>Berhasil</strong> data nilai disimpan</span>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div></div>';
+            echo "
+                    <script>
+                    setTimeout(function(){
+                        Swal.fire({
+                            type:'success',
+                            title : 'Berhasil',
+                            text : 'Nilai berhasil disimpan',
+                        });
+                    },3)
+                    </script>
+                    ";
         } else {
-            echo '<div class="card card-body"><div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <span class="alert-icon"><i class="ni ni-like-2"></i></span>
-            <span class="alert-text"><strong>Gagal!</strong> data tidak disimpan</span>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            </div></div>';
+            echo "
+                    <script>
+                    setTimeout(function(){
+                        Swal.fire({
+                            type:'error',
+                            title : 'Gagal',
+                            text : 'Nilai Gagal disimpan',
+                        });
+                    },3)
+                    </script>
+                    ";
         }
     }
     //kumpulan data tiap record
@@ -53,7 +61,7 @@ if (!isset($_SESSION['username'])) {
     $kontingen = $row['kontingen'];
     ?>
     <div class="container-fluid mt-5 mb-5">
-        <form action="#" method="post">
+        <form action="" method="post">
             <table class="table table-striped table-bordered" style="width:100%">
                 <thead>
                     <tr>

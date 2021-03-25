@@ -25,7 +25,7 @@ if (!isset($_SESSION['username'])) {
                 </div>
                 <div class="col-md-6">
     
-                    <form action="#" method="get">
+                    <form action="" method="get">
                         <div class="row">
                             <div class="col-md-8">
                                 <select name="grup" class="form-control">

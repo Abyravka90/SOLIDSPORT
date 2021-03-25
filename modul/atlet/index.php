@@ -22,6 +22,17 @@ if (!isset($_SESSION['username'])) {
             grup = '$grup[$key]', atribut = '$atribut[$key]', kelas = '$kelas[$key]' WHERE idAtlet = $idAtlet[$key];";
             $sukses = mysqli_query($conn, $sql) or die(mysqli_error($conn));
         }
+        echo "
+        <script>
+        setTimeout(function(){
+            Swal.fire({
+                type:'success',
+                title : 'Berhasil',
+                text : 'Data Atlet berhasil dirubah',
+            });
+        },3)
+        </script>
+        ";
     }
 
     //JIKA TOMBOL TAMBAH DATA DITEKAN
@@ -41,7 +52,7 @@ if (!isset($_SESSION['username'])) {
                     text : "menambahkan data atlet",
                     type : "success"
                 })
-            },1000)</script>';
+            }, 3)</script>';
         }
     }
 
@@ -49,6 +60,13 @@ if (!isset($_SESSION['username'])) {
     if (isset($_GET['idAtlet'])) {
         $idAtlet = $_GET['idAtlet'];
         mysqli_query($conn, "DELETE FROM atlet WHERE idAtlet = '$idAtlet'") or die(mysqli_error($conn));
+        echo '<script>setTimeout(function(){
+            swal({
+                title : "berhasil",
+                text : "hapus data atlet",
+                type : "success"
+            })
+        }, 3)</script>';
     }
 
     //JIKA TOMBOL RESET DITEKAN
@@ -69,6 +87,18 @@ if (!isset($_SESSION['username'])) {
             mysqli_query($conn, "UPDATE `point` SET idAtlet = '-', namaAtlet = '-', kelas = '-', kontingen = '-', namaKata = '-',
                             grup = '-', atribut = '-', nilaiTeknik = 0, nilaiAtletik = 0, statusPenilaian = 'standby', juriMenilai = 0");
                             mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby'") or die(mysqli_error($conn)) ;
+            
+                            echo "
+                            <script>
+                            setTimeout(function(){
+                                Swal.fire({
+                                    type:'success',
+                                    title : 'Berhasil',
+                                    text : 'Semua Data berhasil dibersihkan',
+                                });
+                            },3)
+                            </script>
+                            ";
         
     }
 
