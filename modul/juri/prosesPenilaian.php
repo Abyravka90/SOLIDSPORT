@@ -106,9 +106,19 @@ if (!isset($_SESSION['username'])) {
                       </select>
                     </div>
                   </div>
-                  <div class="text-center">
-                    <button id="buttonNilai" class="btn btn-primary btn-block mt-5 mb-4  ">Nilai</button>
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="text-center">
+                        <button id="buttonNilai" class="btn btn-primary btn-block mt-5 mb-4">Nilai</button>
+                      </div>  
+                    </div>
+                    <div class="col-md-6">
+                        <div class="text-center">
+                          <button id="update" class="btn btn-success btn-block mt-5 mb-4">Refresh</button>
+                        </div>
+                    </div>
                   </div>
+                  
                 
               </div>
             </div>
@@ -132,6 +142,11 @@ if (!isset($_SESSION['username'])) {
   </html>
   <script>
     $('document').ready(function(){
+      
+      $('#update').click(function(){
+        window.location.reload();
+      });
+
       //PROSES INPUT DATA
       $('#buttonNilai').click(function(){
         var username = $('#username').val();

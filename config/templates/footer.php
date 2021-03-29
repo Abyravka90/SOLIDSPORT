@@ -34,7 +34,6 @@
 <script>
   $(document).ready(function() {
     $('#example').DataTable({
-      
       "scrollX": true,
       "language": {
         "paginate": {
@@ -67,7 +66,6 @@
       console.log("masuk gag", idAtlet)
       $(`#btn-stop-${idAtlet}`).prop("disabled", false);
       $(`#btn-stop-${idAtlet}`).prop("disabled", false);
-
       $(`#btn-reset-${idAtlet}`).prop("disabled", false);
   } else {
 
