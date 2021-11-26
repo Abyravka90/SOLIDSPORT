@@ -84,42 +84,47 @@ if (!isset($_SESSION['username'])) {
                         }
                     }
                     //proses merubah nilai papan skor
-                    if(isset($_POST['updatePapanskor'])){
+                    if(isset($_POST['updatePapanskor4'])){
                         $sqlTampilPapanskor = "UPDATE `papanskor` SET `status` = 'idle' WHERE `jenisScoreboard` = 'scoreboard'";
-                        $sqlTampilKlasemen = "UPDATE `papanskor` SET `status` = 'aktif', `grup` = '$grup' WHERE `jenisScoreboard` = 'klasemen'";
+                        $sqlTampilKlasemen = "UPDATE `papanskor` SET `status` = 'aktif', `grup` = '$grup', `tampilkan` = 4 WHERE `jenisScoreboard` = 'klasemen'";
+                        mysqli_query($conn, $sqlTampilPapanskor);
+                        mysqli_query($conn, $sqlTampilKlasemen);
+                    }
+                    if(isset($_POST['updatePapanskor3'])){
+                        $sqlTampilPapanskor = "UPDATE `papanskor` SET `status` = 'idle' WHERE `jenisScoreboard` = 'scoreboard'";
+                        $sqlTampilKlasemen = "UPDATE `papanskor` SET `status` = 'aktif', `grup` = '$grup', `tampilkan` = 3 WHERE `jenisScoreboard` = 'klasemen'";
+                        mysqli_query($conn, $sqlTampilPapanskor);
+                        mysqli_query($conn, $sqlTampilKlasemen);
+                    }
+                    if(isset($_POST['updatePapanskor2'])){
+                        $sqlTampilPapanskor = "UPDATE `papanskor` SET `status` = 'idle' WHERE `jenisScoreboard` = 'scoreboard'";
+                        $sqlTampilKlasemen = "UPDATE `papanskor` SET `status` = 'aktif', `grup` = '$grup', `tampilkan` = 2 WHERE `jenisScoreboard` = 'klasemen'";
                         mysqli_query($conn, $sqlTampilPapanskor);
                         mysqli_query($conn, $sqlTampilKlasemen);
                     }
 
-                    //JIKA TOMBOL RESET SCOREBOARD DI KLIK
-                    if(isset($_POST['resetPapanskor'])){
-                        mysqli_query($conn, "UPDATE `papanskor` SET `status` = 'aktif' where jenisScoreboard = 'scoreboard'");
-                        mysqli_query($conn, "UPDATE `papanskor` SET `status` = 'idle' where jenisScoreboard = 'klasemen'");
-                        mysqli_query($conn, "UPDATE `point` SET idAtlet = '-', namaAtlet = '-', kelas = '-', kontingen = '-', namaKata = '-',
-                                        grup = '-', atribut = '-', nilaiTeknik = 0, nilaiAtletik = 0, statusPenilaian = 'standby', juriMenilai = 0");
-                                        mysqli_query($conn, "UPDATE `atlet` SET statusPenilaian = 'standby'");
-                                        echo '<script>
-                                        setTimeout(function() {
-                                            Swal.fire({
-                                                title: "Berhasil!",
-                                                text: "Papan Skor berhasil di reset!",
-                                                type: "success"
-                                            });
-                                        }, 1000);
-                                    </script>';
-                                    }
                     ?>
                 </tr>
             </tbody>
         </table>
         <div class="pl-3">
         <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2 ml-4 mt-3">
             <form action="" method="post">
-                <input type="submit" name="updatePapanskor" value="Tampilkan" class="btn btn-info"></input>
+                <input type="submit" name="updatePapanskor4" value="Tampilkan 4 data" class="btn btn-info"></input>
             </form>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-2 ml-4 mt-3">
+            <form action="" method="post">
+                <input type="submit" name="updatePapanskor3" value="Tampilkan 3 data" class="btn btn-warning"></input>
+            </form>
+        </div>
+        <div class="col-md-2 ml-4 mt-3">
+            <form action="" method="post">
+                <input type="submit" name="updatePapanskor2" value="Tampilkan 2 data" class="btn btn-success"></input>
+            </form>
+        </div>
+        <div class="col-md-2 ml-4 mt-3">
             <input type="hidden" value=1 id='resetPapanSkor'>
             <button class="btn btn-warning" id='resetPapanSkorButton' >reset Scoreboard</button>
         </div>

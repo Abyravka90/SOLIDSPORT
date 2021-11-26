@@ -11,6 +11,7 @@ $data = mysqli_query($conn, $sqlScoreBoard);
 $row = mysqli_fetch_array($data);
 $tampil = $row['jenisScoreboard'];
 $grup = $row['grup'];
+$tampilkan = $row['tampilkan'];
 //ambil value  atlet dari table point ke layar
 $sqlJuriMenilai = mysqli_query($conn, "SELECT SUM(juriMenilai) as juriMenilai from `point`");
 $rowJuriMenilai = mysqli_fetch_array($sqlJuriMenilai);
@@ -224,10 +225,21 @@ include '../../config/prosesPerhitungan.php';
                             $sqlDataKlasemen = mysqli_query($conn, "SELECT grup from `papanskor`");
                             $row = mysqli_fetch_object($sqlDataKlasemen);
                             $grupKlasemen = $row->grup;
-                            $queryKlas = "SELECT * FROM klasemen WHERE grup = '$grupKlasemen' ORDER BY `totalPoint` DESC LIMIT 4";
+                            //IDENTIFIKASI JUMLAH DATA YANG DITAMPILKAN
+                            $jumlahData=0;
+                            if($tampilkan == 4)
+                            {
+                                $jumlahData = 4;
+                            }else if($tampilkan == 3){
+                                $jumlahData = 3;
+                            }else {
+                                $jumlahData = 2;
+                            }
+                             
+                            $queryKlas = "SELECT * FROM klasemen WHERE grup = '$grupKlasemen' ORDER BY `totalPoint` DESC LIMIT ".$jumlahData;
                             $cekDataKlasemen = mysqli_num_rows(mysqli_query($conn, $queryKlas));
                             if ($cekDataKlasemen > 0) {
-                                $sqlKlasemen = "SELECT * FROM klasemen WHERE grup = '$grupKlasemen' ORDER BY `totalPoint` DESC LIMIT 4";
+                                $sqlKlasemen = "SELECT * FROM klasemen WHERE grup = '$grupKlasemen' ORDER BY `totalPoint` DESC LIMIT ".$jumlahData;
                                 $dataKlasemen = mysqli_query($conn, $sqlKlasemen);
                                 $no = 1;
                             ?>
