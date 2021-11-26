@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Mar 2021 pada 05.54
+-- Waktu pembuatan: 26 Nov 2021 pada 02.59
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.4.11
 
@@ -65,16 +65,17 @@ CREATE TABLE `papanskor` (
   `jenisScoreboard` varchar(10) NOT NULL,
   `status` varchar(10) NOT NULL,
   `kelas` varchar(150) NOT NULL,
-  `grup` varchar(10) NOT NULL
+  `grup` varchar(10) NOT NULL,
+  `tampilkan` int(1) NOT NULL DEFAULT 4
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `papanskor`
 --
 
-INSERT INTO `papanskor` (`jenisScoreboard`, `status`, `kelas`, `grup`) VALUES
-('klasemen', 'idle', '', 'A2'),
-('scoreboard', 'aktif', '', '-');
+INSERT INTO `papanskor` (`jenisScoreboard`, `status`, `kelas`, `grup`, `tampilkan`) VALUES
+('klasemen', 'idle', '', '-', 4),
+('scoreboard', 'aktif', '', '-', 0);
 
 -- --------------------------------------------------------
 
@@ -153,7 +154,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`idUser`, `username`, `password`, `statusLogin`, `level`) VALUES
-(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 0, 1),
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', 2, 1),
 (2, 'J-1', '6caeba444797a281a0110e0c80ad5814', 0, 2),
 (3, 'J-2', '843eca7556234d9c90eae1fc0f1e2939', 0, 2),
 (4, 'J-3', '6050b64b6ad6fa8f163ca9e06c05a815', 0, 2),
