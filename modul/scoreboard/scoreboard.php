@@ -205,19 +205,16 @@ include '../../config/prosesPerhitungan.php';
         </div>
     <?php } else { ?>
         <!-- ========================LISTSCORE======================== -->
-        <div class="container mt-4">
-            <div class="row">
-                <div class="col"></div>
-                <div class="col-md-12">
-                    <div class="">
-                        <table class="table table-small table-bordered table-sm align-items-center">
+        
+            
+                        <table>
                             <thead class="thead-light">
                                 <tr>
-                                    <th style="font-size:20px;" class="text-center">Peringkat</th>
-                                    <th style="font-size:20px;" class="text-center">Nama atlet</th>
-                                    <th style="font-size:20px;" class="text-center">Kontingen</th>
-                                    <th style="font-size:20px;" class="text-center">Atribut</th>
-                                    <th style="font-size:20px;" class="text-center">Point</th>
+                                    <th style="font-size:50;" class="bg-white text-center">RANK</th>
+                                    <th style="font-size:50;" class="bg-white text-center">NAME</th>
+                                    <th style="font-size:50;" class="bg-white text-center">KONTINGEN</th>
+                                    <th style="font-size:50;" class="bg-white text-center">ATRIBUT&nbsp;</th>
+                                    <th style="font-size:50;" class="bg-white text-center">POINT</th>
                                 </tr>
                             </thead>
                             <?php
@@ -247,19 +244,19 @@ include '../../config/prosesPerhitungan.php';
                                     <?php
                                     while ($rowKlasemen = mysqli_fetch_array($dataKlasemen)) { ?>
                                         <tr>
-                                            <td class="text-center text-white" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;"><?= $no; ?></td>
-                                            <td class="text-center text-white" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;">
+                                            <td class="text-white" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:50px;text-transform:uppercase;"><?= $no; ?></td>
+                                            <td class="text-white" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:50px;text-transform:uppercase;">
                                                 <?= $rowKlasemen['namaAtlet'] ?>
                                             </td>
-                                            <td class="text-center text-white" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;"><?= $rowKlasemen['kontingen'] ?></td>
+                                            <td class="text-white" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:50px;text-transform:uppercase;"><?= $rowKlasemen['kontingen'] ?></td>
                                             <td class="text-center text-white bg-<?php if ($rowKlasemen['atribut'] == 'Ao') {
                                                                                             echo 'primary';
                                                                                         } else {
                                                                                             echo 'danger';
-                                                                                        } ?>" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;"><?= $rowKlasemen['atribut'] ?></td>
-                                            <td class="text-center <?php if ($no == 1) {
+                                                                                        } ?>" style="font-family: 'Arial', sans-serif;font-weight:bold;font-size:50px;text-transform:uppercase;"><?= $rowKlasemen['atribut'] ?></td>
+                                            <td class="<?php if ($no == 1) {
                                                                                 echo 'blinking';
-                                                                            } ?>" style="font-family: 'Arial', sans-serif; color:white; font-weight:bold;font-size:20px;padding:15px;text-transform:uppercase;"><?= number_format($rowKlasemen['totalPoint'], 2) ?></td>
+                                                                            } ?>" style="font-family: 'Arial', sans-serif; color:white;;font-weight:bold;font-size:50px;text-transform:uppercase;"><?= number_format($rowKlasemen['totalPoint'], 2) ?></td>
                                         </tr>
                                     <?php
                                         $no += 1;
@@ -278,11 +275,6 @@ include '../../config/prosesPerhitungan.php';
                             }
                             ?>
                         </table>
-                    </div>
-                </div>
-                <div class="col"></div>
-            </div>
-        </div>
     <?php } ?>
 </body>
 
